@@ -45,12 +45,85 @@ html[data-theme='dark'] body::before {
     linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
 }
 
-/* 内容层要压在网格之上 */
-#body-wrap,
-#nav,
-#page-header,
-#footer,
-#rightside {
+/* 自定义图片背景：主题只在深色模式给 #web_bg 加了遮罩，
+   浅色模式没有 → 亮图会压不住正文，这里补一层，并让玻璃有东西可糊 */
+#web_bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(246, 248, 251, 0.46);
+}
+
+html[data-theme='dark'] #web_bg::before {
+  background-color: rgba(9, 13, 22, 0.74) !important;
+}
+
+/* 有粒子 / 有背景图时，把极光渐变和细网格收敛掉，主角交给背景本身。
+   选择器用 :has() 直接选中主题输出的 <script id="canvas_nest"> 和 <div id="web_bg">；
+   custom.js 同时给 <html> 打 .has-canvas / .has-bg-image，作为老浏览器兜底。 */
+body:has(#canvas_nest),
+html.has-canvas body {
+  background-image:
+    radial-gradient(60rem 40rem at 50% -12%, var(--brand-a12), transparent 66%);
+}
+
+body:has(#canvas_nest)::before,
+html.has-canvas body::before {
+  opacity: 0.20;
+}
+
+body:has(#web_bg),
+html.has-bg-image body {
+  background-image: none;
+}
+
+body:has(#web_bg)::before,
+html.has-bg-image body::before {
+  opacity: 0.08;
+}
+
+/* --------------------------------------------------------------------------
+   1.5 磨砂玻璃卡片
+   --------------------------------------------------------------------------
+   贴在主题的 cardHover 系元素上：正文卡片 / 首页卡片 / 侧边栏卡片 / 版权 / 相关文章。
+   玻璃要有东西可糊才好看，所以它和「粒子背景」「自定义图片背景」是配套的。
+
+   想调：
+     --glass-alpha   卡片通透度，改成 1 就等于关掉玻璃视觉（卡片回到不透明）
+     --glass-blur    模糊半径
+     --glass-border  玻璃边缘那道细线
+   想连性能开销一起去掉：删掉本节里的两行 backdrop-filter。
+   -------------------------------------------------------------------------- */
+#post,
+#page,
+#recent-posts > .recent-post-item,
+#aside-content .card-widget,
+#post-copyright,
+.relatedPosts {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--card-box-shadow);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+}
+
+/* 不支持 backdrop-filter 时退回不透明卡片，保证文字可读 */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  #post,
+  #page,
+  #recent-posts > .recent-post-item,
+  #aside-content .card-widget,
+  #post-copyright,
+  .relatedPosts {
+    background: var(--card-bg);
+  }
+}
+
+/* 内容层要压在网格之上。
+   只给最外层 #body-wrap —— 它内部已经包含 #nav / #page-header / #footer，
+   给它们单独写 position 会覆盖主题的定位方式（#nav 是 absolute、#rightside 是 fixed）。
+   #rightside 是 #body-wrap 的兄弟节点，本身 position:fixed + z-index:100，不需要补。 */
+#body-wrap {
   position: relative;
   z-index: 1;
 }
@@ -152,8 +225,7 @@ html[data-theme='dark'] #page-header.fixed #nav {
    -------------------------------------------------------------------------- */
 #recent-posts > .recent-post-item {
   border-radius: var(--r-lg);
-  border: 1px solid var(--n-200);
-  background: var(--card-bg);
+  /* 背景与边框交给上面的「1.5 磨砂玻璃」统一管，这里只负责圆角与动效 */
   box-shadow: var(--card-box-shadow);
   overflow: hidden;
   transition: transform var(--t-mid) var(--ease-out),
@@ -210,8 +282,7 @@ html[data-theme='dark'] #recent-posts > .recent-post-item {
    -------------------------------------------------------------------------- */
 #aside-content .card-widget {
   border-radius: var(--r-lg);
-  border: 1px solid var(--n-200);
-  background: var(--card-bg);
+  /* 背景与边框交给上面的「1.5 磨砂玻璃」统一管 */
   box-shadow: var(--card-box-shadow);
   transition: box-shadow var(--t-mid) var(--ease-out),
               transform var(--t-mid) var(--ease-out),
@@ -314,8 +385,29 @@ html[data-theme='dark'] #aside-content .card-widget {
 }
 
 /* --------------------------------------------------------------------------
-   8. 右下角悬浮按钮
+   8. 右下角悬浮按钮 + 「设置」入口
+   --------------------------------------------------------------------------
+   主题原本的「设置」很难被发现，三个原因叠在一起：
+     1) scrollTop > 56 才出现（页面一打开根本看不到）
+     2) 出现后整组只有 opacity .8，发灰
+     3) 和平级按钮长得一模一样，没有任何层级差
+   这里分别处理：常显 / 不再发灰 / 设置按钮单独做成品牌渐变胶囊 + 常驻文字 + 光环。
    -------------------------------------------------------------------------- */
+
+/* 1) 常显 + 不再发灰。主题的 #rightside.rightside-show 权重更高，两处都要写 */
+#rightside,
+#rightside.rightside-show {
+  opacity: 1;
+  transform: translate(-58px, 0);
+}
+
+/* 2) 按钮宽度不一致时也要右对齐（设置胶囊比其它按钮宽） */
+#rightside > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 #rightside > div > button,
 #rightside > div > a {
   border-radius: var(--r-pill);
@@ -338,6 +430,51 @@ html[data-theme='dark'] #rightside > div > a {
   background: var(--brand-grad);
   color: #fff;
   border-color: transparent;
+}
+
+/* 3) 设置按钮：#rightside-config 内含一个 fa-cog 图标，
+      文字用 ::after 生成，不用改主题模板 */
+#rightside #rightside-config {
+  width: auto;
+  min-width: 35px;
+  height: 35px;
+  padding: 0 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  background: var(--brand-grad);
+  color: #fff;
+  border: none;
+  box-shadow: 0 10px 24px -10px var(--brand-ring), 0 0 0 4px var(--brand-a12);
+}
+
+#rightside #rightside-config::after {
+  content: "设置";
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+#rightside #rightside-config:hover {
+  background: var(--brand-grad-hover);
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+/* 手机上只留图标，避免胶囊遮住正文 */
+@media (max-width: 900px) {
+  #rightside #rightside-config {
+    width: 35px;
+    padding: 0;
+  }
+
+  #rightside #rightside-config::after {
+    content: none;
+  }
 }
 
 /* --------------------------------------------------------------------------

@@ -210,7 +210,103 @@
   }
 
   /* ------------------------------------------------------------------
-     5. 正文图片懒加载
+     5. 满屏条幅：量出「元素到视口左右边」的真实距离
+     ------------------------------------------------------------------
+     为什么不用 calc(50% - 50vw)：那是相对「最近的容器」算的，而有侧边栏时
+     正文列并不在视口正中，算出来左右会不对称。这里直接量 getBoundingClientRect。
+     ------------------------------------------------------------------ */
+  function initBleed() {
+    var els = [].slice.call(doc.querySelectorAll('.banner--bleed'));
+    if (!els.length) return;
+
+    var ticking = false;
+
+    function measure() {
+      ticking = false;
+      var vw = doc.documentElement.clientWidth;
+      els.forEach(function (el) {
+        // 先归零，否则量到的是「已经外扩过」的位置，会越滚越宽
+        el.style.marginLeft = '0px';
+        el.style.marginRight = '0px';
+        var r = el.getBoundingClientRect();
+        el.style.setProperty('--bleed-l', r.left + 'px');
+        el.style.setProperty('--bleed-r', Math.max(0, vw - r.right) + 'px');
+      });
+    }
+
+    function request() {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(measure);
+      }
+    }
+
+    measure();
+    window.addEventListener('resize', request, { passive: true });
+    // 字体加载完、图片撑开高度后宽度可能还会变，再补一次
+    window.addEventListener('load', request);
+  }
+
+  /* ------------------------------------------------------------------
+     6. 背景模式标记
+     ------------------------------------------------------------------
+     主题输出 <script id="canvas_nest">（开了粒子）或 <div id="web_bg">（设了背景图）。
+     现代浏览器 CSS 里用 :has() 就能选中，这里再给 <html> 打一对类名做兜底。
+     ------------------------------------------------------------------ */
+  function initBackgroundFlags() {
+    root.classList.toggle('has-canvas', !!doc.getElementById('canvas_nest'));
+    root.classList.toggle('has-bg-image', !!doc.getElementById('web_bg'));
+  }
+
+  /* ------------------------------------------------------------------
+     7. 首次访问提示：「设置」在右下角
+     ------------------------------------------------------------------
+     只显示一次（localStorage 记），8 秒自动消失，点一下也算已读。
+     不想要这个提示：把下面的 SHOW_HINT 改成 false 即可。
+     ------------------------------------------------------------------ */
+  var SHOW_HINT = true;
+  var HINT_KEY = 'dsh-hint-v1';
+
+  function initHint() {
+    if (!SHOW_HINT) return;
+    if (!doc.getElementById('rightside-config')) return;
+
+    var seen = null;
+    try {
+      seen = window.localStorage.getItem(HINT_KEY);
+    } catch (err) {
+      return; // 隐私模式下 localStorage 会抛错，直接不显示
+    }
+    if (seen) return;
+
+    var hint = doc.createElement('div');
+    hint.id = 'dsh-hint';
+    hint.setAttribute('role', 'status');
+    hint.textContent = '点右下角「设置」可以切换夜间模式 / 阅读模式';
+    doc.body.appendChild(hint);
+
+    // 一显示就记「已读」——否则用户没点也没等满 8 秒就离开的话，下次刷新还会再弹
+    try {
+      window.localStorage.setItem(HINT_KEY, '1');
+    } catch (err) { /* 忽略 */ }
+
+    var removed = false;
+
+    function dismiss() {
+      if (removed) return;
+      removed = true;
+      hint.classList.add('is-hiding');
+      window.setTimeout(function () {
+        if (hint.parentNode) hint.parentNode.removeChild(hint);
+      }, 400);
+    }
+
+    hint.addEventListener('click', dismiss);
+    window.setTimeout(dismiss, 8000);
+  }
+
+  /* ------------------------------------------------------------------
+     8. 正文图片懒加载
      ------------------------------------------------------------------ */
   function initLazyImages() {
     var scope = doc.getElementById('article-container');
@@ -226,7 +322,16 @@
      启动：每一步独立 try/catch，互不影响
      ------------------------------------------------------------------ */
   onReady(function () {
-    [initProgress, initTables, initNav, initLazyImages, initReveal].forEach(function (step) {
+    [
+      initBackgroundFlags,
+      initProgress,
+      initTables,
+      initNav,
+      initBleed,
+      initLazyImages,
+      initReveal,
+      initHint
+    ].forEach(function (step) {
       try {
         step();
       } catch (err) {

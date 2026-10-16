@@ -91,7 +91,86 @@ html.js #page-header.full_page #scroll-down {
 }
 
 /* --------------------------------------------------------------------------
-   4. 加载完成后的图片淡入（custom.js 打上 .is-loaded）
+   4. 「设置」按钮的光环脉冲 + 首次访问提示气泡
+   -------------------------------------------------------------------------- */
+
+/* 让设置按钮自己会「呼吸」，从一堆静止按钮里跳出来 */
+@keyframes dsh-cog-pulse {
+  0%,
+  100% {
+    box-shadow: 0 10px 24px -10px var(--brand-ring), 0 0 0 4px var(--brand-a12);
+  }
+  55% {
+    box-shadow: 0 10px 24px -10px var(--brand-ring), 0 0 0 9px rgba(76, 110, 245, 0);
+  }
+}
+
+#rightside #rightside-config {
+  animation: dsh-cog-pulse 2.8s var(--ease-in-out-3, ease-in-out) infinite;
+}
+
+/* 首次访问的提示气泡（custom.js 只创建一次，localStorage 记住已读） */
+#dsh-hint {
+  position: fixed;
+  right: 62px;
+  bottom: 52px;
+  z-index: 101;
+  max-width: 240px;
+  padding: 10px 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  box-shadow: var(--card-hover-box-shadow);
+  color: var(--font-color);
+  font-size: 0.86rem;
+  line-height: 1.6;
+  cursor: pointer;
+  animation: dsh-hint-in 420ms var(--ease-out) both;
+}
+
+#dsh-hint::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  border-right: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  transform: rotate(45deg);
+}
+
+@keyframes dsh-hint-in {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+#dsh-hint.is-hiding {
+  opacity: 0;
+  transform: translateX(14px);
+  transition: opacity var(--t-mid) var(--ease-out), transform var(--t-mid) var(--ease-out);
+}
+
+@media (max-width: 900px) {
+  #dsh-hint {
+    right: 14px;
+    bottom: 64px;
+    max-width: 200px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. 加载完成后的图片淡入（custom.js 打上 .is-loaded）
    -------------------------------------------------------------------------- */
 img[data-dsh-fade] {
   opacity: 0;
@@ -103,7 +182,7 @@ img[data-dsh-fade].is-loaded {
 }
 
 /* --------------------------------------------------------------------------
-   5. 无障碍：尊重系统的「减少动态效果」
+   6. 无障碍：尊重系统的「减少动态效果」
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
   html.js [data-reveal] {
@@ -115,8 +194,14 @@ img[data-dsh-fade].is-loaded {
   html.js #page-header.full_page #site-info,
   html.js #page-header.full_page #scroll-down,
   #page-header.full_page #scroll-down .scroll-down-effects,
+  #rightside #rightside-config,
+  #dsh-hint,
   .bar i::after {
     animation: none !important;
+  }
+
+  #dsh-hint.is-hiding {
+    transition: none !important;
   }
 
   *,

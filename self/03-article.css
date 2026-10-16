@@ -1316,7 +1316,133 @@ html[data-theme='dark'] .figure-card p {
 }
 
 /* --------------------------------------------------------------------------
-   D14. 移动端：所有网格退回单列，避免挤压
+   D14. 条幅 / 全宽图片 / 图标板
+   --------------------------------------------------------------------------
+   五种写法，直接粘进 Markdown：
+
+     <div class="banner"><img src="/img/x.jpg" alt=""><p class="banner-caption">图注</p></div>
+        默认条幅：铺满正文列，圆角 + 投影，和正文一起留白
+
+     <div class="banner banner--flush"><img src="/img/x.jpg" alt=""></div>
+        齐边条幅：左右铺到正文卡片的边缘（吃掉卡片的左右内边距）
+
+     <div class="banner banner--flush banner--crop" style="--ratio: 21/9"><img src="/img/x.jpg" alt=""></div>
+        裁切条幅：固定宽高比 + object-fit:cover，适合做电影宽银幕条幅
+
+     <div class="banner banner--bleed"><img src="/img/x.jpg" alt=""></div>
+        满屏条幅：突破卡片铺满整个浏览器宽度
+        ⚠️ 有侧边栏时右侧会被侧栏卡片压住，满屏条幅请给该文章 front-matter 加 aside: false
+
+     <div class="logo-plate"><img src="/img/logo.jpg" alt="校徽"></div>
+        图标板：校徽 / 合作方 logo 这类「浅底小图」不要拉伸放大，
+        居中放在一条浅色板上，并把 JPEG 的灰底融掉
+   -------------------------------------------------------------------------- */
+
+.banner {
+  margin: 2em 0;
+}
+
+/* ⚠️ 一律用后代选择器，不要用 `> img`。
+   主题的 photofigcaption 会在运行时把每个 <img> 包进
+   <a data-fancybox>，并用 alt 生成一个 .img-alt 图注，
+   子选择器会直接失效。 */
+.banner img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-md);
+  box-shadow: 0 14px 34px -20px rgba(15, 23, 42, 0.55);
+}
+
+.banner a,
+.logo-plate a {
+  display: block;
+  margin: 0;
+}
+
+/* 图注：photofigcaption 用图片的 alt 自动生成 .img-alt */
+.banner .img-alt,
+.logo-plate .img-alt {
+  margin-top: 0.7em;
+  font-size: 0.86em;
+  color: var(--n-500);
+  letter-spacing: 0.02em;
+}
+
+/* 裁切比例：默认 21:9，用 style="--ratio: 16/9" 覆盖 */
+.banner--crop img {
+  aspect-ratio: var(--ratio, 21 / 9);
+  object-fit: cover;
+}
+
+/* 齐边：抵消卡片左右内边距（桌面 40px，≤768px 为 14px） */
+.banner--flush {
+  margin-inline: -40px;
+}
+
+.banner--flush img {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 满屏：--bleed-l / --bleed-r 由 custom.js 量出「元素到视口左右边」的真实距离，
+   比 calc(50% - 50vw) 准 —— 有侧边栏时正文列并不在视口正中 */
+.banner--bleed {
+  margin-left: calc(-1 * var(--bleed-l, 0px));
+  margin-right: calc(-1 * var(--bleed-r, 0px));
+}
+
+.banner--bleed img {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 图标板 */
+.logo-plate {
+  display: flex;
+  /* 竖向排列：主题会在图片后面补一个 .img-alt 图注，横向会把图注挤到图片右边 */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 2em 0;
+  padding: 26px 22px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  background: var(--n-0);
+  /* 把 mix-blend-mode 的作用范围限制在这块板内 */
+  isolation: isolate;
+}
+
+html[data-theme='dark'] .logo-plate {
+  /* 必须是不透明白：multiply 的结果 = 板色 × 图片色 / 255，
+     板色不到 255 的话，图片那圈白底就会留下一个淡淡的方块 */
+  background: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 18px 44px -26px rgba(0, 0, 0, 0.85);
+}
+
+.logo-plate img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 88px;
+  margin: 0 auto;
+  border-radius: 0;
+  box-shadow: none;
+  /* 校徽这类 JPEG 的底色通常是纯白，multiply 一下就会和浅色板融为一体，
+     所以深色模式下不需要换图也看不出「方框」。
+     如果哪天换成深底 logo，把这两行改成 isolation + 深色板即可。 */
+  mix-blend-mode: multiply;
+}
+
+.logo-plate--flush {
+  margin-inline: -40px;
+  border-radius: 0;
+}
+
+/* --------------------------------------------------------------------------
+   D15. 移动端：所有网格退回单列，避免挤压
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   #article-container {
@@ -1345,5 +1471,19 @@ html[data-theme='dark'] .figure-card p {
   .compare,
   .media {
     grid-template-columns: 1fr;
+  }
+
+  /* 手机上卡片内边距是 36px 14px，齐边条幅跟着改 */
+  .banner--flush,
+  .logo-plate--flush {
+    margin-inline: -14px;
+  }
+
+  .logo-plate {
+    padding: 20px 16px;
+  }
+
+  .logo-plate img {
+    max-height: 64px;
   }
 }
