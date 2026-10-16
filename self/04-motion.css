@@ -196,6 +196,7 @@ img[data-dsh-fade].is-loaded {
   #page-header.full_page #scroll-down .scroll-down-effects,
   #rightside #rightside-config,
   #dsh-hint,
+  .gallery-scroll--marquee .gs-track.is-running,
   .bar i::after {
     animation: none !important;
   }

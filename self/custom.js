@@ -306,7 +306,139 @@
   }
 
   /* ------------------------------------------------------------------
-     8. 正文图片懒加载
+     8. 滚动相册
+     ------------------------------------------------------------------
+     作者只写 <div class="gallery-scroll"> 加若干 <img>，这里负责生成
+       .gs-viewport（滚动 / 裁剪容器）
+         .gs-track（横向排布的轨道）
+           .gs-item（每张卡）
+     以及左右箭头、鼠标拖拽，跑马灯模式还会克隆一份做无缝循环。
+
+     ⚠️ 主题的 photofigcaption 会把 <img> 包进 <a>，并在后面补一个 .img-alt 图注，
+     所以「一项」可能是 <a> 而不是 <img>，图注必须跟着挂进同一张卡里。
+     ------------------------------------------------------------------ */
+  function makeNav(cls, label) {
+    var b = doc.createElement('button');
+    b.type = 'button';
+    b.className = 'gs-nav ' + cls;
+    b.setAttribute('aria-label', label);
+    b.innerHTML = '<i class="fas fa-chevron-' + (cls === 'gs-prev' ? 'left' : 'right') + '"></i>';
+    return b;
+  }
+
+  function initGalleryScroll() {
+    var boxes = [].slice.call(doc.querySelectorAll('.gallery-scroll'));
+    if (!boxes.length) return;
+
+    boxes.forEach(function (box) {
+      if (box.querySelector('.gs-viewport')) return; // 幂等：重复调用不会重复包一层
+
+      var children = [].slice.call(box.children);
+      if (!children.length) return;
+
+      // ---- 1) 把孩子整理成「一项一卡」----
+      var track = doc.createElement('div');
+      track.className = 'gs-track';
+
+      var lastItem = null;
+      children.forEach(function (node) {
+        if (node.classList && node.classList.contains('img-alt')) {
+          if (lastItem) lastItem.appendChild(node);
+          return;
+        }
+        var item = doc.createElement('div');
+        item.className = 'gs-item';
+        item.appendChild(node);
+        track.appendChild(item);
+        lastItem = item;
+      });
+
+      var viewport = doc.createElement('div');
+      viewport.className = 'gs-viewport';
+      viewport.appendChild(track);
+      box.appendChild(viewport);
+
+      if (box.classList.contains('gallery-scroll--marquee')) {
+        // ---- 2) 跑马灯：克隆一份接在后面实现无缝循环 ----
+        var originals = [].slice.call(track.children);
+        originals.forEach(function (it) {
+          var clone = it.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          track.appendChild(clone);
+        });
+
+        var speed = parseFloat(getComputedStyle(box).getPropertyValue('--gs-speed')) || 6;
+        track.style.setProperty('--gs-duration', (originals.length * speed) + 's');
+        track.classList.add('is-running');
+      } else {
+        // ---- 3) 滑动模式：左右箭头 + 鼠标拖拽 ----
+        var prev = makeNav('gs-prev', '上一张');
+        var next = makeNav('gs-next', '下一张');
+        box.appendChild(prev);
+        box.appendChild(next);
+
+        function step() {
+          var first = track.firstElementChild;
+          return first ? first.getBoundingClientRect().width + 14 : 280;
+        }
+
+        prev.addEventListener('click', function () {
+          viewport.scrollBy({ left: -step(), behavior: 'smooth' });
+        });
+        next.addEventListener('click', function () {
+          viewport.scrollBy({ left: step(), behavior: 'smooth' });
+        });
+
+        function syncNav() {
+          var max = viewport.scrollWidth - viewport.clientWidth;
+          prev.hidden = viewport.scrollLeft <= 4;
+          next.hidden = viewport.scrollLeft >= max - 4;
+        }
+
+        viewport.addEventListener('scroll', function () {
+          window.requestAnimationFrame(syncNav);
+        }, { passive: true });
+        window.addEventListener('resize', syncNav, { passive: true });
+        syncNav();
+
+        // 鼠标拖拽（触屏走系统原生滚动，不用插手）
+        var down = false, startX = 0, startLeft = 0, moved = false;
+        viewport.addEventListener('pointerdown', function (e) {
+          if (e.pointerType !== 'mouse') return;
+          down = true;
+          moved = false;
+          startX = e.clientX;
+          startLeft = viewport.scrollLeft;
+          viewport.style.scrollBehavior = 'auto';
+        });
+        viewport.addEventListener('pointermove', function (e) {
+          if (!down) return;
+          var dx = e.clientX - startX;
+          if (Math.abs(dx) > 4) moved = true;
+          viewport.scrollLeft = startLeft - dx;
+        });
+        ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (ev) {
+          viewport.addEventListener(ev, function () {
+            if (!down) return;
+            down = false;
+            viewport.style.scrollBehavior = '';
+          });
+        });
+        // 拖完松手时别顺带触发图片的 fancybox 预览
+        viewport.addEventListener('click', function (e) {
+          if (!moved) return;
+          moved = false;
+          e.preventDefault();
+          e.stopPropagation();
+        }, true);
+      }
+
+      box.classList.add('is-ready');
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     9. 正文图片懒加载
      ------------------------------------------------------------------ */
   function initLazyImages() {
     var scope = doc.getElementById('article-container');
@@ -328,6 +460,7 @@
       initTables,
       initNav,
       initBleed,
+      initGalleryScroll,
       initLazyImages,
       initReveal,
       initHint
@@ -338,6 +471,14 @@
         // 静默失败：动效不是必需品，内容可见才是
         if (window.console && console.warn) console.warn('[dsh] step failed:', err);
       }
+    });
+
+    // 主题的 photofigcaption 是在 DOMContentLoaded 里跑的，可能比这里晚一点点；
+    // 相册整理是幂等的，load 时再补一次，保证每张卡都拿到了自己的图注
+    window.addEventListener('load', function () {
+      try {
+        initGalleryScroll();
+      } catch (err) { /* 忽略 */ }
     });
 
     // 最后再加一次保险：确保 .js 类存在时不会永久隐藏内容

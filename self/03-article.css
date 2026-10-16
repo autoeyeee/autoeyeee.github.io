@@ -399,17 +399,54 @@ html[data-theme='dark'] #article-container hr {
   text-shadow: 0 2px 26px rgba(0, 0, 0, 0.35);
 }
 
-/* 版权 / 相关文章 / 打赏卡片统一成“卡片” */
+/* 版权 / 相关文章 / 评论 统一成卡片。
+   ⚠️ 千万不要给 .post-reward 加 overflow: hidden ——
+   主题的二维码浮层 .reward-main 是 position:absolute + bottom:40px，
+   它是往「上」伸出容器的，一裁就被切没了，
+   表现就是「最底下那个『联系方式』按钮点了/悬浮了完全没反应」。 */
 #post-copyright,
 .relatedPosts,
-#reward-author,
-.post-reward,
-#post-comment,
-#random-post {
+#post-comment {
   border-radius: var(--r-lg);
   border: 1px solid var(--n-200);
   box-shadow: var(--card-box-shadow);
   overflow: hidden;
+}
+
+/* 联系方式按钮（主题的 reward 区块）：只做外观，不加任何裁切 */
+.post-reward .reward-button {
+  border-radius: var(--r-pill);
+  padding: 6px 26px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform var(--t-fast) var(--ease-out),
+              background-color var(--t-fast) var(--ease-out);
+}
+
+.post-reward .reward-button:hover {
+  transform: translateY(-2px);
+}
+
+/* 悬浮弹出的二维码面板（父级必须保持 overflow 可见，否则这里根本看不到） */
+.post-reward .reward-main .reward-all {
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  box-shadow: var(--card-hover-box-shadow);
+}
+
+html[data-theme='dark'] .post-reward .reward-main .reward-all {
+  border-color: rgba(255, 255, 255, 0.10);
+}
+
+.post-reward .reward-main .reward-all img {
+  border-radius: var(--r-sm);
+  box-shadow: none;
+}
+
+.post-reward .reward-main .post-qr-code-desc {
+  font-family: var(--font-heading);
+  font-weight: 600;
 }
 
 html[data-theme='dark'] #post-copyright,
@@ -1442,7 +1479,187 @@ html[data-theme='dark'] .logo-plate {
 }
 
 /* --------------------------------------------------------------------------
-   D15. 移动端：所有网格退回单列，避免挤压
+   D15. 滚动相册 —— 横向滑动的照片条
+   --------------------------------------------------------------------------
+   两种模式，写法都是「一个容器 + 若干张图」，中间的 .gs-viewport / .gs-track /
+   .gs-item 都由 custom.js 自动生成，不用手写：
+
+     <div class="gallery-scroll">
+       <img src="/img/a.jpg" alt="说明 A">
+       <img src="/img/b.jpg" alt="说明 B">
+     </div>
+        滑动模式：横向滑动 + 滚动吸附 + 鼠标拖拽 + 左右箭头
+
+     <div class="gallery-scroll gallery-scroll--marquee">
+       <img src="/img/a.jpg" alt="">
+       ...
+     </div>
+        跑马灯模式：自动匀速滚动、无缝循环、鼠标悬浮暂停
+
+   可调参数（写在容器的 style 里）：
+     --gs-w      每张卡宽度，默认 260px
+     --gs-h      图片高度，默认 180px
+     --gs-speed  跑马灯每张卡走完几秒，默认 6
+   -------------------------------------------------------------------------- */
+
+.gallery-scroll {
+  position: relative;
+  margin: 1.8em 0;
+}
+
+.gallery-scroll .gs-viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 4px 2px 10px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.gallery-scroll .gs-viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery-scroll .gs-track {
+  display: flex;
+  gap: var(--gs-gap, 14px);
+  width: max-content;
+}
+
+.gallery-scroll .gs-item {
+  flex: 0 0 auto;
+  scroll-snap-align: center;
+  width: var(--gs-w, 260px);
+  margin: 0;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  background: var(--card-bg);
+  overflow: hidden;
+  box-shadow: var(--card-box-shadow);
+  transition: transform var(--t-mid) var(--ease-out),
+              box-shadow var(--t-mid) var(--ease-out);
+}
+
+.gallery-scroll .gs-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-hover-box-shadow);
+}
+
+html[data-theme='dark'] .gallery-scroll .gs-item {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.gallery-scroll .gs-item img {
+  display: block;
+  width: 100%;
+  height: var(--gs-h, 180px);
+  object-fit: cover;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 图注由主题的 photofigcaption 用 alt 生成 */
+.gallery-scroll .gs-item .img-alt {
+  margin: 0;
+  padding: 8px 10px 10px;
+  font-size: 0.8em;
+  color: var(--n-500);
+  text-align: center;
+}
+
+/* 左右箭头：鼠标进入相册才浮现，触屏设备不显示（直接滑就行） */
+.gallery-scroll .gs-nav {
+  position: absolute;
+  top: calc(50% - 22px);
+  z-index: 2;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--n-200);
+  border-radius: var(--r-pill);
+  background: var(--card-bg);
+  color: var(--font-color);
+  cursor: pointer;
+  opacity: 0;
+  box-shadow: var(--card-box-shadow);
+  transition: opacity var(--t-fast) var(--ease-out),
+              background-color var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out);
+}
+
+.gallery-scroll .gs-prev {
+  left: -8px;
+}
+
+.gallery-scroll .gs-next {
+  right: -8px;
+}
+
+.gallery-scroll .gs-nav[hidden] {
+  display: none !important;
+}
+
+.gallery-scroll.is-ready:hover .gs-nav:not([hidden]) {
+  opacity: 1;
+}
+
+.gallery-scroll .gs-nav:hover {
+  background: var(--brand-grad);
+  border-color: transparent;
+  color: #fff;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .gallery-scroll .gs-nav {
+    display: flex;
+  }
+}
+
+/* 跑马灯模式 */
+.gallery-scroll--marquee .gs-viewport {
+  overflow: hidden;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  padding-bottom: 4px;
+  /* 两端淡出，避免图片被硬生生切断 */
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.gallery-scroll--marquee .gs-track.is-running {
+  animation: dsh-gs-marquee var(--gs-duration, 30s) linear infinite;
+}
+
+.gallery-scroll--marquee:hover .gs-track.is-running,
+.gallery-scroll--marquee:focus-within .gs-track.is-running {
+  animation-play-state: paused;
+}
+
+.gallery-scroll--marquee .gs-item:hover {
+  transform: none;
+}
+
+.gallery-scroll--marquee .gs-nav {
+  display: none !important;
+}
+
+/* 位移 = 一半轨道 + 半个间距，这样克隆出来的第二份正好接上第一份 */
+@keyframes dsh-gs-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - var(--gs-gap, 14px) / 2));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   D16. 移动端：所有网格退回单列，避免挤压
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
   #article-container {
@@ -1477,6 +1694,12 @@ html[data-theme='dark'] .logo-plate {
   .banner--flush,
   .logo-plate--flush {
     margin-inline: -14px;
+  }
+
+  /* 滚动相册在窄屏用更小的卡片（作者显式写了 --gs-w 的话以作者为准） */
+  .gallery-scroll {
+    --gs-w: 200px;
+    --gs-h: 150px;
   }
 
   .logo-plate {
