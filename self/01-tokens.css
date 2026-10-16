@@ -1,0 +1,234 @@
+/* ==========================================================================
+   01-tokens.css — 设计令牌层
+   --------------------------------------------------------------------------
+   这一层只做两件事：
+     1. 定义自己的语义化令牌（颜色 / 字体 / 阴影 / 圆角 / 动效曲线）
+     2. 把这些令牌映射到 Butterfly 暴露的运行时 CSS 变量上
+
+   Butterfly 的主题样式是 Stylus 编译期写死的，但它同时导出了一批运行时变量
+   （--global-bg / --card-bg / --font-color / --btn-bg ...），在 :root 与
+   [data-theme='dark'] 两处定义。所以改外观最干净的做法是：
+      改这里的变量值 → 全站跟着变，而不用去和几十个选择器对抗。
+
+   配色来源：Open Color（经 open-props 打包，已本地化到 vendor/open-props/
+   避免依赖外部 CDN）。中性色用偏冷的 slate 阶，和 indigo 主色更协调。
+
+   换一套配色：只改下面 【品牌色】 与 【中性色】 两块即可。
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   【中性色】冷灰阶（slate）—— 浅色模式与深色模式共用同一套编号
+   -------------------------------------------------------------------------- */
+html:root {
+  --n-0: #ffffff;
+  --n-25: #fbfcfe;
+  --n-50: #f6f8fb;
+  --n-100: #eef2f7;
+  --n-200: #e3e9f0;
+  --n-300: #cbd5e1;
+  --n-400: #94a3b8;
+  --n-500: #64748b;
+  --n-600: #475569;
+  --n-700: #334155;
+  --n-800: #1e293b;
+  --n-900: #0f172a;
+  --n-950: #080d18;
+
+  /* ------------------------------------------------------------------------
+     【品牌色】indigo → violet → cyan 的冷色极光系
+     改了 --brand-1/2/3，渐变、按钮、强调色、链接会一起跟着变
+     ------------------------------------------------------------------------ */
+  --brand-1: var(--indigo-6);   /* #4c6ef5  主色 */
+  --brand-2: var(--violet-6);   /* #845ef7  次色 */
+  --brand-3: var(--cyan-5);     /* #22b8cf  点缀 */
+  --brand-ink: var(--indigo-8); /* 文字链接用的深色，保证白底对比度 ≥ 4.5:1 */
+  --brand-grad: linear-gradient(120deg, var(--brand-1), var(--brand-2) 52%, var(--brand-3));
+  --brand-grad-hover: linear-gradient(120deg, var(--brand-2), var(--brand-1) 52%, var(--brand-3));
+  --brand-a12: rgba(76, 110, 245, 0.12);
+  --brand-a20: rgba(76, 110, 245, 0.20);
+  --brand-ring: rgba(76, 110, 245, 0.32);
+
+  /* 语义色 */
+  --ok: var(--teal-7);
+  --warn: var(--yellow-8);
+  --danger: var(--red-7);
+  --info: var(--blue-7);
+
+  /* ------------------------------------------------------------------------
+     【字体】正文用楷（霞鹜文楷屏幕阅读版·GB），标题用黑体
+     这是中文排版的经典搭配：正文楷、标题黑，标题不需要伪粗体
+     字体已本地化到 vendor/lxgw-wenkai/，不依赖外部 CDN
+     ------------------------------------------------------------------------ */
+  --font-body: "LXGW WenKai Screen", "PingFang SC", "HarmonyOS Sans SC",
+               "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               system-ui, sans-serif;
+  --font-heading: "PingFang SC", "HarmonyOS Sans SC", "Microsoft YaHei",
+                  -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+                  sans-serif;
+  --font-mono: "Cascadia Code", "JetBrains Mono", "Fira Code", Consolas,
+               "Liberation Mono", Menlo, monospace;
+  --font-size-base: 16px;
+  --leading: 1.85;
+
+  /* ------------------------------------------------------------------------
+     【形状与动效】
+     ------------------------------------------------------------------------ */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 18px;
+  --r-xl: 26px;
+  --r-pill: 999px;
+  --ease-out: var(--ease-out-3);
+  --ease-spring: var(--ease-squish-2, cubic-bezier(.5, 1.6, .4, .8));
+  --t-fast: 160ms;
+  --t-mid: 260ms;
+  --t-slow: 420ms;
+
+  /* 内容最大宽度 */
+  --content-w: 780px;
+}
+
+/* ==========================================================================
+   浅色模式 → 映射到 Butterfly 运行时变量
+   ========================================================================== */
+html:root {
+  --global-font-size: var(--font-size-base);
+  --global-bg: var(--n-50);
+  --font-color: var(--n-700);
+  --text-highlight-color: var(--n-900);
+
+  --card-bg: var(--n-0);
+  --card-meta: var(--n-400);
+  --rgb-card-bg: 255, 255, 255;
+
+  --sidebar-bg: var(--n-25);
+  --sidebar-menu-bg: var(--n-0);
+
+  --btn-bg: var(--brand-1);
+  --btn-color: #fff;
+  --btn-hover-color: var(--brand-2);
+  --pseudo-hover: var(--brand-2);
+  --text-bg-hover: var(--brand-a20);
+
+  --light-grey: var(--n-100);
+  --dark-grey: var(--n-400);
+  --white: var(--n-0);
+
+  --blockquote-color: var(--n-600);
+  --blockquote-bg: var(--brand-a12);
+
+  --reward-pop: var(--n-50);
+  --toc-link-color: var(--n-500);
+
+  --card-box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04),
+                     0 10px 26px -10px rgba(15, 23, 42, 0.10);
+  --card-hover-box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05),
+                           0 22px 48px -14px rgba(15, 23, 42, 0.20);
+
+  --headline-presudo: var(--n-300);
+  --scrollbar-color: var(--brand-1);
+  --default-bg-color: var(--brand-1);
+  --hr-border: var(--n-200);
+  --hr-before-color: var(--indigo-3);
+
+  --search-bg: var(--n-50);
+  --search-input-color: var(--n-800);
+  --search-a-color: var(--n-800);
+
+  --tab-border-color: var(--n-200);
+  --tab-button-bg: var(--n-100);
+  --tab-button-color: var(--n-700);
+  --tab-button-hover-bg: var(--n-200);
+  --tab-button-active-bg: var(--n-0);
+
+  --preloader-bg: var(--n-950);
+  --preloader-color: rgba(255, 255, 255, 0.86);
+  --zoom-bg: var(--n-0);
+  --mark-bg: rgba(15, 23, 42, 0.55);
+
+  /* 代码块（浅） */
+  --hl-color: #334155;
+  --hl-bg: #f8fafc;
+  --hltools-bg: #eef2f7;
+  --hltools-color: #64748b;
+  --hlnumber-bg: #f8fafc;
+  --hlnumber-color: rgba(100, 116, 139, 0.55);
+  --hlscrollbar-bg: #dbe2ec;
+  --hlexpand-bg: linear-gradient(180deg, rgba(248, 250, 252, 0.6), rgba(248, 250, 252, 0.95));
+}
+
+/* ==========================================================================
+   深色模式 → 映射到 Butterfly 运行时变量
+   Butterfly 用 [data-theme='dark']，这里加 html 前缀提升权重，
+   保证不论 inject 插在哪，都覆盖得住主题自己的定义
+   ========================================================================== */
+html[data-theme='dark'] {
+  --global-bg: #090d16;
+  --font-color: rgba(203, 213, 225, 0.80);
+  --text-highlight-color: #f1f5f9;
+
+  --card-bg: #0f1523;
+  --card-meta: #7c8aa1;
+  --rgb-card-bg: 15, 21, 35;
+
+  --sidebar-bg: #0c111d;
+  --sidebar-menu-bg: #0f1523;
+
+  --btn-bg: var(--indigo-5);
+  --btn-color: #fff;
+  --btn-hover-color: var(--violet-5);
+  --pseudo-hover: var(--violet-5);
+  --text-bg-hover: rgba(92, 124, 250, 0.28);
+
+  --light-grey: rgba(255, 255, 255, 0.10);
+  --dark-grey: rgba(255, 255, 255, 0.28);
+  --white: rgba(255, 255, 255, 0.92);
+
+  --blockquote-color: rgba(203, 213, 225, 0.72);
+  --blockquote-bg: rgba(124, 146, 255, 0.09);
+
+  --reward-pop: #141b2b;
+  --toc-link-color: rgba(203, 213, 225, 0.60);
+
+  --card-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45),
+                     0 12px 30px -12px rgba(0, 0, 0, 0.65);
+  --card-hover-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5),
+                           0 26px 52px -16px rgba(0, 0, 0, 0.8);
+
+  --headline-presudo: rgba(255, 255, 255, 0.22);
+  --scrollbar-color: var(--indigo-5);
+  --default-bg-color: var(--indigo-5);
+  --hr-border: rgba(255, 255, 255, 0.12);
+  --hr-before-color: rgba(255, 255, 255, 0.28);
+
+  --search-bg: #0c111d;
+  --search-input-color: rgba(226, 232, 240, 0.85);
+  --search-a-color: rgba(226, 232, 240, 0.85);
+
+  --tab-border-color: rgba(255, 255, 255, 0.08);
+  --tab-button-bg: #141b2b;
+  --tab-button-color: rgba(226, 232, 240, 0.72);
+  --tab-button-hover-bg: #1b2436;
+  --tab-button-active-bg: #0f1523;
+
+  --preloader-bg: #090d16;
+  --preloader-color: rgba(255, 255, 255, 0.86);
+  --zoom-bg: #0b1120;
+  --mark-bg: rgba(0, 0, 0, 0.62);
+
+  /* 品牌色在深色底上提亮，保证可读性 */
+  --brand-ink: var(--indigo-3);
+  --brand-a12: rgba(124, 168, 255, 0.12);
+  --brand-a20: rgba(124, 168, 255, 0.22);
+  --brand-ring: rgba(124, 168, 255, 0.36);
+
+  /* 代码块（深） */
+  --hl-color: #c9d4e4;
+  --hl-bg: #0c111d;
+  --hltools-bg: #141b2b;
+  --hltools-color: #8697ae;
+  --hlnumber-bg: #0c111d;
+  --hlnumber-color: rgba(134, 151, 174, 0.55);
+  --hlscrollbar-bg: #1b2436;
+  --hlexpand-bg: linear-gradient(180deg, rgba(12, 17, 29, 0.6), rgba(12, 17, 29, 0.95));
+}

@@ -1,0 +1,531 @@
+/* ==========================================================================
+   02-theme.css — 站点外观层
+   --------------------------------------------------------------------------
+   背景 / 导航栏 / 首页卡片 / 侧边栏 / 分页 / 页脚 / 滚动条 / 选词色 /
+   搜索面板 / 右下角按钮 / 阅读进度条
+
+   只改外观，不删主题原有元素，所以主题升级时冲突面最小。
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. 背景：极光渐变 + 细网格
+   -------------------------------------------------------------------------- */
+body {
+  font-family: var(--font-body);
+  background-color: var(--global-bg);
+  background-image:
+    radial-gradient(60rem 40rem at 12% -8%, var(--brand-a12), transparent 60%),
+    radial-gradient(48rem 34rem at 88% 4%, rgba(132, 94, 247, 0.10), transparent 62%),
+    radial-gradient(52rem 40rem at 50% 108%, rgba(34, 184, 207, 0.09), transparent 60%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(to right, rgba(100, 116, 139, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(100, 116, 139, 0.055) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(70% 55% at 50% 22%, #000 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(70% 55% at 50% 22%, #000 0%, transparent 100%);
+}
+
+html[data-theme='dark'] body::before {
+  background-image:
+    linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+}
+
+/* 内容层要压在网格之上 */
+#body-wrap,
+#nav,
+#page-header,
+#footer,
+#rightside {
+  position: relative;
+  z-index: 1;
+}
+
+/* 半透明遮罩：默认的 --mark-bg 是均匀 30% 黑，亮色头图上白字会读不清，
+   这里换成上/中/下三段式的渐变遮罩（顶部压住导航，中间保持画面，底部托住标题） */
+#page-header:not(.not-top-img)::before {
+  background: linear-gradient(
+    180deg,
+    rgba(6, 10, 20, 0.58) 0%,
+    rgba(6, 10, 20, 0.26) 42%,
+    rgba(6, 10, 20, 0.76) 100%
+  ) !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. 导航栏：顶部透明，滚动后毛玻璃
+   -------------------------------------------------------------------------- */
+#nav {
+  transition: background-color var(--t-mid) var(--ease-out),
+              box-shadow var(--t-mid) var(--ease-out),
+              backdrop-filter var(--t-mid) var(--ease-out);
+  background: transparent;
+}
+
+/* 注意：Butterfly 是给 #page-header 加 .nav-fixed / .nav-visible，
+   不是给 #nav 加，选择器必须写成 #page-header.nav-fixed #nav 才命中 */
+#page-header.nav-fixed #nav,
+#page-header.fixed #nav {
+  background: rgba(255, 255, 255, 0.74) !important;
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  box-shadow: 0 1px 0 var(--n-200), 0 10px 34px -22px rgba(15, 23, 42, 0.45) !important;
+}
+
+html[data-theme='dark'] #page-header.nav-fixed #nav,
+html[data-theme='dark'] #page-header.fixed #nav {
+  background: rgba(9, 13, 22, 0.74) !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08), 0 12px 36px -22px rgba(0, 0, 0, 0.95) !important;
+}
+
+#nav .site-name {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* 导航栏左侧的 logo：源图自带白底，裁成圆角方块 + 投影才像一枚正经 app 图标 */
+#nav #blog-info .site-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 9px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+  background: var(--n-0);
+}
+
+/* 菜单项：把主题自带的 hover 下划线改成渐变胶囊
+   （主题规则在 #nav .site-page:not(.child)::after，这里只覆盖外观，
+     位置/宽度动画仍然交给主题，避免两套定位打架） */
+#nav .site-page:not(.child)::after {
+  background: var(--brand-grad) !important;
+  border-radius: var(--r-pill);
+  height: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   3. 首页 Hero：渐变标题 + 滚动提示
+   -------------------------------------------------------------------------- */
+#site-title,
+#site-subtitle {
+  font-family: var(--font-heading);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+}
+
+#site-title {
+  font-weight: 800;
+  letter-spacing: 0.03em;
+}
+
+#page-header #scroll-down,
+#page-header .scroll-down-effects {
+  opacity: 0.9;
+}
+
+/* 首页顶部大图：底部做一层轻渐隐，和页面背景衔接（太重会像蒙了一层雾） */
+#page-header.full_page::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 96px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--global-bg));
+  opacity: 0.55;
+}
+
+/* --------------------------------------------------------------------------
+   4. 首页文章卡片
+   -------------------------------------------------------------------------- */
+#recent-posts > .recent-post-item {
+  border-radius: var(--r-lg);
+  border: 1px solid var(--n-200);
+  background: var(--card-bg);
+  box-shadow: var(--card-box-shadow);
+  overflow: hidden;
+  transition: transform var(--t-mid) var(--ease-out),
+              box-shadow var(--t-mid) var(--ease-out),
+              border-color var(--t-mid) var(--ease-out);
+}
+
+html[data-theme='dark'] #recent-posts > .recent-post-item {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+#recent-posts > .recent-post-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-hover-box-shadow);
+  border-color: var(--brand-a20);
+}
+
+/* 封面图：hover 轻微放大 */
+#recent-posts > .recent-post-item .post_cover img {
+  transition: transform var(--t-slow) var(--ease-out);
+  will-change: transform;
+}
+
+#recent-posts > .recent-post-item:hover .post_cover img {
+  transform: scale(1.05);
+}
+
+#recent-posts .recent-post-info .article-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  transition: color var(--t-fast) var(--ease-out);
+}
+
+#recent-posts .recent-post-info .article-title:hover {
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 分类 / 标签小胶囊 */
+#recent-posts .article-meta-wrap a,
+#recent-posts .article-meta-wrap .post-meta-date {
+  border-radius: var(--r-pill);
+  transition: color var(--t-fast) var(--ease-out);
+}
+
+#recent-posts .article-meta-wrap a:hover {
+  color: var(--brand-ink);
+}
+
+/* --------------------------------------------------------------------------
+   5. 侧边栏卡片
+   -------------------------------------------------------------------------- */
+#aside-content .card-widget {
+  border-radius: var(--r-lg);
+  border: 1px solid var(--n-200);
+  background: var(--card-bg);
+  box-shadow: var(--card-box-shadow);
+  transition: box-shadow var(--t-mid) var(--ease-out),
+              transform var(--t-mid) var(--ease-out),
+              border-color var(--t-mid) var(--ease-out);
+}
+
+html[data-theme='dark'] #aside-content .card-widget {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+#aside-content .card-widget:hover {
+  box-shadow: var(--card-hover-box-shadow);
+  border-color: var(--brand-a20);
+}
+
+#aside-content .card-info .author-info-name,
+#aside-content .item-headline {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+#aside-content .card-info .author-info-description {
+  line-height: 1.7;
+}
+
+/* 头像：渐变色描边 */
+#aside-content .card-info .avatar-img {
+  border: 2px solid transparent;
+  background: var(--brand-grad) border-box;
+  padding: 2px;
+  box-shadow: 0 8px 24px -10px var(--brand-ring);
+  transition: transform var(--t-mid) var(--ease-spring);
+}
+
+#aside-content .card-info .avatar-img:hover {
+  transform: scale(1.06) rotate(-2deg);
+}
+
+/* 侧边栏按钮 */
+#aside-content .card-info #card-info-btn,
+#aside-content .card-info .button--animated {
+  border-radius: var(--r-pill);
+  overflow: hidden;
+}
+
+/* 分类 / 标签 / 归档条目 */
+#aside-content .card-categories .card-category-list-item,
+#aside-content .card-archives .card-archive-list-item {
+  border-radius: var(--r-sm);
+  transition: background-color var(--t-fast) var(--ease-out),
+              padding-left var(--t-fast) var(--ease-out);
+}
+
+#aside-content .card-categories .card-category-list-item:hover,
+#aside-content .card-archives .card-archive-list-item:hover {
+  background: var(--brand-a12);
+  padding-left: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   6. 分页 / 按钮
+   -------------------------------------------------------------------------- */
+#pagination .page-number,
+#pagination .extend,
+#pagination .prev,
+#pagination .next {
+  border-radius: var(--r-pill) !important;
+  border: 1px solid var(--n-200);
+  transition: all var(--t-fast) var(--ease-out);
+}
+
+#pagination .page-number.current {
+  background: var(--brand-grad) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  box-shadow: 0 8px 20px -8px var(--brand-ring);
+}
+
+#pagination .page-number:hover,
+#pagination .extend:hover {
+  border-color: var(--brand-a20);
+  color: var(--brand-ink);
+}
+
+/* --------------------------------------------------------------------------
+   7. 页脚
+   -------------------------------------------------------------------------- */
+#footer {
+  background: transparent;
+}
+
+#footer::before {
+  background: transparent !important;
+}
+
+#footer-wrap,
+#footer-wrap a {
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   8. 右下角悬浮按钮
+   -------------------------------------------------------------------------- */
+#rightside > div > button,
+#rightside > div > a {
+  border-radius: var(--r-pill);
+  background: var(--card-bg);
+  border: 1px solid var(--n-200);
+  box-shadow: var(--card-box-shadow);
+  transition: transform var(--t-fast) var(--ease-out),
+              background-color var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out);
+}
+
+html[data-theme='dark'] #rightside > div > button,
+html[data-theme='dark'] #rightside > div > a {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+#rightside > div > button:hover,
+#rightside > div > a:hover {
+  transform: translateY(-3px);
+  background: var(--brand-grad);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* --------------------------------------------------------------------------
+   9. 搜索面板
+   -------------------------------------------------------------------------- */
+.search-dialog,
+#local-search .search-dialog {
+  border-radius: var(--r-lg);
+  border: 1px solid var(--n-200);
+  box-shadow: 0 30px 80px -30px rgba(15, 23, 42, 0.45);
+  overflow: hidden;
+}
+
+html[data-theme='dark'] .search-dialog,
+html[data-theme='dark'] #local-search .search-dialog {
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, 0.85);
+}
+
+#local-search .search-dialog .local-search-box input {
+  border-radius: var(--r-pill);
+}
+
+#local-search mark,
+#local-search .search-keyword {
+  background: var(--brand-a20);
+  color: var(--brand-ink);
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+/* --------------------------------------------------------------------------
+   10. 滚动条 / 选词色 / 焦点态
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--brand-1), var(--brand-2));
+  border-radius: var(--r-pill);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--brand-2), var(--brand-3));
+  background-clip: padding-box;
+}
+
+::selection {
+  background: var(--brand-a20);
+  color: var(--text-highlight-color);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brand-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   11. 顶部阅读进度条（由 custom.js 创建）
+   -------------------------------------------------------------------------- */
+#dsh-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 9999;
+  background: var(--brand-grad);
+  box-shadow: 0 0 12px var(--brand-ring);
+  transition: width 90ms linear, opacity var(--t-mid) var(--ease-out);
+  opacity: 0;
+  pointer-events: none;
+}
+
+#dsh-progress.is-active {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   12. 回到顶部之外的“阅读模式”等按钮图标微调
+   -------------------------------------------------------------------------- */
+#rightside-config-hide button i,
+#rightside > div > button i {
+  transition: transform var(--t-fast) var(--ease-spring);
+}
+
+#rightside > div > button:hover i {
+  transform: scale(1.15);
+}
+
+/* --------------------------------------------------------------------------
+   12.5 标签页 / 分类页
+   主题给标签上了 inline style 的彩虹配色（随机色相），和整体配色打架，
+   这里统一成「品牌色边框胶囊」，hover 才填充渐变
+   -------------------------------------------------------------------------- */
+.tag-cloud-list a {
+  color: var(--font-color) !important;
+  border: 1px solid var(--n-200);
+  border-radius: var(--r-pill) !important;
+  padding: 3px 13px !important;
+  margin: 4px 3px !important;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  transition: transform var(--t-fast) var(--ease-out),
+              border-color var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out),
+              background var(--t-fast) var(--ease-out) !important;
+}
+
+html[data-theme='dark'] .tag-cloud-list a {
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+.tag-cloud-list a:hover {
+  background: var(--brand-grad) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px -12px var(--brand-ring) !important;
+}
+
+#page .category-lists .category-list a {
+  position: relative;
+  transition: color var(--t-fast) var(--ease-out),
+              padding-left var(--t-fast) var(--ease-out);
+}
+
+#page .category-lists .category-list a:hover {
+  color: var(--brand-ink);
+  padding-left: 6px;
+}
+
+#page .category-lists .category-list-count {
+  border-radius: var(--r-pill);
+  border: 1px solid var(--n-200);
+  padding: 0 8px;
+  margin-left: 8px;
+  font-size: 0.82em;
+  font-family: var(--font-heading);
+}
+
+html[data-theme='dark'] #page .category-lists .category-list-count {
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+/* 归档页时间线列表 */
+#page .archive-list .archive-list-item a,
+.archive-list-item a {
+  transition: color var(--t-fast) var(--ease-out),
+              padding-left var(--t-fast) var(--ease-out);
+}
+
+.archive-list-item a:hover {
+  color: var(--brand-ink);
+  padding-left: 6px;
+}
+
+/* 归档年份标题（字数变化很大，这里只做颜色统一） */
+#page .archive-list .archive-list-title,
+.archive-list .archive-list-title {
+  color: var(--text-highlight-color);
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   13. 移动端微调
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  body::before {
+    background-size: 40px 40px;
+    opacity: 0.35;
+  }
+
+  #recent-posts > .recent-post-item:hover {
+    transform: none;
+  }
+}

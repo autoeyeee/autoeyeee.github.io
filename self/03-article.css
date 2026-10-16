@@ -1,0 +1,1349 @@
+/* ==========================================================================
+   03-article.css — 正文排版 + 内容组件
+   --------------------------------------------------------------------------
+   A. 正文排版    标题 / 段落 / 引用 / 列表 / 表格 / 代码 / 图片 / 分隔线
+   B. 文章周边    文章信息 / 版权 / 相关文章 / 打赏 / TOC
+   C. 主题标签插件 note / tabs / timeline / label / btn / hide / gallery
+   D. 内容组件    ★ 让文章看起来像幻灯片的那一套：数字卡、卡片网格、步骤、
+                  对比栏、流程链、徽标、提示框、数据条、封面块
+
+   D 部分是纯 HTML + class，写在 Markdown 里就能用，用法见
+   docs/界面美化说明.md
+   ========================================================================== */
+
+/* ==========================================================================
+   A. 正文排版
+   ========================================================================== */
+
+#article-container {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: var(--leading);
+  letter-spacing: 0.012em;
+  color: var(--font-color);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* 注意：这些「基础排版」规则用 :where() 把 #article-container 的 id 权重清零，
+   否则 #article-container p 这种 (1,0,1) 会盖掉后面 .dcard p 这类 (0,1,1) 的组件规则。
+   :where() 本身不贡献权重，所以规则仍然只作用于文章容器内部。 */
+:where(#article-container) p {
+  margin: 0 0 1.1em;
+}
+
+/* ---------- 标题 ---------- */
+#article-container h1,
+#article-container h2,
+#article-container h3,
+#article-container h4,
+#article-container h5,
+#article-container h6 {
+  font-family: var(--font-heading);
+  color: var(--text-highlight-color);
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+/* h2：左侧渐变竖条 + 底部细线，是整篇的“章节标题” */
+#article-container h2 {
+  position: relative;
+  margin: 2.4em 0 1.1em;
+  padding: 0 0 0.5em 18px;
+  font-size: 1.6em;
+  font-weight: 800;
+  border-bottom: 1px solid var(--n-200);
+}
+
+html[data-theme='dark'] #article-container h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.09);
+}
+
+#article-container h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.16em;
+  width: 5px;
+  height: 1em;
+  border-radius: var(--r-pill);
+  background: var(--brand-grad);
+  box-shadow: 0 0 14px var(--brand-ring);
+}
+
+#article-container h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 88px;
+  height: 2px;
+  border-radius: var(--r-pill);
+  background: var(--brand-grad);
+}
+
+/* h3：左侧小方块 */
+#article-container h3 {
+  position: relative;
+  margin: 1.9em 0 0.8em;
+  padding-left: 14px;
+  font-size: 1.26em;
+  font-weight: 700;
+}
+
+#article-container h3::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.42em;
+  width: 6px;
+  height: 6px;
+  border-radius: 2px;
+  background: var(--brand-grad);
+  transform: rotate(45deg);
+}
+
+:where(#article-container) h4 {
+  margin: 1.6em 0 0.6em;
+  font-size: 1.1em;
+  font-weight: 700;
+}
+
+#article-container h4::before {
+  content: "#";
+  margin-right: 6px;
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 800;
+}
+
+/* 首页卡片里标题别继承这套装饰 */
+.index-card .article-title {
+  border-bottom: none;
+}
+
+.index-card .article-title::before,
+.index-card .article-title::after {
+  display: none;
+}
+
+/* ---------- 引用 → 提示块 ---------- */
+#article-container blockquote {
+  position: relative;
+  margin: 1.4em 0;
+  padding: 14px 18px 14px 22px;
+  border: 1px solid var(--n-200);
+  border-left: 4px solid var(--brand-1);
+  border-radius: var(--r-md);
+  background: var(--blockquote-bg);
+  color: var(--blockquote-color);
+}
+
+html[data-theme='dark'] #article-container blockquote {
+  border-color: rgba(255, 255, 255, 0.07);
+  border-left-color: var(--brand-1);
+}
+
+#article-container blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+#article-container blockquote::before {
+  content: none;
+}
+
+/* ---------- 列表 ---------- */
+:where(#article-container) ul,
+:where(#article-container) ol {
+  padding-left: 1.5em;
+  margin: 0 0 1.1em;
+}
+
+#article-container ul > li,
+#article-container ol > li {
+  margin: 0.4em 0;
+}
+
+#article-container ul > li::marker {
+  color: var(--brand-1);
+}
+
+#article-container ol > li::marker {
+  color: var(--brand-1);
+  font-weight: 700;
+}
+
+#article-container ul > li > strong:first-child,
+#article-container li strong {
+  color: var(--text-highlight-color);
+}
+
+/* ---------- 表格 ---------- */
+#article-container table {
+  width: 100%;
+  margin: 1.5em 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--n-200);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  font-size: 0.95em;
+}
+
+html[data-theme='dark'] #article-container table {
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+#article-container thead th,
+#article-container thead td {
+  background: var(--n-100);
+  color: var(--text-highlight-color);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+html[data-theme='dark'] #article-container thead th,
+html[data-theme='dark'] #article-container thead td {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#article-container th,
+#article-container td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--n-200);
+  border-right: 1px solid var(--n-200);
+}
+
+html[data-theme='dark'] #article-container th,
+html[data-theme='dark'] #article-container td {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+#article-container th:last-child,
+#article-container td:last-child {
+  border-right: none;
+}
+
+#article-container tbody tr:last-child th,
+#article-container tbody tr:last-child td {
+  border-bottom: none;
+}
+
+#article-container tbody tr {
+  transition: background-color var(--t-fast) var(--ease-out);
+}
+
+#article-container tbody tr:nth-child(even) {
+  background: var(--n-25);
+}
+
+html[data-theme='dark'] #article-container tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.022);
+}
+
+#article-container tbody tr:hover {
+  background: var(--brand-a12);
+}
+
+/* 宽表横向滚动容器（由 custom.js 包裹） */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 1.5em 0;
+  border-radius: var(--r-md);
+}
+
+.table-wrap > table {
+  margin: 0;
+  min-width: 100%;
+}
+
+/* ---------- 代码 ---------- */
+#article-container code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+#article-container :not(pre) > code,
+#article-container p > code,
+#article-container li > code,
+#article-container td > code {
+  padding: 2px 7px;
+  border-radius: 6px;
+  border: 1px solid var(--n-200);
+  background: var(--n-50);
+  color: var(--brand-ink);
+  letter-spacing: 0;
+}
+
+html[data-theme='dark'] #article-container :not(pre) > code {
+  border-color: rgba(255, 255, 255, 0.09);
+  background: rgba(255, 255, 255, 0.05);
+  color: #a5b4ff;
+}
+
+#article-container figure.highlight,
+#article-container pre {
+  position: relative;
+  margin: 1.5em 0;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  box-shadow: 0 10px 26px -18px rgba(15, 23, 42, 0.45);
+  overflow: hidden;
+}
+
+html[data-theme='dark'] #article-container figure.highlight,
+html[data-theme='dark'] #article-container pre {
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+#article-container figure.highlight .highlight-tools {
+  border-bottom: 1px solid var(--n-200);
+}
+
+html[data-theme='dark'] #article-container figure.highlight .highlight-tools {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ---------- 图片 ---------- */
+#article-container img {
+  border-radius: var(--r-md);
+  box-shadow: 0 14px 34px -20px rgba(15, 23, 42, 0.55);
+  transition: transform var(--t-mid) var(--ease-out),
+              box-shadow var(--t-mid) var(--ease-out);
+}
+
+#article-container img:hover {
+  box-shadow: 0 20px 44px -20px rgba(15, 23, 42, 0.6);
+}
+
+#article-container figure {
+  margin: 1.6em 0;
+}
+
+#article-container figure img {
+  display: block;
+  margin: 0 auto;
+}
+
+#article-container figcaption,
+#article-container .figcaption {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.86em;
+  color: var(--n-500);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- 分隔线 ---------- */
+#article-container hr {
+  position: relative;
+  margin: 2.6em auto;
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--n-300), transparent);
+}
+
+html[data-theme='dark'] #article-container hr {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+}
+
+/* ---------- 正文链接：hover 时渐变下划线展开 ---------- */
+#article-container a:not(.headerlink):not(.fancybox):not(.btn-beautify) {
+  position: relative;
+  color: var(--brand-ink);
+  background-image: linear-gradient(var(--brand-1), var(--brand-2));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1.5px;
+  transition: background-size var(--t-mid) var(--ease-out), color var(--t-fast) var(--ease-out);
+  text-decoration: none;
+}
+
+#article-container a:not(.headerlink):not(.fancybox):hover {
+  background-size: 100% 1.5px;
+}
+
+#article-container .headerlink {
+  color: var(--n-300);
+}
+
+/* ==========================================================================
+   B. 文章周边
+   ========================================================================== */
+
+/* 文章信息（日期 / 分类 / 标签）做成胶囊 */
+#post-info .post-meta__tags,
+#post-info .post-meta__categories {
+  border-radius: var(--r-pill) !important;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(6px);
+  padding: 2px 12px !important;
+  transition: background-color var(--t-fast) var(--ease-out);
+}
+
+#post-info .post-meta__tags:hover,
+#post-info .post-meta__categories:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* 文章标题 */
+#post-info .post-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 26px rgba(0, 0, 0, 0.35);
+}
+
+/* 版权 / 相关文章 / 打赏卡片统一成“卡片” */
+#post-copyright,
+.relatedPosts,
+#reward-author,
+.post-reward,
+#post-comment,
+#random-post {
+  border-radius: var(--r-lg);
+  border: 1px solid var(--n-200);
+  box-shadow: var(--card-box-shadow);
+  overflow: hidden;
+}
+
+html[data-theme='dark'] #post-copyright,
+html[data-theme='dark'] .relatedPosts,
+html[data-theme='dark'] .post-reward {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+.relatedPosts > .relatedPosts-list > div {
+  border-radius: var(--r-md);
+  overflow: hidden;
+  transition: transform var(--t-mid) var(--ease-out);
+}
+
+.relatedPosts > .relatedPosts-list > div:hover {
+  transform: translateY(-4px);
+}
+
+/* TOC 目录 */
+#card-toc {
+  border-radius: var(--r-lg);
+}
+
+#card-toc .toc-link {
+  border-radius: var(--r-sm);
+  transition: color var(--t-fast) var(--ease-out),
+              background-color var(--t-fast) var(--ease-out);
+}
+
+#card-toc .toc-link:hover {
+  background: var(--brand-a12);
+}
+
+#card-toc .toc-link.active {
+  background: var(--brand-grad) !important;
+  color: #fff !important;
+  box-shadow: 0 6px 16px -8px var(--brand-ring);
+}
+
+#card-toc .toc-percentage {
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   C. 主题标签插件的美化
+   ========================================================================== */
+
+/* note 提示块 */
+#article-container .note {
+  border-radius: var(--r-md);
+  border-width: 1px;
+  border-style: solid;
+  box-shadow: none;
+}
+
+#article-container .note.modern {
+  border-radius: var(--r-md);
+}
+
+/* tabs */
+#article-container .tabs {
+  margin: 1.6em 0;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  box-shadow: var(--card-box-shadow);
+  overflow: hidden;
+}
+
+html[data-theme='dark'] #article-container .tabs {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+#article-container .tabs > .nav-tabs {
+  border-bottom: 1px solid var(--n-200);
+  background: var(--n-50);
+}
+
+html[data-theme='dark'] #article-container .tabs > .nav-tabs {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+#article-container .tabs > .nav-tabs > button {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  transition: color var(--t-fast) var(--ease-out),
+              background-color var(--t-fast) var(--ease-out);
+}
+
+#article-container .tabs > .nav-tabs > button.active {
+  color: var(--brand-ink);
+}
+
+#article-container .tabs > .nav-tabs > button.active::after {
+  background: var(--brand-grad) !important;
+  height: 2px;
+  border-radius: var(--r-pill);
+}
+
+/* timeline */
+#article-container .timeline {
+  margin: 1.8em 0;
+  padding-left: 6px;
+}
+
+#article-container .timeline .timeline-item {
+  padding: 0 0 1.4em 4px;
+}
+
+#article-container .timeline .timeline-item-title .item-circle {
+  border-radius: var(--r-pill);
+  border: 1px solid var(--brand-a20);
+  background: var(--card-bg);
+  padding: 4px 12px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.88em;
+  color: var(--brand-ink);
+  box-shadow: 0 6px 18px -12px var(--brand-ring);
+}
+
+#article-container .timeline .timeline-item-title .item-circle p {
+  margin: 0;
+}
+
+#article-container .timeline .timeline-item-content {
+  margin: 10px 0 0;
+  padding: 14px 18px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  background: var(--card-bg);
+  box-shadow: var(--card-box-shadow);
+}
+
+html[data-theme='dark'] #article-container .timeline .timeline-item-content {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+#article-container .timeline .timeline-item-content p:last-child {
+  margin-bottom: 0;
+}
+
+#article-container .timeline::before {
+  background: var(--n-200) !important;
+}
+
+html[data-theme='dark'] #article-container .timeline::before {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* label 行内标签 */
+#article-container .label,
+.label {
+  border-radius: var(--r-pill) !important;
+  padding: 2px 10px !important;
+  font-size: 0.86em;
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+/* btn 按钮 */
+#article-container .btn-beautify,
+.btn-beautify {
+  border-radius: var(--r-pill) !important;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  transition: transform var(--t-fast) var(--ease-out),
+              box-shadow var(--t-fast) var(--ease-out),
+              background-color var(--t-fast) var(--ease-out);
+}
+
+#article-container .btn-beautify:hover,
+.btn-beautify:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -14px var(--brand-ring);
+}
+
+/* hideToggle 折叠块 */
+#article-container .hide-button {
+  border-radius: var(--r-pill);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  transition: transform var(--t-fast) var(--ease-out);
+}
+
+#article-container .hide-button:hover {
+  transform: translateY(-2px);
+}
+
+#article-container .hide-content {
+  border-radius: var(--r-md);
+  border: 1px dashed var(--n-300);
+  padding: 14px 18px;
+}
+
+/* gallery 相册 */
+#article-container .gallery-container,
+#article-container .gallery-group {
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+#article-container .gallery-container .gallery-item img,
+#article-container .gallery-group .gallery-group-img {
+  transition: transform var(--t-slow) var(--ease-out);
+}
+
+#article-container .gallery-container .gallery-item:hover img,
+#article-container .gallery-group:hover .gallery-group-img {
+  transform: scale(1.06);
+}
+
+/* ==========================================================================
+   D. 内容组件（写 Markdown 时直接用的 HTML + class）
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   D1. 数字卡 —— 把关键指标做成“PPT 上的大数字”
+   <div class="kpi-grid">
+     <div class="kpi"><b>14%</b><span>云台减重</span></div>
+   </div>
+   -------------------------------------------------------------------------- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin: 1.6em 0;
+}
+
+.kpi {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 16px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  background: var(--card-bg);
+  box-shadow: var(--card-box-shadow);
+  overflow: hidden;
+  transition: transform var(--t-mid) var(--ease-out),
+              box-shadow var(--t-mid) var(--ease-out),
+              border-color var(--t-mid) var(--ease-out);
+}
+
+.kpi::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--brand-grad);
+  opacity: 0;
+  transition: opacity var(--t-mid) var(--ease-out);
+}
+
+.kpi:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-hover-box-shadow);
+  border-color: var(--brand-a20);
+}
+
+.kpi:hover::before {
+  opacity: 1;
+}
+
+.kpi b {
+  font-family: var(--font-heading);
+  font-size: 1.9em;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.kpi span {
+  font-size: 0.88em;
+  color: var(--n-500);
+  letter-spacing: 0.02em;
+}
+
+html[data-theme='dark'] .kpi {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+/* --------------------------------------------------------------------------
+   D2. 卡片网格 —— 并列的要点 / 特性
+   <div class="card-grid">
+     <div class="dcard"><h4>标题</h4><p>说明</p></div>
+   </div>
+   加 class="card-grid cols-2" 可以固定两列
+   -------------------------------------------------------------------------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  margin: 1.6em 0;
+}
+
+/* cols-2 表示「固定两列」，窄屏再退回单列 */
+.card-grid.cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dcard {
+  position: relative;
+  padding: 18px 18px 16px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  background: var(--card-bg);
+  box-shadow: var(--card-box-shadow);
+  transition: transform var(--t-mid) var(--ease-out),
+              box-shadow var(--t-mid) var(--ease-out),
+              border-color var(--t-mid) var(--ease-out);
+}
+
+.dcard:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--card-hover-box-shadow);
+  border-color: var(--brand-a20);
+}
+
+.dcard .dcard-title,
+.dcard h4 {
+  margin: 0 0 8px;
+  font-size: 1.02em;
+  font-weight: 700;
+  color: var(--text-highlight-color);
+}
+
+.dcard h4::before,
+.dcard .dcard-title::before {
+  content: none;
+}
+
+.dcard p {
+  margin: 0;
+  font-size: 0.93em;
+  color: var(--font-color);
+  opacity: 0.9;
+}
+
+.dcard p:not(:last-child) {
+  margin-bottom: 0.6em;
+}
+
+.dcard .dcard-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  background: var(--brand-a12);
+  color: var(--brand-ink);
+  font-size: 0.95em;
+}
+
+html[data-theme='dark'] .dcard {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+/* --------------------------------------------------------------------------
+   D3. 步骤 —— 带自动序号的流程，替代“第一步/第二步”
+   <div class="steps">
+     <div class="step"><h4>方案选型</h4><p>…</p></div>
+   </div>
+   -------------------------------------------------------------------------- */
+.steps {
+  counter-reset: dsh-step;
+  display: grid;
+  gap: 12px;
+  margin: 1.6em 0;
+}
+
+.step {
+  position: relative;
+  counter-increment: dsh-step;
+  padding: 16px 18px 16px 60px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  background: var(--card-bg);
+  box-shadow: var(--card-box-shadow);
+  transition: transform var(--t-mid) var(--ease-out),
+              border-color var(--t-mid) var(--ease-out);
+}
+
+.step:hover {
+  transform: translateX(4px);
+  border-color: var(--brand-a20);
+}
+
+.step::before {
+  content: counter(dsh-step, decimal-leading-zero);
+  position: absolute;
+  left: 16px;
+  top: 15px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--brand-grad);
+  color: #fff;
+  font-family: var(--font-heading);
+  font-size: 0.78em;
+  font-weight: 700;
+  box-shadow: 0 8px 18px -10px var(--brand-ring);
+}
+
+.step .step-title,
+.step h4 {
+  margin: 0 0 6px;
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--text-highlight-color);
+}
+
+.step h4::before,
+.step .step-title::before {
+  content: none;
+}
+
+.step p {
+  margin: 0;
+  font-size: 0.93em;
+}
+
+html[data-theme='dark'] .step {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+/* --------------------------------------------------------------------------
+   D4. 横向对比 —— 两栏方案对比
+   <div class="compare">
+     <div class="compare-col"><h4>方案 A</h4><ul>…</ul></div>
+     <div class="compare-col"><h4>方案 B</h4><ul>…</ul></div>
+   </div>
+   -------------------------------------------------------------------------- */
+.compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 1.6em 0;
+}
+
+.compare-col {
+  padding: 18px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  background: var(--card-bg);
+  box-shadow: var(--card-box-shadow);
+}
+
+.compare-col.good {
+  border-color: var(--brand-a20);
+  background: linear-gradient(180deg, var(--brand-a12), transparent 70%), var(--card-bg);
+}
+
+.compare-col .compare-title,
+.compare-col h4 {
+  margin: 0 0 10px;
+  font-family: var(--font-heading);
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--text-highlight-color);
+}
+
+.compare-col h4::before,
+.compare-col .compare-title::before {
+  content: none;
+}
+
+.compare-col ul {
+  margin: 0;
+  padding-left: 1.2em;
+}
+
+.compare-col li {
+  font-size: 0.93em;
+}
+
+html[data-theme='dark'] .compare-col {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+/* --------------------------------------------------------------------------
+   D5. 流程链 —— 横向的“输入 → 处理 → 输出”
+   <div class="flow">
+     <div class="flow-node">需求</div>
+     <div class="flow-arrow"></div>
+     <div class="flow-node">建模</div>
+   </div>
+   -------------------------------------------------------------------------- */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 1.6em 0;
+  padding: 18px 14px;
+  border-radius: var(--r-md);
+  border: 1px dashed var(--n-300);
+  background: var(--card-bg);
+}
+
+html[data-theme='dark'] .flow {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.flow-node {
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  background: var(--brand-a12);
+  border: 1px solid var(--brand-a20);
+  color: var(--brand-ink);
+  font-family: var(--font-heading);
+  font-size: 0.9em;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.flow-arrow {
+  position: relative;
+  width: 26px;
+  height: 2px;
+  background: var(--n-300);
+  border-radius: 2px;
+}
+
+.flow-arrow::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--n-300);
+  border-top: 2px solid var(--n-300);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* --------------------------------------------------------------------------
+   D6. 徽标行
+   <div class="badge-row"><span class="badge">AutoCAD</span></div>
+   -------------------------------------------------------------------------- */
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 1.2em 0;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 13px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--n-200);
+  background: var(--card-bg);
+  color: var(--font-color);
+  font-family: var(--font-heading);
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: transform var(--t-fast) var(--ease-out),
+              border-color var(--t-fast) var(--ease-out),
+              color var(--t-fast) var(--ease-out);
+}
+
+.badge:hover {
+  transform: translateY(-2px);
+  border-color: var(--brand-a20);
+  color: var(--brand-ink);
+}
+
+.badge.solid {
+  background: var(--brand-grad);
+  border-color: transparent;
+  color: #fff;
+}
+
+html[data-theme='dark'] .badge {
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+/* --------------------------------------------------------------------------
+   D7. 强调提示框（比 blockquote 更醒目）
+   <div class="callout info"><p>…</p></div>
+   class 可选 info / ok / warn / danger / idea
+   -------------------------------------------------------------------------- */
+.callout {
+  --co: var(--brand-1);
+  --co-bg: var(--brand-a12);
+  position: relative;
+  margin: 1.6em 0;
+  padding: 15px 18px 15px 20px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  border-left: 4px solid var(--co);
+  background: linear-gradient(90deg, var(--co-bg), transparent 60%), var(--card-bg);
+}
+
+.callout p:last-child {
+  margin-bottom: 0;
+}
+
+.callout.info {
+  --co: var(--blue-7);
+  --co-bg: rgba(34, 139, 230, 0.10);
+}
+
+.callout.ok {
+  --co: var(--teal-7);
+  --co-bg: rgba(32, 201, 151, 0.10);
+}
+
+.callout.warn {
+  --co: var(--yellow-8);
+  --co-bg: rgba(250, 176, 5, 0.12);
+}
+
+.callout.danger {
+  --co: var(--red-7);
+  --co-bg: rgba(240, 62, 62, 0.10);
+}
+
+.callout.idea {
+  --co: var(--violet-6);
+  --co-bg: rgba(132, 94, 247, 0.12);
+}
+
+html[data-theme='dark'] .callout {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+/* --------------------------------------------------------------------------
+   D8. 数据条 —— 用纯 HTML 画横向进度/占比
+   <div class="bars">
+     <div class="bar" style="--v:72%"><span>镂空率</span><i></i><b>72%</b></div>
+   </div>
+   -------------------------------------------------------------------------- */
+.bars {
+  display: grid;
+  gap: 12px;
+  margin: 1.6em 0;
+}
+
+.bar {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 6px;
+  font-size: 0.9em;
+}
+
+.bar span {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--text-highlight-color);
+}
+
+.bar i {
+  display: block;
+  position: relative;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--n-100);
+  overflow: hidden;
+}
+
+html[data-theme='dark'] .bar i {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.bar i::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--v, 50%);
+  border-radius: var(--r-pill);
+  background: var(--brand-grad);
+  transform-origin: left center;
+  animation: dsh-bar-grow 900ms var(--ease-out) both;
+}
+
+.bar b {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: var(--n-500);
+  font-weight: 600;
+}
+
+.bar {
+  position: relative;
+}
+
+@keyframes dsh-bar-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   D9. 封面块 —— 文章开头做成一张“标题页”
+   <div class="slide-cover">
+     <p class="slide-eyebrow">项目复盘</p>
+     <h3>全向轮步兵机器人</h3>
+     <p class="slide-sub">2024.10 - 2025.07 · 25 赛季</p>
+   </div>
+   -------------------------------------------------------------------------- */
+.slide-cover {
+  position: relative;
+  margin: 1.8em 0;
+  padding: 34px 28px;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--brand-a20);
+  background:
+    radial-gradient(120% 140% at 0% 0%, var(--brand-a12), transparent 55%),
+    radial-gradient(120% 140% at 100% 100%, rgba(132, 94, 247, 0.12), transparent 55%),
+    var(--card-bg);
+  box-shadow: var(--card-box-shadow);
+  overflow: hidden;
+}
+
+.slide-cover::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--brand-grad);
+  opacity: 0.14;
+  filter: blur(6px);
+}
+
+.slide-cover .slide-eyebrow {
+  margin: 0 0 8px;
+  font-family: var(--font-heading);
+  font-size: 0.8em;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.slide-cover .slide-cover-title,
+.slide-cover h3 {
+  margin: 0 0 8px;
+  padding: 0;
+  font-family: var(--font-heading);
+  font-size: 1.75em;
+  font-weight: 800;
+  color: var(--text-highlight-color);
+}
+
+.slide-cover h3::before,
+.slide-cover .slide-cover-title::before {
+  content: none;
+}
+
+.slide-cover .slide-sub {
+  margin: 0;
+  font-size: 0.92em;
+  color: var(--n-500);
+  letter-spacing: 0.02em;
+}
+
+/* --------------------------------------------------------------------------
+   D10. 大引言 —— 一句话重点
+   -------------------------------------------------------------------------- */
+.pull-quote {
+  margin: 1.8em 0;
+  padding: 4px 0 4px 20px;
+  border-left: 3px solid transparent;
+  border-image: var(--brand-grad) 1;
+  font-family: var(--font-heading);
+  font-size: 1.2em;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--text-highlight-color);
+}
+
+.pull-quote p {
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   D11. 小节标记 —— 长文里做“分节页”
+   <div class="slide-section"><span>01</span><h3>教育背景</h3></div>
+   -------------------------------------------------------------------------- */
+.slide-section {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 2.4em 0 1em;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--n-200);
+}
+
+html[data-theme='dark'] .slide-section {
+  border-bottom-color: rgba(255, 255, 255, 0.09);
+}
+
+.slide-section span {
+  font-family: var(--font-heading);
+  font-size: 1.6em;
+  font-weight: 800;
+  line-height: 1;
+  background: var(--brand-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  opacity: 0.65;
+}
+
+.slide-section .slide-section-title,
+.slide-section h3 {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-heading);
+  font-size: 1.3em;
+  font-weight: 800;
+  color: var(--text-highlight-color);
+}
+
+.slide-section h3::before,
+.slide-section .slide-section-title::before {
+  content: none;
+}
+
+/* --------------------------------------------------------------------------
+   D12. 图片卡 —— 图 + 说明，比裸图更整齐
+   <div class="figure-card">
+     <img src="/img/x.jpg" alt="">
+     <p>云台爆炸图</p>
+   </div>
+   -------------------------------------------------------------------------- */
+.figure-card {
+  margin: 1.6em 0;
+  border-radius: var(--r-md);
+  border: 1px solid var(--n-200);
+  background: var(--card-bg);
+  overflow: hidden;
+  box-shadow: var(--card-box-shadow);
+}
+
+.figure-card img {
+  display: block;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.figure-card p {
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 0.86em;
+  color: var(--n-500);
+  text-align: center;
+  border-top: 1px solid var(--n-200);
+}
+
+html[data-theme='dark'] .figure-card {
+  border-color: rgba(255, 255, 255, 0.07);
+}
+
+html[data-theme='dark'] .figure-card p {
+  border-top-color: rgba(255, 255, 255, 0.07);
+}
+
+/* --------------------------------------------------------------------------
+   D13. 两栏图文（长文里左右交替的版式）
+   -------------------------------------------------------------------------- */
+.media {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+  align-items: center;
+  margin: 1.6em 0;
+}
+
+.media .media-body > :last-child {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   D14. 移动端：所有网格退回单列，避免挤压
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  #article-container {
+    font-size: 15.5px;
+    letter-spacing: 0.008em;
+  }
+
+  #article-container h2 {
+    font-size: 1.38em;
+  }
+
+  .kpi b {
+    font-size: 1.6em;
+  }
+
+  .slide-cover {
+    padding: 24px 20px;
+  }
+
+  .slide-cover h3 {
+    font-size: 1.4em;
+  }
+
+  .card-grid,
+  .kpi-grid,
+  .compare,
+  .media {
+    grid-template-columns: 1fr;
+  }
+}

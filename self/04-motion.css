@@ -1,0 +1,127 @@
+/* ==========================================================================
+   04-motion.css — 动效层
+   --------------------------------------------------------------------------
+   设计原则：
+     · 只做「入场」和「悬停」两类动效，不做常驻动画（省电、不晕）
+     · 所有入场动效默认关闭，由 custom.js 给 <html> 加 .js 后才生效
+       → JS 挂了 / 被禁用，内容照样完整可见（不会被藏起来）
+     · 全文遵守 prefers-reduced-motion
+
+   custom.js 会给需要入场的元素自动加上 data-reveal="up|left|right|zoom"，
+   也可以用 style="--d:120ms" 单独控制延迟。
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. 入场动效
+   --------------------------------------------------------------------------
+   注意选择器里的 :not([data-reveal='none'])：
+   [data-reveal] 只判断「属性存在」，如果不过滤掉 none，
+   那些显式声明「不要动效」的元素反而会被 opacity:0 永久藏起来。
+   -------------------------------------------------------------------------- */
+html.js [data-reveal]:not([data-reveal='none']) {
+  opacity: 0;
+  transition:
+    opacity var(--t-slow) var(--ease-out),
+    transform var(--t-slow) var(--ease-out);
+  transition-delay: var(--d, 0ms);
+  will-change: opacity, transform;
+}
+
+html.js [data-reveal='up'] {
+  transform: translateY(22px);
+}
+
+html.js [data-reveal='left'] {
+  transform: translateX(-22px);
+}
+
+html.js [data-reveal='right'] {
+  transform: translateX(22px);
+}
+
+html.js [data-reveal='zoom'] {
+  transform: scale(0.965);
+}
+
+html.js [data-reveal]:not([data-reveal='none']).is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* 入场完成后把 will-change 摘掉，避免长期占用合成层 */
+html.js [data-reveal].is-done {
+  will-change: auto;
+}
+
+/* --------------------------------------------------------------------------
+   2. 首页首屏：标题整体上浮
+   -------------------------------------------------------------------------- */
+@keyframes dsh-hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+html.js #page-header.full_page #site-info,
+html.js #page-header.full_page #scroll-down {
+  animation: dsh-hero-in 900ms var(--ease-out) both;
+}
+
+html.js #page-header.full_page #scroll-down {
+  animation-delay: 240ms;
+}
+
+/* --------------------------------------------------------------------------
+   3. 头像 / 封面 / 卡片：轻微呼吸，不抢注意力
+   -------------------------------------------------------------------------- */
+@keyframes dsh-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+#page-header.full_page #scroll-down .scroll-down-effects {
+  animation: dsh-float 2.4s var(--ease-in-out-3, ease-in-out) infinite;
+}
+
+/* --------------------------------------------------------------------------
+   4. 加载完成后的图片淡入（custom.js 打上 .is-loaded）
+   -------------------------------------------------------------------------- */
+img[data-dsh-fade] {
+  opacity: 0;
+  transition: opacity var(--t-slow) var(--ease-out);
+}
+
+img[data-dsh-fade].is-loaded {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   5. 无障碍：尊重系统的「减少动态效果」
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  html.js #page-header.full_page #site-info,
+  html.js #page-header.full_page #scroll-down,
+  #page-header.full_page #scroll-down .scroll-down-effects,
+  .bar i::after {
+    animation: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
