@@ -1,0 +1,650 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>awesome-design-md 使用指南：84 份设计文档怎么读、怎么用 | Blog</title><meta name="author" content="Lin"><meta name="copyright" content="Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f6f8fb"><meta name="description" content="这个仓库收的不是 UI，而是 84 份对真实站点设计语言的拆解。这篇讲清楚它有什么、84 套怎么分类、十分钟怎么读完一份、怎么预览，以及三种实际用法和几个别踩的坑。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="awesome-design-md 使用指南：84 份设计文档怎么读、怎么用">
+<meta property="og:url" content="https://autoeyeee.github.io/awesome-design-md-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="这个仓库收的不是 UI，而是 84 份对真实站点设计语言的拆解。这篇讲清楚它有什么、84 套怎么分类、十分钟怎么读完一份、怎么预览，以及三种实际用法和几个别踩的坑。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://autoeyeee.github.io/img/design-md-cover.jpg">
+<meta property="article:published_time" content="2026-10-25T04:40:00.000Z">
+<meta property="article:modified_time" content="2026-10-25T04:40:00.000Z">
+<meta property="article:author" content="Lin">
+<meta property="article:tag" content="设计系统">
+<meta property="article:tag" content="开源">
+<meta property="article:tag" content="设计文档">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://autoeyeee.github.io/img/design-md-cover.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "awesome-design-md 使用指南：84 份设计文档怎么读、怎么用",
+  "url": "https://autoeyeee.github.io/awesome-design-md-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/",
+  "image": "https://autoeyeee.github.io/img/design-md-cover.jpg",
+  "datePublished": "2026-10-25T04:40:00.000Z",
+  "dateModified": "2026-10-25T04:40:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Lin",
+      "url": "https://autoeyeee.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/x2.jpg"><link rel="canonical" href="https://autoeyeee.github.io/awesome-design-md-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/self/vendor/fontawesome/css/all.min.css"><link rel="stylesheet" href="/self/vendor/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#090d16')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f6f8fb')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'awesome-design-md 使用指南：84 份设计文档怎么读、怎么用',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><script>document.documentElement.classList.add("js");</script><link rel="stylesheet" href="/self/vendor/open-props/colors.min.css"><link rel="stylesheet" href="/self/vendor/open-props/sizes.min.css"><link rel="stylesheet" href="/self/vendor/open-props/borders.min.css"><link rel="stylesheet" href="/self/vendor/open-props/shadows.min.css"><link rel="stylesheet" href="/self/vendor/open-props/easings.min.css"><link rel="stylesheet" href="/self/vendor/open-props/gradients.min.css"><link rel="stylesheet" href="/self/vendor/open-props/animations.min.css"><link rel="stylesheet" href="/self/vendor/lxgw-wenkai/lxgw-wenkai-screen-gb.css"><link rel="stylesheet" href="/self/01-tokens.css"><link rel="stylesheet" href="/self/02-theme.css"><link rel="stylesheet" href="/self/03-article.css"><link rel="stylesheet" href="/self/04-motion.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/ban.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/design-md-top.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/x2.jpg" alt="Logo"><span class="site-name">Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">awesome-design-md 使用指南：84 份设计文档怎么读、怎么用</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">awesome-design-md 使用指南：84 份设计文档怎么读、怎么用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-25T04:40:00.000Z" title="发表于 2026-10-25 12:40:00">2026-10-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-25T04:40:00.000Z" title="更新于 2026-10-25 12:40:00">2026-10-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/">教程</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/%E8%AE%BE%E8%AE%A1/">设计</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div class="slide-cover">
+  <p class="slide-eyebrow">开源 · 设计文档 · 使用指南</p>
+  <p class="slide-cover-title">84 份 DESIGN.md</p>
+  <p class="slide-sub">怎么读、怎么用，以及别指望它替你画界面</p>
+</div>
+
+<blockquote>
+<p>第一次打开 <a target="_blank" rel="noopener" href="https://github.com/VoltAgent/awesome-design-md">awesome-design-md</a> 容易失望：说好的 84 套设计，怎么全是 Markdown？但把它当成「设计规格书」而不是「UI 素材库」，它立刻就好用了。</p>
+</blockquote>
+<h2 id="这个库到底是什么"><a href="#这个库到底是什么" class="headerlink" title="这个库到底是什么"></a>这个库到底是什么</h2><p>一句话：<strong>它把 84 个真实网站的设计语言，拆成了可读、可抄、可执行的文字规格。</strong></p>
+<div class="kpi-grid">
+  <div class="kpi"><b>84</b><span>份 DESIGN.md</span></div>
+  <div class="kpi"><b>74</b><span>份带 YAML token</span></div>
+  <div class="kpi"><b>10</b><span>份只有正文</span></div>
+  <div class="kpi"><b>4.3–44</b><span>KB / 份</span></div>
+</div>
+
+<p>仓库结构很朴素：<code>design-md/&lt;站点&gt;/DESIGN.md</code>，同目录的 <code>README.md</code> 只有两百来字节，是个索引占位。没有图片、没有 HTML、没有 Figma 文件，也没有演示页。</p>
+<p>它最像的东西，是一份「视觉验收标准」：设计师看完能复述品牌的样子，工程师看完能写出 token，AI 看完能生成八九不离十的页面。</p>
+<h2 id="84-套怎么分类"><a href="#84-套怎么分类" class="headerlink" title="84 套怎么分类"></a>84 套怎么分类</h2><p>仓库按行业把 84 份分成了 10 类，数量差得挺大：消费科技最多（16），复古网页只有 2 份。这个分布本身就有用——想找和自己场景相近的参照，先锁定这一类。</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>数量</th>
+<th>代表</th>
+<th>适合看什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Media &amp; Consumer Tech</td>
+<td>16</td>
+<td>Apple、Spotify、WIRED、The Verge、NVIDIA</td>
+<td>大图、强品牌、编辑式排版</td>
+</tr>
+<tr>
+<td>AI &amp; LLM Platforms</td>
+<td>13</td>
+<td>Claude、Cohere、Mistral、Ollama、xAI</td>
+<td>暗色科技感、terminal 风、渐变</td>
+</tr>
+<tr>
+<td>Backend &#x2F; Database &#x2F; DevOps</td>
+<td>9</td>
+<td>Supabase、Sentry、PostHog、MongoDB</td>
+<td>文档型站点、开发者密度</td>
+</tr>
+<tr>
+<td>Fintech &amp; Crypto</td>
+<td>9</td>
+<td>Stripe、Coinbase、Wise、Mastercard</td>
+<td>信任感、数据密集、克制的配色</td>
+</tr>
+<tr>
+<td>Productivity &amp; SaaS</td>
+<td>8</td>
+<td>Linear、Notion、Resend、Cal.com</td>
+<td>极简、留白、组件细节最全</td>
+</tr>
+<tr>
+<td>Developer Tools &amp; IDEs</td>
+<td>7</td>
+<td>Vercel、Raycast、Cursor、Warp</td>
+<td>单色、等宽、键盘优先</td>
+</tr>
+<tr>
+<td>Automotive</td>
+<td>7</td>
+<td>Ferrari、BMW、Tesla、Lamborghini</td>
+<td>大幅影像、极简字、强对比</td>
+</tr>
+<tr>
+<td>Design &amp; Creative Tools</td>
+<td>6</td>
+<td>Figma、Framer、Webflow、Miro</td>
+<td>图形语言与动效</td>
+</tr>
+<tr>
+<td>E-commerce &amp; Retail</td>
+<td>6</td>
+<td>Airbnb、Nike、Shopify、Starbucks</td>
+<td>商品卡、暖色、圆角</td>
+</tr>
+<tr>
+<td>Retro Web</td>
+<td>2</td>
+<td>Dell (1996)、Nintendo (2001)</td>
+<td>复古 UI、拟物细节</td>
+</tr>
+<tr>
+<td>未归类</td>
+<td>1</td>
+<td>Slacc</td>
+<td>读一下就好</td>
+</tr>
+</tbody></table>
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-circle-info"></i><p>分类来自仓库 README；实际目录里还有 1 套（Slacc）没写进分类表，所以加起来是 84。分类只影响「从哪儿开始翻」，不影响文档本身的质量。</p>
+</div>
+
+<h2 id="一份文件里有什么"><a href="#一份文件里有什么" class="headerlink" title="一份文件里有什么"></a>一份文件里有什么</h2><p>开头是一段 YAML，这是整份文档里最像「代码」的部分，也是最能直接用的一段：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 摘自 Linear</span></span><br><span class="line"><span class="attr">colors:</span></span><br><span class="line">  <span class="attr">canvas:</span> <span class="string">&quot;#010102&quot;</span></span><br><span class="line">  <span class="attr">surface-1:</span> <span class="string">&quot;#0f1011&quot;</span></span><br><span class="line">  <span class="attr">ink:</span> <span class="string">&quot;#f7f8f8&quot;</span></span><br><span class="line">  <span class="attr">hairline:</span> <span class="string">&quot;#23252a&quot;</span></span><br><span class="line">  <span class="attr">primary:</span> <span class="string">&quot;#5e6ad2&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">rounded:</span></span><br><span class="line">  <span class="attr">md:</span> <span class="string">8px</span></span><br><span class="line">  <span class="attr">lg:</span> <span class="string">12px</span></span><br><span class="line"></span><br><span class="line"><span class="attr">components:</span></span><br><span class="line">  <span class="attr">button-primary:</span></span><br><span class="line">    <span class="attr">backgroundColor:</span> <span class="string">&quot;&#123;colors.primary&#125;&quot;</span></span><br><span class="line">    <span class="attr">textColor:</span> <span class="string">&quot;&#123;colors.on-primary&#125;&quot;</span></span><br><span class="line">    <span class="attr">rounded:</span> <span class="string">&quot;&#123;rounded.md&#125;&quot;</span></span><br><span class="line">    <span class="attr">padding:</span> <span class="string">8px</span> <span class="string">14px</span></span><br></pre></td></tr></table></figure>
+
+<p>YAML 后面是若干段说明。README 里的规范是 9 段，实际文件常见的是这样：</p>
+<table>
+<thead>
+<tr>
+<th>段落</th>
+<th>里面写什么</th>
+<th>值不值得读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Overview</td>
+<td>氛围、气质、几个 Key Characteristics</td>
+<td>先扫一眼</td>
+</tr>
+<tr>
+<td>Colors</td>
+<td>颜色 + 语义角色（canvas &#x2F; surface &#x2F; ink &#x2F; hairline &#x2F; accent）</td>
+<td>必读</td>
+</tr>
+<tr>
+<td>Typography</td>
+<td>字族 + 完整层级表（字号 &#x2F; 字重 &#x2F; 行高 &#x2F; 字距）</td>
+<td>必读</td>
+</tr>
+<tr>
+<td>Layout</td>
+<td>间距刻度、栅格、容器宽度、留白理念</td>
+<td>选读</td>
+</tr>
+<tr>
+<td>Elevation &amp; Depth</td>
+<td>阴影与 surface 阶梯</td>
+<td>选读</td>
+</tr>
+<tr>
+<td>Shapes</td>
+<td>圆角刻度、图片比例</td>
+<td>必读，圆角就是品牌语言</td>
+</tr>
+<tr>
+<td>Components</td>
+<td>按钮 &#x2F; 卡片 &#x2F; 输入框 &#x2F; 导航 &#x2F; 页脚，含三态和具体数值</td>
+<td><strong>最有用</strong></td>
+</tr>
+<tr>
+<td>Do’s and Don’ts</td>
+<td>品牌红线</td>
+<td>必读，防止「像但不对」</td>
+</tr>
+<tr>
+<td>Responsive &#x2F; Iteration &#x2F; Known Gaps</td>
+<td>断点、迭代建议、已知缺失</td>
+<td>选读</td>
+</tr>
+</tbody></table>
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-circle-info"></i><p>仓库里其实有<strong>两种格式</strong>：74 份是上面这种「YAML + 英文段落」，另外 10 份（Spotify、Tesla、The Verge、Sanity、Starbucks 等）没有 YAML，是 <code>## 1. Visual Theme &amp; Atmosphere</code> 到 <code>## 9. Agent Prompt Guide</code> 的编号正文。后者要靠关键词从正文里找色值，好在它们通常把 hex 写得很规整。</p>
+</div>
+
+<h2 id="三个例子，差异在哪"><a href="#三个例子，差异在哪" class="headerlink" title="三个例子，差异在哪"></a>三个例子，差异在哪</h2><div class="card-grid">
+  <div class="dcard">
+    <div class="dcard-icon"><i class="fas fa-layer-group"></i></div>
+    <p class="dcard-title">Linear</p>
+    <p>画布 <code>#010102</code>，强调色 <code>#5e6ad2</code>，12px 圆角 + 1px 细线，拒绝投影，层次全靠 surface 阶梯。</p>
+  </div>
+  <div class="dcard">
+    <div class="dcard-icon"><i class="fas fa-newspaper"></i></div>
+    <p class="dcard-title">WIRED</p>
+    <p>纯黑白、圆角 <code>0</code>、1px 分隔线，三套衬线分工（显示 / 正文 / 元信息），报头做到 64px。</p>
+  </div>
+  <div class="dcard">
+    <div class="dcard-icon"><i class="fas fa-mug-hot"></i></div>
+    <p class="dcard-title">Claude</p>
+    <p>纸面 <code>#faf9f5</code>，陶土色 <code>#cc785c</code>，暖灰分隔线 <code>#e6dfd8</code>，衬线标题配人文感正文。</p>
+  </div>
+</div>
+
+<p>三份文档的 Overview 都是形容词：深邃、克制、温暖。真正能执行的，是上面那些数字和规则。<strong>读 DESIGN.md 时，跳过形容词，直接找数字。</strong></p>
+<h2 id="怎么读：十分钟读完一份"><a href="#怎么读：十分钟读完一份" class="headerlink" title="怎么读：十分钟读完一份"></a>怎么读：十分钟读完一份</h2><div class="steps">
+  <div class="step"><p class="step-title">先看 colors 和 rounded</p><p>30 秒建立印象：底色、强调色、中性阶、圆角是 0 还是 12。这四样决定「第一眼像不像」。</p></div>
+  <div class="step"><p class="step-title">跳到 Components，只看三个</p><p>按钮、卡片、输入框。抄它们的 padding、圆角、边框和 hover 状态，够用了。</p></div>
+  <div class="step"><p class="step-title">扫 Do's and Don'ts</p><p>这里写着「千万别做什么」，比正面描述更省事，也是防止风格跑偏的关键。</p></div>
+  <div class="step"><p class="step-title">看 Typography 的层级表</p><p>字号阶、字重、字距是气质的来源；顺手记下它是衬线还是无衬线。</p></div>
+  <div class="step"><p class="step-title">最后再补氛围和 Known Gaps</p><p>这两段是给「没看过这家网站的人」的，读几份以后你会发现套路很像。</p></div>
+</div>
+
+<div class="callout idea">
+  <p>不要从第一段开始逐字读。84 份文档的 Overview 用的是同一套写法，先读五份就会腻；带着「我要什么」去翻，效率会高很多。</p>
+</div>
+
+<h2 id="怎么预览：先看，再抄"><a href="#怎么预览：先看，再抄" class="headerlink" title="怎么预览：先看，再抄"></a>怎么预览：先看，再抄</h2><p>DESIGN.md 是文字，光读很难判断「这套放到我的页面里长什么样」。按成本从低到高，有三种办法：</p>
+<table>
+<thead>
+<tr>
+<th>办法</th>
+<th>成本</th>
+<th>能得到什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>翻 getdesign.md 的在线单页</td>
+<td>0</td>
+<td>色卡与说明，看不到组件组合</td>
+</tr>
+<tr>
+<td>自己做一张对照卡</td>
+<td>半小时</td>
+<td>按钮 &#x2F; 卡片 &#x2F; 输入框在真实字号下的样子</td>
+</tr>
+<tr>
+<td>用现成的预览页</td>
+<td>一条命令</td>
+<td>84 套 × 16 个组件，可随时切换</td>
+</tr>
+</tbody></table>
+<p>第三种是这个博客里已经搭好的：<code>preview/</code> 不参与 Hexo 构建，起个本地服务就能看。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> D:\blog</span><br><span class="line">npm run preview</span><br><span class="line"><span class="comment"># 浏览器打开 http://127.0.0.1:4173/preview/</span></span><br></pre></td></tr></table></figure>
+
+<div class="figure-card">
+  <img src="/img/preview-gallery.jpg" alt="">
+  <p>画廊：84 张卡，同一组组件套不同的 token；可按分类和深浅筛选</p>
+</div>
+
+<ul>
+<li><strong>画廊</strong>：一张卡一套风格，卡里是同一组组件的迷你版</li>
+<li><strong>详情</strong>：点进去看 16 个内容组件 + 主题标签 + 一篇样例长文</li>
+<li><strong>键盘</strong>：<code>/</code> 搜索、<code>←</code> <code>→</code> 换风格、<code>d</code> 切明暗</li>
+<li><strong>复制</strong>：右上角「复制 CSS 变量」，选中后直接贴进自己的 <code>:root</code></li>
+</ul>
+<div class="figure-card">
+  <img src="/img/preview-wired.png" alt="">
+  <p>详情页：同一套组件换成 WIRED 的 token——直角、衬线、细线，投影全部消失</p>
+</div>
+
+<div class="callout warn">
+  <p>直接双击 <code>preview/index.html</code> 会被浏览器按 CORS 规则拦掉本地字体和图标，字体会退成系统默认；要看准的，还是用 <code>npm run preview</code> 起本地 http。另外「反相」只是近似深浅，真要深色请用文档里的原生深色值。</p>
+</div>
+
+<h2 id="三种实际用法"><a href="#三种实际用法" class="headerlink" title="三种实际用法"></a>三种实际用法</h2><h3 id="一、丢给-AI"><a href="#一、丢给-AI" class="headerlink" title="一、丢给 AI"></a>一、丢给 AI</h3><p>仓库设计的原始用法就是：把某份 <code>DESIGN.md</code> 复制到项目根目录，然后让 AI 按它来做页面。Google 的 Stitch 原生支持这种文件，也可以直接把内容贴进对话。</p>
+<div class="note green icon-padding modern"><i class="note-icon fas fa-lightbulb"></i><p>那 10 份编号正文的文件末尾，有一段 <code>## 9. Agent Prompt Guide</code>，里面是现成的 prompt。比如 Spotify 那份直接写好了「做一个胶囊按钮：<code>#1f1f1f</code> 背景、白字、9999px 圆角、8×16 内距」。直接抄，比你自己描述准确。</p>
+</div>
+
+<h3 id="二、抽成项目变量"><a href="#二、抽成项目变量" class="headerlink" title="二、抽成项目变量"></a>二、抽成项目变量</h3><p>如果你有自己的主题或组件库，最稳的方式是只取 token，映射成 CSS 变量，然后只改这一层：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 以 Claude 为例，值来自它的 DESIGN.md */</span></span><br><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  <span class="attr">--bg</span>: <span class="number">#faf9f5</span>;</span><br><span class="line">  <span class="attr">--surface</span>: <span class="number">#efe9de</span>;</span><br><span class="line">  <span class="attr">--ink</span>: <span class="number">#141413</span>;</span><br><span class="line">  <span class="attr">--body</span>: <span class="number">#3d3d3a</span>;</span><br><span class="line">  <span class="attr">--muted</span>: <span class="number">#6c6a64</span>;</span><br><span class="line">  <span class="attr">--accent</span>: <span class="number">#cc785c</span>;</span><br><span class="line">  <span class="attr">--hairline</span>: <span class="number">#e6dfd8</span>;</span><br><span class="line">  <span class="attr">--radius</span>: <span class="number">12px</span>;</span><br><span class="line">  <span class="attr">--font-heading</span>: <span class="string">&quot;Noto Serif SC&quot;</span>, Georgia, serif;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>两件必须自己补的事：</p>
+<ul>
+<li><strong>字体</strong>：文档里大多是专有字体（Linear Text、WiredDisplay、StyreneB、SoDoSans），浏览器会 fallback。要么找公开替代（Inter、Lora、思源宋体），要么接受系统字体。</li>
+<li><strong>对比度</strong>：文档给的是品牌色，正文色不一定过 4.5:1。落到自己站点，用工具重新算一遍再用。</li>
+</ul>
+<h3 id="三、当选型参考库"><a href="#三、当选型参考库" class="headerlink" title="三、当选型参考库"></a>三、当选型参考库</h3><p>不一定非要抄某一套。做新项目时，先按「想要什么」去翻，往往比在脑内空想快：</p>
+<table>
+<thead>
+<tr>
+<th>想要的感觉</th>
+<th>先看这几份</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>极简暗色、开发者工具</td>
+<td>Linear、Vercel、Raycast、Warp</td>
+</tr>
+<tr>
+<td>杂志式排版、编辑感</td>
+<td>WIRED、The Verge、Sanity</td>
+</tr>
+<tr>
+<td>阅读舒服、暖纸面</td>
+<td>Notion、Claude、Oura</td>
+</tr>
+<tr>
+<td>强品牌色、视觉冲击</td>
+<td>Spotify、Nike、Lamborghini</td>
+</tr>
+<tr>
+<td>研究圆角语言</td>
+<td>WIRED（0）、Notion（4–6）、Linear（8–12）、Spotify（9999）</td>
+</tr>
+<tr>
+<td>渐变与光感</td>
+<td>Stripe、Framer、Cohere</td>
+</tr>
+</tbody></table>
+<h2 id="几个别踩的坑"><a href="#几个别踩的坑" class="headerlink" title="几个别踩的坑"></a>几个别踩的坑</h2><div class="card-grid">
+  <div class="dcard">
+    <p class="dcard-title">它是规格，不是界面</p>
+    <p>文档告诉你「12px 圆角、1px 细线」，不会告诉你页面怎么排。只抄 token，最多拿到六七成气质。</p>
+  </div>
+  <div class="dcard">
+    <p class="dcard-title">没有预览页</p>
+    <p>README 说每套带 <code>preview.html</code>，但仓库里实际没有（抽查过）。想「看一眼」只能自己做，或者去 getdesign.md 看单页。</p>
+  </div>
+  <div class="dcard">
+    <p class="dcard-title">字体和商标不包含</p>
+    <p>文档是对公开网站视觉的分析，不含品牌字体、logo、图片。商用前先确认字体授权，别直接搬商标。</p>
+  </div>
+</div>
+
+<div class="callout danger">
+  <p>「看着像」和「用对了」是两件事。仿一个品牌的页面不掉价，但把别人的 logo、插画、专有字体直接搬进自己的产品，性质就不一样了。</p>
+</div>
+
+<h2 id="一份可以直接照着做的清单"><a href="#一份可以直接照着做的清单" class="headerlink" title="一份可以直接照着做的清单"></a>一份可以直接照着做的清单</h2><div class="steps">
+  <div class="step"><p class="step-title">选一个参照，只选一个</p><p>一次只对标一套，混搭会变成四不像。</p></div>
+  <div class="step"><p class="step-title">抄 5 个颜色和 1 套圆角</p><p>canvas、surface、ink、muted、accent，加上 md/lg 两档圆角。</p></div>
+  <div class="step"><p class="step-title">抄 2 个组件的内距</p><p>按钮和卡片。这两个对了，整体就像了。</p></div>
+  <div class="step"><p class="step-title">换字体，算对比度</p><p>专有字体换公开替代；正文色重新验一遍 4.5:1。</p></div>
+  <div class="step"><p class="step-title">对照原始站点看差距</p><p>把两边截图并排，先看出入最大的地方，别抠细节。</p></div>
+</div>
+
+<div class="pull-quote">
+  <p>设计文档的价值不是「给你一个皮肤」，而是让你在动手之前，先有一个可执行的判断标准。</p>
+</div>
+
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/VoltAgent/awesome-design-md">awesome-design-md</a></li>
+<li><a target="_blank" rel="noopener" href="https://stitch.withgoogle.com/docs/design-md/overview/">Google Stitch 与 DESIGN.md</a></li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://autoeyeee.github.io/">Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://autoeyeee.github.io/awesome-design-md-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">https://autoeyeee.github.io/awesome-design-md-使用指南/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://autoeyeee.github.io" target="_blank">Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BE%E8%AE%A1%E7%B3%BB%E7%BB%9F/">设计系统</a><a class="post-meta__tags" href="/tags/%E5%BC%80%E6%BA%90/">开源</a><a class="post-meta__tags" href="/tags/%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3/">设计文档</a></div><div class="post-share"><div class="social-share" data-image="/img/design-md-cover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>联系方式</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/qq.jpg" target="_blank"><img class="post-qr-code-img" src="/img/qq.jpg" alt="QQ"/></a><div class="post-qr-code-desc">QQ</div></li></ul></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/ban.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/autoeyeee"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/autoeyeee" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:863426293@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=863426293&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome to my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E4%B8%AA%E5%BA%93%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">这个库到底是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#84-%E5%A5%97%E6%80%8E%E4%B9%88%E5%88%86%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">84 套怎么分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BB%BD%E6%96%87%E4%BB%B6%E9%87%8C%E6%9C%89%E4%BB%80%E4%B9%88"><span class="toc-number">3.</span> <span class="toc-text">一份文件里有什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E4%BE%8B%E5%AD%90%EF%BC%8C%E5%B7%AE%E5%BC%82%E5%9C%A8%E5%93%AA"><span class="toc-number">4.</span> <span class="toc-text">三个例子，差异在哪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E8%AF%BB%EF%BC%9A%E5%8D%81%E5%88%86%E9%92%9F%E8%AF%BB%E5%AE%8C%E4%B8%80%E4%BB%BD"><span class="toc-number">5.</span> <span class="toc-text">怎么读：十分钟读完一份</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E9%A2%84%E8%A7%88%EF%BC%9A%E5%85%88%E7%9C%8B%EF%BC%8C%E5%86%8D%E6%8A%84"><span class="toc-number">6.</span> <span class="toc-text">怎么预览：先看，再抄</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E5%AE%9E%E9%99%85%E7%94%A8%E6%B3%95"><span class="toc-number">7.</span> <span class="toc-text">三种实际用法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%A2%E7%BB%99-AI"><span class="toc-number">7.1.</span> <span class="toc-text">一、丢给 AI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8A%BD%E6%88%90%E9%A1%B9%E7%9B%AE%E5%8F%98%E9%87%8F"><span class="toc-number">7.2.</span> <span class="toc-text">二、抽成项目变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%BD%93%E9%80%89%E5%9E%8B%E5%8F%82%E8%80%83%E5%BA%93"><span class="toc-number">7.3.</span> <span class="toc-text">三、当选型参考库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E5%88%AB%E8%B8%A9%E7%9A%84%E5%9D%91"><span class="toc-number">8.</span> <span class="toc-text">几个别踩的坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BB%BD%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E7%85%A7%E7%9D%80%E5%81%9A%E7%9A%84%E6%B8%85%E5%8D%95"><span class="toc-number">9.</span> <span class="toc-text">一份可以直接照着做的清单</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/awesome-design-md-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="awesome-design-md 使用指南：84 份设计文档怎么读、怎么用"><img src="/img/design-md-cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="awesome-design-md 使用指南：84 份设计文档怎么读、怎么用"/></a><div class="content"><a class="title" href="/awesome-design-md-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="awesome-design-md 使用指南：84 份设计文档怎么读、怎么用">awesome-design-md 使用指南：84 份设计文档怎么读、怎么用</a><time datetime="2026-10-25T04:40:00.000Z" title="发表于 2026-10-25 12:40:00">2026-10-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Hexo-Butterfly-%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E4%B8%8E%E5%86%85%E5%AE%B9%E7%BB%84%E4%BB%B6%E9%80%9F%E6%9F%A5/" title="界面美化与内容组件速查"><img src="/img/XiaoHong.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="界面美化与内容组件速查"/></a><div class="content"><a class="title" href="/Hexo-Butterfly-%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E4%B8%8E%E5%86%85%E5%AE%B9%E7%BB%84%E4%BB%B6%E9%80%9F%E6%9F%A5/" title="界面美化与内容组件速查">界面美化与内容组件速查</a><time datetime="2026-10-15T15:50:00.000Z" title="发表于 2026-10-15 23:50:00">2026-10-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/about-me/" title="个人介绍"><img src="/img/slogan.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="个人介绍"/></a><div class="content"><a class="title" href="/about-me/" title="个人介绍">个人介绍</a><time datetime="2026-10-15T13:52:00.000Z" title="发表于 2026-10-15 21:52:00">2026-10-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Hexo-Butterfly-%E5%86%99%E4%BD%9C%E4%B8%8E%E7%BE%8E%E5%8C%96%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/" title="Hexo + Butterfly 博客写作与美化速查手册"><img src="/img/XiaoHong.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo + Butterfly 博客写作与美化速查手册"/></a><div class="content"><a class="title" href="/Hexo-Butterfly-%E5%86%99%E4%BD%9C%E4%B8%8E%E7%BE%8E%E5%8C%96%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/" title="Hexo + Butterfly 博客写作与美化速查手册">Hexo + Butterfly 博客写作与美化速查手册</a><time datetime="2026-10-15T13:30:00.000Z" title="发表于 2026-10-15 21:30:00">2026-10-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/TEST/" title="TEST"><img src="/img/screen.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="TEST"/></a><div class="content"><a class="title" href="/TEST/" title="TEST">TEST</a><time datetime="2026-10-15T08:32:30.000Z" title="发表于 2026-10-15 16:32:30">2026-10-15</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Lin</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/self/vendor/fancybox/fancybox.umd.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/self/vendor/mermaid/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const applyThemeDefaultsConfig = theme => {
+    if (theme === 'dark-mode') {
+      Chart.defaults.color = "rgba(255, 255, 255, 0.8)"
+      Chart.defaults.borderColor = "rgba(255, 255, 255, 0.2)"
+      Chart.defaults.scale.ticks.backdropColor = "transparent"
+    } else {
+      Chart.defaults.color = "rgba(0, 0, 0, 0.8)"
+      Chart.defaults.borderColor = "rgba(0, 0, 0, 0.1)"
+      Chart.defaults.scale.ticks.backdropColor = "transparent"
+    }
+  }
+
+  // Recursively traverse the config object and automatically apply theme-specific color schemes
+  const applyThemeConfig = (obj, theme) => {
+    if (typeof obj !== 'object' || obj === null) return
+
+    Object.keys(obj).forEach(key => {
+      const value = obj[key]
+      // If the property is an object and has theme-specific options, apply them
+      if (typeof value === 'object' && value !== null) {
+        if (value[theme]) {
+          obj[key] = value[theme] // Apply the value for the current theme
+        } else {
+          // Recursively process child objects
+          applyThemeConfig(value, theme)
+        }
+      }
+    })
+  }
+
+  const runChartJS = ele => {
+    window.loadChartJS = true
+
+    Array.from(ele).forEach((item, index) => {
+      const chartSrc = item.firstElementChild
+      const chartID = item.getAttribute('data-chartjs-id') || ('chartjs-' + index) // Use custom ID or default ID
+      const width = item.getAttribute('data-width')
+      const existingCanvas = document.getElementById(chartID)
+
+      // If a canvas already exists, remove it to avoid rendering duplicates
+      if (existingCanvas) {
+          existingCanvas.parentNode.remove()
+      }
+
+      const chartDefinition = chartSrc.textContent
+      const canvas = document.createElement('canvas')
+      canvas.id = chartID
+
+      const div = document.createElement('div')
+      div.className = 'chartjs-wrap'
+
+      if (width) {
+        div.style.width = width
+      }
+
+      div.appendChild(canvas)
+      chartSrc.insertAdjacentElement('afterend', div)
+
+      const ctx = document.getElementById(chartID).getContext('2d')
+
+      const config = JSON.parse(chartDefinition)
+
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark-mode' : 'light-mode'
+
+      // Set default styles (initial setup)
+      applyThemeDefaultsConfig(theme)
+
+      // Automatically traverse the config and apply dual-mode color schemes
+      applyThemeConfig(config, theme)
+
+      new Chart(ctx, config)
+    })
+  }
+
+  const loadChartJS = () => {
+    const chartJSEle = document.querySelectorAll('#article-container .chartjs-container')
+    if (chartJSEle.length === 0) return
+
+    window.loadChartJS ? runChartJS(chartJSEle) : btf.getScript('/self/vendor/chartjs/chart.umd.js').then(() => runChartJS(chartJSEle))
+  }
+
+  // Listen for theme change events
+  btf.addGlobalFn('themeChange', loadChartJS, 'chartjs')
+  btf.addGlobalFn('encrypt', loadChartJS, 'chartjs')
+
+  window.pjax ? loadChartJS() : document.addEventListener('DOMContentLoaded', loadChartJS)
+})()</script></div><script src="/self/custom.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="/self/vendor/canvas-nest/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
