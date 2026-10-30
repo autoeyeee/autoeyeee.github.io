@@ -1,0 +1,1354 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>taste-skill：把审美拆成 20 个方向 | Blog</title><meta name="author" content="Lin"><meta name="copyright" content="Lin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f6f8fb"><meta name="description" content="这个仓库不是组件库也不是模板集，而是一份把设计决策拆开、编号、可抽签的资料库：20 个方向、58 个首屏、185 个区块、56 套配色、44 套字体系统、420 张照片、18 个动效。这篇讲清楚它有什么、怎么分类、怎么读、怎么用，以及迁到 PPT 和视频时哪些能搬、哪些搬不动。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="taste-skill：把审美拆成 20 个方向">
+<meta property="og:url" content="https://autoeyeee.github.io/taste-skill-%E8%AE%BE%E8%AE%A1%E5%BA%93%E6%8B%86%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="这个仓库不是组件库也不是模板集，而是一份把设计决策拆开、编号、可抽签的资料库：20 个方向、58 个首屏、185 个区块、56 套配色、44 套字体系统、420 张照片、18 个动效。这篇讲清楚它有什么、怎么分类、怎么读、怎么用，以及迁到 PPT 和视频时哪些能搬、哪些搬不动。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://autoeyeee.github.io/img/taste-skill-cover.jpg">
+<meta property="article:published_time" content="2026-10-30T13:20:00.000Z">
+<meta property="article:modified_time" content="2026-10-30T13:20:00.000Z">
+<meta property="article:author" content="Lin">
+<meta property="article:tag" content="设计系统">
+<meta property="article:tag" content="开源">
+<meta property="article:tag" content="设计库">
+<meta property="article:tag" content="审美">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://autoeyeee.github.io/img/taste-skill-cover.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "taste-skill：把审美拆成 20 个方向",
+  "url": "https://autoeyeee.github.io/taste-skill-%E8%AE%BE%E8%AE%A1%E5%BA%93%E6%8B%86%E8%A7%A3/",
+  "image": "https://autoeyeee.github.io/img/taste-skill-cover.jpg",
+  "datePublished": "2026-10-30T13:20:00.000Z",
+  "dateModified": "2026-10-30T13:20:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Lin",
+      "url": "https://autoeyeee.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/x2.jpg"><link rel="canonical" href="https://autoeyeee.github.io/taste-skill-%E8%AE%BE%E8%AE%A1%E5%BA%93%E6%8B%86%E8%A7%A3/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/self/vendor/fontawesome/css/all.min.css"><link rel="stylesheet" href="/self/vendor/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#090d16')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f6f8fb')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.json","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: true,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'taste-skill：把审美拆成 20 个方向',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><script>document.documentElement.classList.add("js");</script><link rel="stylesheet" href="/self/vendor/open-props/colors.min.css"><link rel="stylesheet" href="/self/vendor/open-props/sizes.min.css"><link rel="stylesheet" href="/self/vendor/open-props/borders.min.css"><link rel="stylesheet" href="/self/vendor/open-props/shadows.min.css"><link rel="stylesheet" href="/self/vendor/open-props/easings.min.css"><link rel="stylesheet" href="/self/vendor/open-props/gradients.min.css"><link rel="stylesheet" href="/self/vendor/open-props/animations.min.css"><link rel="stylesheet" href="/self/vendor/lxgw-wenkai/lxgw-wenkai-screen-gb.css"><link rel="stylesheet" href="/self/01-tokens.css"><link rel="stylesheet" href="/self/02-theme.css"><link rel="stylesheet" href="/self/03-article.css"><link rel="stylesheet" href="/self/04-motion.css"><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      if ($loadingBox.classList.contains('loaded')) return
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+
+  if (document.readyState === 'complete') {
+    preloader.endLoading()
+  } else {
+    window.addEventListener('load', preloader.endLoading)
+    document.addEventListener('DOMContentLoaded', preloader.endLoading)
+    // Add timeout protection: force end after 7 seconds
+    setTimeout(preloader.endLoading, 7000)
+  }
+
+  if (false) {
+    btf.addGlobalFn('pjaxSend', preloader.initLoading, 'preloader_init')
+    btf.addGlobalFn('pjaxComplete', preloader.endLoading, 'preloader_end')
+  }
+})()</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/ban.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/taste-skill-banner.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/img/x2.jpg" alt="Logo"><span class="site-name">Blog</span></a><a class="nav-page-title" href="/"><span class="site-name">taste-skill：把审美拆成 20 个方向</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/comment/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于笔者</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">taste-skill：把审美拆成 20 个方向</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-10-30T13:20:00.000Z" title="发表于 2026-10-30 21:20:00">2026-10-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-10-30T13:20:00.000Z" title="更新于 2026-10-30 21:20:00">2026-10-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/">教程</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%99%E7%A8%8B/%E8%AE%BE%E8%AE%A1/">设计</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><div class="slide-cover">
+  <p class="slide-eyebrow">开源 · 设计库 · 拆解</p>
+  <p class="slide-cover-title">把审美拆成编号</p>
+  <p class="slide-sub">20 个方向 / 56 套配色 / 185 个区块，以及它为什么敢禁止渐变</p>
+</div>
+
+<blockquote>
+<p>仓库开篇有一句话，比后面所有规则都狠：<strong>“Nothing in it is wrong and nothing in it was decided.”</strong> 模型做出的页面，没有一处是错的，也没有一处是决定过的。taste-skill 干的事，就是把「决定」这一步从模型手里拿走，塞进一个可以抽签的库里。</p>
+</blockquote>
+<p>我把它从头读了一遍（SKILL.md 542 行、9 篇 reference、9 个 JSON、5 个脚本），也把它的脚本真跑了几遍。这篇只说库：库长什么样、分成哪几类、怎么用，以及<strong>如果你只想要网页 &#x2F; PPT &#x2F; 视频的美化，这座库里哪些是能搬走的砖</strong>。</p>
+<h2 id="它是什么：三层，不是一层"><a href="#它是什么：三层，不是一层" class="headerlink" title="它是什么：三层，不是一层"></a>它是什么：三层，不是一层</h2><p>很多人看到 “skill” 两个字会以为是 prompt 合集。实际拆开它，结构很清楚：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>体量</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>知识层<br><code>SKILL.md</code> + <code>references/</code></td>
+<td>542 行 + 9 篇</td>
+<td>规定「怎么做」和「为什么」：研究、文案、字、色、版式、影像、动效、评审、AI 味清单</td>
+</tr>
+<tr>
+<td>资料层<br><code>library/</code></td>
+<td>9 个 JSON</td>
+<td>提供「做什么」：方向、首屏、区块、字、色、照片、动效、参考站点、app 版式</td>
+</tr>
+<tr>
+<td>工具层<br><code>scripts/</code></td>
+<td>5 个脚本</td>
+<td>抽签、找图、静态扫描、真实浏览器测量（draw &#x2F; assets &#x2F; lint &#x2F; inspect &#x2F; scenes）</td>
+</tr>
+</tbody></table>
+<div class="kpi-grid">
+  <div class="kpi"><b>20</b><span>设计方向</span></div>
+  <div class="kpi"><b>58</b><span>首屏构图</span></div>
+  <div class="kpi"><b>185</b><span>区块蓝图</span></div>
+  <div class="kpi"><b>56</b><span>配色</span></div>
+</div>
+
+<div class="kpi-grid">
+  <div class="kpi"><b>44</b><span>字体系统</span></div>
+  <div class="kpi"><b>18</b><span>动效配方</span></div>
+  <div class="kpi"><b>420</b><span>气氛照片</span></div>
+  <div class="kpi"><b>202</b><span>拆解过的站</span></div>
+</div>
+
+<p>当前版本 v2.1.5（2026-10-25），MIT，作者 Leonxlnx。安装就一行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx skills add https://github.com/Leonxlnx/taste-skill --skill <span class="string">&quot;design-taste-frontend&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>它需要的环境是 Node 22+ 和本机一个 Chrome &#x2F; Edge &#x2F; Chromium（用来量页面），不装任何依赖，不要 API key；只有找图那一步需要网络。</p>
+<p>它背后的研究值得单独说一句：采集 248 个站（One Page Love + Awwwards Sites of the Day），247 个加载成功，235 个进了评审，202 个可测量。评分按 Awwwards 的权重——<strong>设计 40%、可用性 30%、创意 20%、内容 10%</strong>。中位数 7.2，7.5 分以上 90 个。所以库里那些数字不是拍脑袋，是从这 247 个站里量出来、手记下来、再压缩成规则的。</p>
+<h2 id="先看它反对什么，比看它主张什么更有用"><a href="#先看它反对什么，比看它主张什么更有用" class="headerlink" title="先看它反对什么，比看它主张什么更有用"></a>先看它反对什么，比看它主张什么更有用</h2><p><code>references/tells.md</code> 是整座库里我最喜欢的一份文件：一份<strong>带日期的「AI 味」编年史</strong>。它把「一眼看出是模型做的」拆成三波：</p>
+<ul>
+<li><strong>第一波（2023–2024）</strong>：紫罗兰渐变、渐变文字、玻璃拟态卡、发光按钮、每个卡片底下一层柔灰阴影、三个带圆角方框图标的特性卡、emoji 当图标。</li>
+<li><strong>第二波（2025）</strong>：每个标题上方的小号大写眉标（eyebrow）、首屏标题上方的 “New &#x2F; Beta” 药丸、”bento grid” 圆角磁贴、近黑底 + 霓虹 + 光晕、悬浮药丸导航、灰条假仪表盘。</li>
+<li><strong>第三波（2025–2026）</strong>：「把它变暖、变编辑感」这个解药本身成了最典型的生成味——<strong>米黄纸底 + 赭石 &#x2F; 陶土色</strong>，配衬线大标题和满页细线，假装自己是报纸。</li>
+</ul>
+<p>第三波那段话值得抄下来（意译）：</p>
+<blockquote>
+<p>第一波和第二波被公开的补救方案是「调暖、加强编辑感」。模型把这个补救方案整体照搬，于是它成了所有生成页面里最好认的一种。</p>
+</blockquote>
+<p>这一点在数据里非常明显。研究里对比了高分站（≥7.5）和弱站（&lt;6.5）：</p>
+<table>
+<thead>
+<tr>
+<th>装饰</th>
+<th>高分站</th>
+<th>弱站</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>带图标的特性卡</td>
+<td>1%</td>
+<td>28%</td>
+</tr>
+<tr>
+<td>药丸徽标</td>
+<td>14%</td>
+<td>34%</td>
+</tr>
+<tr>
+<td>渐变填充</td>
+<td>22%</td>
+<td>52%</td>
+</tr>
+<tr>
+<td>静置元素的阴影</td>
+<td>24%</td>
+<td>48%</td>
+</tr>
+<tr>
+<td>小号大写 + 宽字距标签</td>
+<td>16%</td>
+<td>57%</td>
+</tr>
+<tr>
+<td>居中式首屏（标题居中、图在下）</td>
+<td>7%</td>
+<td>24%</td>
+</tr>
+</tbody></table>
+<p>反过来，有三样东西在<strong>高分站里更常见</strong>：等宽字标签 44% vs 24%、编号（01&#x2F;02&#x2F;03）38% vs 21%、细线 61% vs 52%。但 taste-skill 一样全禁。理由写在 tells.md 里，很坦白：</p>
+<blockquote>
+<p>它们是获奖站当下的时装，也是生成器最先抄走的东西。一个不能靠它们撑结构的页面，必须从空间、色调和尺度里找结构。</p>
+</blockquote>
+<p>这句话是整座库的设计观：<strong>不是「获奖站做什么我就做什么」，而是「把最容易被批量模仿的装饰拿掉，逼出真正的构图」</strong>。</p>
+<p>而且它自己知道「只做减法」会死：</p>
+<div class="note blue icon-padding modern"><i class="note-icon fas fa-circle-info"></i><p>一个把所有装饰都拿掉、又没有补上任何东西的页面，是一个很有礼貌的空页面，这也是一种 AI 味（”avoidance aesthetic”）。装饰本来填的是「想法」的空缺。所以顺序是：先有想法，再有构图，再有真实的图或敢下注的字体排版，最后才是检查。</p>
+</div>
+
+<h2 id="风格：20-个「方向」，是构图而不是滤镜"><a href="#风格：20-个「方向」，是构图而不是滤镜" class="headerlink" title="风格：20 个「方向」，是构图而不是滤镜"></a>风格：20 个「方向」，是构图而不是滤镜</h2><p><code>library/directions.json</code> 里的 20 条，是整个库的入口。每条不是一个「风格名」，而是一台<strong>想法发动机</strong>——它规定的是「这一页靠什么成立」。</p>
+<table>
+<thead>
+<tr>
+<th>方向</th>
+<th>一句话</th>
+<th>适合</th>
+<th>代价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>名字纪念碑</td>
+<td>名字放到最大，其余全部压小</td>
+<td>品牌、工作室、酒店、活动</td>
+<td>名字本身不够硬就撑不住</td>
+</tr>
+<tr>
+<td>句子即版式</td>
+<td>一句大字与唯一一张图咬合</td>
+<td>SaaS、文化、产品</td>
+<td>那张图必须对准字</td>
+</tr>
+<tr>
+<td>钉住的海报</td>
+<td>标题钉住，照片一张张换</td>
+<td>音乐、展览、时尚</td>
+<td>照片一垮全垮</td>
+</tr>
+<tr>
+<td>色彩章节</td>
+<td>一章一整屏纯色</td>
+<td>活动、教育、消费产品</td>
+<td>纯色屏容易空，内容要满</td>
+</tr>
+<tr>
+<td>场地承载</td>
+<td>全幅照片，文字退到边缘</td>
+<td>餐厅、地产、建筑</td>
+<td>没照片就没这个方向</td>
+</tr>
+<tr>
+<td>页面即实物</td>
+<td>请柬 &#x2F; 文件夹 &#x2F; 票根做版式</td>
+<td>餐厅、婚庆、文化</td>
+<td>拟物做不像就廉价</td>
+</tr>
+<tr>
+<td>单一母题</td>
+<td>一个形状放大到各个尺寸</td>
+<td>工具、金融、教育</td>
+<td>母题必须来自主题物</td>
+</tr>
+<tr>
+<td>产品自证</td>
+<td>首屏就是能用的界面碎片</td>
+<td>SaaS、开发工具</td>
+<td>假数据一眼假</td>
+</tr>
+<tr>
+<td>安静的仪器</td>
+<td>极简，对齐本身就是设计</td>
+<td>工具、个人站</td>
+<td>留白变空洞</td>
+</tr>
+<tr>
+<td>物件特写</td>
+<td>产品占满画面，裁切制造张力</td>
+<td>实体产品、电商</td>
+<td>需要真产品图</td>
+</tr>
+<tr>
+<td>标本目录</td>
+<td>同规格小图排成墙，便于比较</td>
+<td>电商、食品、出版</td>
+<td>密度失控就乱</td>
+</tr>
+<tr>
+<td>借壳</td>
+<td>用另一个行业的语气说话</td>
+<td>金融、健康、SaaS</td>
+<td>借过头像开玩笑</td>
+</tr>
+<tr>
+<td>接触印样</td>
+<td>严格网格里塞满小图</td>
+<td>摄影、工作室</td>
+<td>图不够就露馅</td>
+</tr>
+<tr>
+<td>印刷年报</td>
+<td>栏线、拼贴、整页色块</td>
+<td>文化、非营利、报告</td>
+<td>容易变成报纸 cosplay</td>
+</tr>
+<tr>
+<td>响亮的平涂</td>
+<td>色块、字块、叠压</td>
+<td>活动、音乐、教育</td>
+<td>平涂最考验比例</td>
+</tr>
+<tr>
+<td>分屏舞台</td>
+<td>一半固定图，一半滚动文字</td>
+<td>餐厅、酒店、产品</td>
+<td>那一半文字必须排得极好</td>
+</tr>
+<tr>
+<td>整齐的板</td>
+<td>满格、均匀间隙、内容各异</td>
+<td>工作室、工具</td>
+<td>稍不留神就是 bento 模板</td>
+</tr>
+<tr>
+<td>照片不等大</td>
+<td>像墙上挂画，各就各位</td>
+<td>酒店、地产、摄影</td>
+<td>「对不齐但要能感觉到网格」</td>
+</tr>
+<tr>
+<td>暗房</td>
+<td>全页暗场，物件被照亮</td>
+<td>夜店、金属卡、唱片</td>
+<td>暗色容易糊成一团</td>
+</tr>
+<tr>
+<td>只有字</td>
+<td>首屏只有字、色、空</td>
+<td>没有好照片时</td>
+<td>排版功力不够立刻露</td>
+</tr>
+</tbody></table>
+<p>每条方向的 JSON 里挂着这些字段，读起来像一张处方：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">id / name              → 方向名</span><br><span class="line">sectors / tones        → 适用行业、语气（quiet/bold/warm/technical/playful/luxury/editorial）</span><br><span class="line">idea                   → 这个方向成立的原理（一段话）</span><br><span class="line">composition            → 桌面和手机各自的构图</span><br><span class="line">typography/typeClasses → 该配哪一类字体</span><br><span class="line">colour/paletteTags     → 该配哪一类配色</span><br><span class="line">imagery                → 影像怎么用</span><br><span class="line">sectionTags            → 适合哪些区块</span><br><span class="line">motion                 → 该配哪个招牌动效</span><br><span class="line">richness               → 这个方向的「丰富度」靠什么提供</span><br><span class="line">pitfalls               → 它具体会怎么失败</span><br><span class="line">seenIn                 → 参考站 id（可以 --site 展开）</span><br></pre></td></tr></table></figure>
+
+<p>真正有意思的是 <code>richness</code> 这个字段。每个方向都写清楚「它的丰富感从哪里来」，因为把装饰拿掉之后，页面容易变薄。比如「分屏舞台」写的是：</p>
+<blockquote>
+<p>一整幅始终在场的照片，对着一条安静的、排得很好的文字栏。</p>
+</blockquote>
+<p>而「响亮的平涂」写的是：</p>
+<blockquote>
+<p>色块、字块、叠压。</p>
+</blockquote>
+<p>这不是文案，这是一句话告诉你在这一页上<strong>把预算花在哪</strong>。</p>
+<h3 id="抽签现场"><a href="#抽签现场" class="headerlink" title="抽签现场"></a>抽签现场</h3><p>方向不是模型挑的，是脚本发的。因为「让模型自己选，它每次都选品类默认那个」。我实跑了一条：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">node scripts/draw.mjs --sector restaurant \</span><br><span class="line">  --brief <span class="string">&quot;a nine-seat counter, one seating a night&quot;</span> \</span><br><span class="line">  --sections intro,list,gallery,contact,footer --seed 42</span><br></pre></td></tr></table></figure>
+
+<p>发出来的方向单长这样（节选）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># DIRECTION SHEET — The split stage</span><br><span class="line">seed 42 · sector restaurant</span><br><span class="line">| Direction | The split stage |</span><br><span class="line">| Hero      | Menu column, sticky photograph |</span><br><span class="line">| Type      | Zilla Slab |</span><br><span class="line">| Colour    | Oxblood and grey |</span><br><span class="line">| Sections  | intro → list → gallery → contact → footer |</span><br><span class="line">| Motion    | Slow crossfade |</span><br><span class="line">| Photos    | the &quot;City at night&quot; set, as atmosphere |</span><br><span class="line"></span><br><span class="line">## 1. The idea</span><br><span class="line">Half the screen never moves. One side is a fixed photograph that stays in place for the</span><br><span class="line">whole visit; the other side is a calm scrolling column with everything you need to read.</span><br><span class="line"></span><br><span class="line">## 3. Type — Zilla Slab</span><br><span class="line">- Display: weight 600 · tracking -0.025em · leading 1.0 · sentence case</span><br><span class="line">- Text: 400 for body, 500 for emphasis · leading 1.5 · tracking 0</span><br><span class="line">:root &#123;</span><br><span class="line">  --step-small: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);</span><br><span class="line">  --step-body:  clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);</span><br><span class="line">  --step-lead:  clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);</span><br><span class="line">  --step-head:  clamp(2rem, 1.3rem + 3.2vw, 4rem);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">## 4. Colour — Oxblood and grey</span><br><span class="line">--bg: #e2e2e2; --surface: #d6d6d6;</span><br><span class="line">--ink: #7d0c14; --muted: #7a4a4e;</span><br><span class="line">--accent: #7d0c14; --accent-ink: #e2e2e2;</span><br><span class="line">--field-1: #7d0c14; --field-1-ink: #e2e2e2;</span><br></pre></td></tr></table></figure>
+
+<p>一次输出就给了你：构图、字体（含正文字重和字距）、四个可复制的 <code>clamp()</code> 字号台阶、一套带 <code>fields</code>（整屏换色的色块）的配色、动效、影像策略，以及每条蓝图下面<strong>它和 house rules 冲突的地方</strong>。</p>
+<p>SKILL.md 给抽签定了三条纪律，值得当作工作方法抄走：</p>
+<ol>
+<li><strong>发三个，选一个</strong>，选「能承载这个客户独有东西」的那个，不选最眼熟的。</li>
+<li><strong>只因为三个理由才能重抽</strong>：和明确的品牌约束冲突、需要的素材根本不存在、这个区块塞不下真实内容。</li>
+<li><strong>绝不因为「不习惯」重抽</strong>——「不习惯」恰恰是它存在的理由。重抽必须写进报告。</li>
+</ol>
+<p>脚本还会记历史（<code>~/.taste-skill/history.json</code>），最近用过的方向、字体、配色会被降权，避免你自己连着做三个项目都长得一样。</p>
+<h2 id="种类：五个货架，加一个-app-区"><a href="#种类：五个货架，加一个-app-区" class="headerlink" title="种类：五个货架，加一个 app 区"></a>种类：五个货架，加一个 app 区</h2><h3 id="版式：58-个首屏-185-个区块"><a href="#版式：58-个首屏-185-个区块" class="headerlink" title="版式：58 个首屏 + 185 个区块"></a>版式：58 个首屏 + 185 个区块</h3><p>首屏按 14 个原型分类，每个原型底下是具体做法：</p>
+<table>
+<thead>
+<tr>
+<th>原型 · 数量</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>type-poster（字体海报）· 8</td>
+<td>双色叠字、句中带控件、窄话宽题</td>
+</tr>
+<tr>
+<td>split（分栏）· 8</td>
+<td>色卡柱配视图、菜单栏配固定照片</td>
+</tr>
+<tr>
+<td>object-centre（物件居中）· 8</td>
+<td>单件上展台、物件裁掉三边、物件劈开标题</td>
+</tr>
+<tr>
+<td>mosaic（拼贴）· 5</td>
+<td>句子配标本墙、带文字格子的版面</td>
+</tr>
+<tr>
+<td>giant-wordmark（巨型字标）· 4</td>
+<td>照片垫在名字下、照片做成一个字母</td>
+</tr>
+<tr>
+<td>colour-field（色场）· 4</td>
+<td>标题跨两个色场、巨型裁切形状</td>
+</tr>
+<tr>
+<td>fullbleed-media（全幅影像）· 4</td>
+<td>小名字配大天空、导航压在中线</td>
+</tr>
+<tr>
+<td>pinned-stage（钉住舞台）· 3</td>
+<td>名字劈到两个角、标题钉在肖像上</td>
+</tr>
+<tr>
+<td>artefact（实物）· 3</td>
+<td>邀请函裁切、卡片压在暗房里</td>
+</tr>
+<tr>
+<td>tiles（磁贴）· 3</td>
+<td>标本墙配停靠面板、2×2 板</td>
+</tr>
+<tr>
+<td>bottom-anchored-type · 3</td>
+<td>电影片名贴底边</td>
+</tr>
+<tr>
+<td>inline-media-sentence · 2</td>
+<td>句子被画框劈开、句子配照片条</td>
+</tr>
+<tr>
+<td>index（索引）· 2</td>
+<td>文字带接版面</td>
+</tr>
+<tr>
+<td>quiet-column · 1</td>
+<td>一条线上的栏目</td>
+</tr>
+</tbody></table>
+<p>区块按 16 个角色分，共 185 条蓝图，实测分布很不均：</p>
+<table>
+<thead>
+<tr>
+<th>角色 · 条数</th>
+<th>角色 · 条数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>features 特性 · 22</td>
+<td>stats 数字 · 10</td>
+</tr>
+<tr>
+<td>showcase 展示 · 21</td>
+<td>testimonial 证言 · 10</td>
+</tr>
+<tr>
+<td>work 作品 · 15</td>
+<td>footer 页脚 · 10</td>
+</tr>
+<tr>
+<td>how-it-works 流程 · 14</td>
+<td>pricing 价格 · 9</td>
+</tr>
+<tr>
+<td>intro 引言 · 11</td>
+<td>faq 问答 · 8</td>
+</tr>
+<tr>
+<td>cta 行动 · 11</td>
+<td>about 关于 · 8</td>
+</tr>
+<tr>
+<td>gallery 画廊 · 11</td>
+<td>proof 背书 · 7</td>
+</tr>
+<tr>
+<td>list 清单 · 11</td>
+<td>contact 联系 · 7</td>
+</tr>
+</tbody></table>
+<p><strong>features 最多、proof 最少</strong>，这个分布本身就是研究结论：真正难的不是「三个特性卡」，是「怎么把一张菜单、一份日程、一排价格排得像被设计过」。蓝图还按 13 种形状标注——<code>split / statement / stack / grid / list / pinned / full-bleed / band / strip / table / index / mosaic / carousel</code>。写页面之前先给每个区块挑一个形状，是避免「整页都是同一种版式」最便宜的办法。</p>
+<p>蓝图的写法是这样的（价格区块，真实节选）：</p>
+<blockquote>
+<p>一个方案，不要卡片。第 1–4 栏放 2–4 个词的标题，28–36px，和一段 17px 的文字，顶对齐。第 6–12 栏把价格做成展示级数字：<code>clamp(120px, 16vw, 240px)</code>，紧字距，行高 0.85，货币符号半号大小抬到字顶线，周期（每月 &#x2F; 一次性）18px 贴最后一个数字的基线。页面上的某样东西要压住数字高度的 10–15%……下面四行 18px 说清楚包含什么，一行一条，不用勾号和圆点，然后一个矩形按钮。整个区块至少 80svh，数字垂直居中。</p>
+</blockquote>
+<p>它不用「大气」「有冲击力」这种词，它给的是栏位、字号、行高、叠压比例和高度。<strong>这是这份库最值钱的地方：它把「设计」写成了可施工的规格。</strong></p>
+<h3 id="字：44-套字体系统，11-个族"><a href="#字：44-套字体系统，11-个族" class="headerlink" title="字：44 套字体系统，11 个族"></a>字：44 套字体系统，11 个族</h3><p>全部是免费可商用的字体（Fontshare &#x2F; Google Fonts），每套包含：展示字体、正文字体、各自字重、<code>tracking</code> &#x2F; <code>leading</code>、四步 <code>clamp()</code> 台阶、它替代的商业字体（<code>standsInFor</code>），以及一句「什么情况下用它」。</p>
+<table>
+<thead>
+<tr>
+<th>族 · 数量</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>grotesk-tight（紧排无衬线）· 6</td>
+<td>Switzer、General Sans、Schibsted Grotesk</td>
+</tr>
+<tr>
+<td>grotesk-light（轻无衬线）· 4</td>
+<td>Switzer Roman、Clash Grotesk、Work Sans</td>
+</tr>
+<tr>
+<td>condensed-heavy（窄体粗）· 5</td>
+<td>Anton、Bebas Neue、Barlow Condensed</td>
+</tr>
+<tr>
+<td>extended-heavy（宽体粗）· 3</td>
+<td>Panchang、TikTok Sans、Unbounded</td>
+</tr>
+<tr>
+<td>heavy-black（极粗）· 4</td>
+<td>Chivo、Cabinet Grotesk、Red Hat Display</td>
+</tr>
+<tr>
+<td>geometric（几何）· 4</td>
+<td>Jost、Albert Sans、League Spartan</td>
+</tr>
+<tr>
+<td>rounded-friendly（圆润）· 3</td>
+<td>Pilcrow Rounded、Roundo、Chillax</td>
+</tr>
+<tr>
+<td>serif-display（衬线展示）· 5</td>
+<td>Gambarino、Bodoni Moda、Boska</td>
+</tr>
+<tr>
+<td>serif-light-large（轻衬线大字）· 3</td>
+<td>Newsreader、Zodiak、Sentient</td>
+</tr>
+<tr>
+<td>serif-text（衬线正文）· 4</td>
+<td>EB Garamond、Literata、STIX</td>
+</tr>
+<tr>
+<td>slab（板衬线）· 3</td>
+<td>Zilla Slab、Besley、Rokkitt</td>
+</tr>
+</tbody></table>
+<p>比如 Switzer 那条，<code>note</code> 写的是：</p>
+<blockquote>
+<p>一款新怪诞干所有事：半粗标题收紧，小号常规正文，不大写、不用第二种声音。适合想显得精确、不炫耀的软件、硬件和工作室页面。</p>
+</blockquote>
+<p>它替代的是 Suisse Intl &#x2F; Neue Haas Grotesk。这种「免费字体 ↔ 商业字体」的对照，对做 PPT 的人其实最实用——你手上只有系统字体的时候，它能告诉你该找什么气质的替代品。</p>
+<h3 id="色：56-套配色，是比例而不是色卡"><a href="#色：56-套配色，是比例而不是色卡" class="headerlink" title="色：56 套配色，是比例而不是色卡"></a>色：56 套配色，是比例而不是色卡</h3><p>每套配色给的不是「一张好看的图」，是<strong>角色</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bg / surface / ink / muted / accent / accentInk / fields[]</span><br></pre></td></tr></table></figure>
+
+<p><code>fields</code> 是关键：它规定「这一页可以有哪几个整屏换色的场」，以及每个场里的字色。也就是说这套库把「配色」定义成「面积比例 + 角色分配」，不是「五个好看的颜色」。</p>
+<p>按标签分 9 类（一套可以带多个标签，所以加起来大于 56）：</p>
+<table>
+<thead>
+<tr>
+<th>标签 · 数量</th>
+<th>气质</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>light-neutral · 10</td>
+<td>浅中性底，冷静</td>
+</tr>
+<tr>
+<td>dark-neutral · 10</td>
+<td>深色底，克制</td>
+</tr>
+<tr>
+<td>mono-accent · 9</td>
+<td>单色 + 一个强强调</td>
+</tr>
+<tr>
+<td>two-tone · 9</td>
+<td>两色对撞</td>
+</tr>
+<tr>
+<td>earth · 9</td>
+<td>土色、材料感</td>
+</tr>
+<tr>
+<td>flat-loud · 9</td>
+<td>平涂高饱和，海报感</td>
+</tr>
+<tr>
+<td>single-field · 8</td>
+<td>整页一个色场</td>
+</tr>
+<tr>
+<td>photographic-neutral · 7</td>
+<td>为照片让路的中性底</td>
+</tr>
+<tr>
+<td>pastel-fields · 6</td>
+<td>粉彩色场</td>
+</tr>
+</tbody></table>
+<p>我抽到的那套叫「Oxblood and grey」，值是这样的：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">--bg</span>: <span class="number">#e2e2e2</span>;        <span class="comment">/* 灰纸 */</span></span><br><span class="line"><span class="attr">--ink</span>: <span class="number">#7d0c14</span>;       <span class="comment">/* 牛血红，当正文色用 */</span></span><br><span class="line"><span class="attr">--muted</span>: <span class="number">#7a4a4e</span>;</span><br><span class="line"><span class="attr">--accent</span>: <span class="number">#7d0c14</span>;    <span class="comment">/* 强调色就是正文色，没有第二个 */</span></span><br><span class="line"><span class="attr">--field-1</span>: <span class="number">#7d0c14</span>;   <span class="comment">/* 一整段和页脚翻成红底，字反过来 */</span></span><br></pre></td></tr></table></figure>
+
+<p>配的文字说明是：「深红字压灰纸占大部分页面，然后一段长区块和页脚用红底浅灰字。照片去饱和，别破坏这一对颜色，按钮是一块实心红。」</p>
+<p>注意它连「按钮是实心块」「照片去饱和」都规定了。这解释为什么这套库出来的页面「像被决定过」：<strong>它把配色的连带后果一起写下来了</strong>。</p>
+<h3 id="影与动：420-张照片-18-个动效配方"><a href="#影与动：420-张照片-18-个动效配方" class="headerlink" title="影与动：420 张照片 + 18 个动效配方"></a>影与动：420 张照片 + 18 个动效配方</h3><p>照片分 19 组（雾与静、海岸、山、森林、水、沙漠与公路、田野、天空、建筑、白日城市、夜晚城市、室内与桌面、静物、手与制作、人、动物、植物、质感、交通），共 420 张，来自 Lorem Picsum（即 Unsplash 授权）。</p>
+<p>用得对的方式写得很清楚：<strong>照片只当气氛，永远不假装是这家的产品、房间、菜或团队</strong>。真的需要「这个主题自己的世界」，去开放馆藏里找（Openverse、Wikimedia Commons、芝加哥艺术博物馆、大都会），只保留可商用的授权（CC0 &#x2F; 公有领域 &#x2F; CC BY &#x2F; CC BY-SA），下载时把署名一起记下来。</p>
+<p>18 个动效是<strong>配方</strong>，不是参数表。名字就能看出用途：</p>
+<table>
+<thead>
+<tr>
+<th>动效</th>
+<th>做什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>masked-headline</td>
+<td>标题逐行从基线后升起，900ms，强 ease-out，第二行晚 110ms</td>
+</tr>
+<tr>
+<td>shutter-image</td>
+<td>主图从一条边用 clip-path 打开，1.1s，图内从 1.12 缩到原位</td>
+</tr>
+<tr>
+<td>scaling-wordmark</td>
+<td>巨型字标随滚动缩放，位移不超过 8%</td>
+</tr>
+<tr>
+<td>pinned-story</td>
+<td>一个元素 sticky 住，内容在它里面换</td>
+</tr>
+<tr>
+<td>index-preview</td>
+<td>文字行就是导航，指到哪行，固定画框里换哪张图，240ms</td>
+</tr>
+<tr>
+<td>opening-window</td>
+<td>图文交接：图从 45% 宽开到全屏</td>
+</tr>
+<tr>
+<td>ink-fill</td>
+<td>三到五行的大字从 45% 墨色随滚动填满</td>
+</tr>
+<tr>
+<td>slow-crossfade</td>
+<td>同一构图的三四张照片 1.6s 交叉淡入，每张停 5–6 秒</td>
+</tr>
+<tr>
+<td>edge-marquee</td>
+<td>一行超大字横向匀速走，整页只允许一条</td>
+</tr>
+<tr>
+<td>drag-row</td>
+<td>可拖的横排，滚动吸附，最后一张露在边缘外</td>
+</tr>
+<tr>
+<td>colour-on-scroll</td>
+<td>每一章整屏换色，且只换整屏，不在段落中间换</td>
+</tr>
+<tr>
+<td>curtain-footer</td>
+<td>页脚在下面等着，内容像纸一样被掀开</td>
+</tr>
+<tr>
+<td>stillness</td>
+<td>干脆不动，只有 140ms 的按下反馈</td>
+</tr>
+</tbody></table>
+<p>每个配方都带 <strong>reduced-motion 的退路</strong>，而且都在 <code>assets/base.css</code> 里有一套对应的令牌：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">--ease-out</span>:   <span class="built_in">cubic-bezier</span>(<span class="number">0.22</span>, <span class="number">1</span>, <span class="number">0.36</span>, <span class="number">1</span>);      <span class="comment">/* 入场、600ms 内的 UI */</span></span><br><span class="line"><span class="attr">--ease-expo</span>:  <span class="built_in">cubic-bezier</span>(<span class="number">0.16</span>, <span class="number">1</span>, <span class="number">0.3</span>, <span class="number">1</span>);       <span class="comment">/* 800ms 以上的揭示、开图 */</span></span><br><span class="line"><span class="attr">--ease-in-out</span>: <span class="built_in">cubic-bezier</span>(<span class="number">0.76</span>, <span class="number">0</span>, <span class="number">0.24</span>, <span class="number">1</span>);     <span class="comment">/* 擦除、面板 */</span></span><br><span class="line"><span class="attr">--t-press</span>: <span class="number">140ms</span>; <span class="attr">--t-hover</span>: <span class="number">180ms</span>; <span class="attr">--t-ui</span>: <span class="number">240ms</span>;</span><br><span class="line"><span class="attr">--t-reveal</span>: <span class="number">800ms</span>; <span class="attr">--t-open</span>: <span class="number">1200ms</span>;</span><br><span class="line"><span class="attr">--stagger-line</span>: <span class="number">90ms</span>; <span class="attr">--stagger-item</span>: <span class="number">70ms</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这段 token 表，是我认为整座库里<strong>最容易搬到视频和 PPT 里去的东西</strong>——后面第七节展开。</p>
+<h3 id="app-区：7-套风格、5-种外壳、25-个屏幕模式"><a href="#app-区：7-套风格、5-种外壳、25-个屏幕模式" class="headerlink" title="app 区：7 套风格、5 种外壳、25 个屏幕模式"></a>app 区：7 套风格、5 种外壳、25 个屏幕模式</h3><p>v2.1 加进来的一整套，来源是另外一次研究：23 块真实产品屏幕（17 个产品，17 浅 6 深）。它的规则和落地页<strong>故意相反</strong>：面板可以有安静的细线、标签可以小、卡片可以重复、数字可以用等宽、没有首屏摄影门槛、没有动效门槛。</p>
+<table>
+<thead>
+<tr>
+<th>风格（明暗）</th>
+<th>字体 &#x2F; 圆角</th>
+<th>颜色预算</th>
+<th>适合</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Achromatic ledger（浅）</td>
+<td>Geist · 8&#x2F;6</td>
+<td>&lt;1% 彩色像素</td>
+<td>金融、电商后台、报表</td>
+</tr>
+<tr>
+<td>Framed sheet（浅）</td>
+<td>IBM Plex Sans · 8&#x2F;6&#x2F;16</td>
+<td>&lt;3%</td>
+<td>分析、开发工具、搭建器</td>
+</tr>
+<tr>
+<td>Accent ladder（浅）</td>
+<td>DM Sans · 8&#x2F;6</td>
+<td>3–10%，几乎全是淡色</td>
+<td>创作者、社群、SMB</td>
+</tr>
+<tr>
+<td>Editorial greeting（浅）</td>
+<td>Instrument Sans + Serif · 22&#x2F;999</td>
+<td>&lt;2%</td>
+<td>工作台、创作者首页</td>
+</tr>
+<tr>
+<td>Pastel consumer（浅）</td>
+<td>Manrope · 20&#x2F;10</td>
+<td>5–8%</td>
+<td>钱包、个人理财</td>
+</tr>
+<tr>
+<td>True-black flat（深）</td>
+<td>Inter · 20&#x2F;999</td>
+<td>3% 以内，强调色不碰按钮和导航</td>
+<td>社群、创作者、市场</td>
+</tr>
+<tr>
+<td>Data terminal（深）</td>
+<td>Public Sans · 6&#x2F;999</td>
+<td>&lt;3%，强调色不超过 1px 线</td>
+<td>行情、监控、开发工具</td>
+</tr>
+</tbody></table>
+<p>外壳 5 种（open-plane &#x2F; framed-sheet &#x2F; ruled-t-frame &#x2F; icon-rail &#x2F; no-sidebar），屏幕模式 25 个（KPI 条 + 主图 + 侧栏、KPI 当 tab、成对的当期与累计、带分享表的洞察……），场景 13 类（finance &#x2F; wallet &#x2F; commerce &#x2F; analytics &#x2F; devtools &#x2F; builder &#x2F; creator &#x2F; smb-admin &#x2F; workspace &#x2F; community &#x2F; support &#x2F; markets &#x2F; report）。</p>
+<p>有一条细节特别能说明这套库的「较真」：Achromatic ledger 里<strong>数字明确指定用 Geist Mono</strong>，而 lint 和 inspector 平常是禁止等宽的——所以它在风格说明里加了一句「lint 会报，请在报告里写理由」。规则不是教条，规则是要你知道自己在破哪一条。</p>
+<h2 id="用法-A：把它当-skill-跑"><a href="#用法-A：把它当-skill-跑" class="headerlink" title="用法 A：把它当 skill 跑"></a>用法 A：把它当 skill 跑</h2><p>如果你有 Claude Code &#x2F; Codex 这类能读 skill 的 agent，这是最短路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">npx skills add https://github.com/Leonxlnx/taste-skill --skill <span class="string">&quot;design-taste-frontend&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Claude Code 插件方式</span></span><br><span class="line">/plugin marketplace add Leonxlnx/taste-skill</span><br><span class="line">/plugin install taste-skill@taste-skill</span><br><span class="line"></span><br><span class="line"><span class="comment"># Codex</span></span><br><span class="line">codex plugin marketplace add Leonxlnx/taste-skill</span><br><span class="line">codex plugin add taste-skill@taste-skill</span><br></pre></td></tr></table></figure>
+
+<p>从 clone 装、想跟着 <code>git pull</code> 自动更新的话，<code>./install.sh</code> 是软链接方式（<code>--codex</code>、<code>--all-agents</code> 可选）。</p>
+<p>装完之后 agent 会走一条十步的路，值得当成 checklist 抄下来：</p>
+<div class="steps">
+  <div class="step">
+    <h4>盘点</h4>
+    <p>列出「只有这个客户有」的 8–12 件事：名字和它的含义、门牌号、街、数字（座位数、到海边的分钟数、价格、年份）、那个约束（一月只做一批、冬天关门）、材料、作息、它世界里已经存在的印刷品。</p>
+  </div>
+  <div class="step">
+    <h4>立论</h4>
+    <p>在动手之前把页面写成「主张 + 证据」的一行一条。没有主张的区块直接删掉——这样才不会掉进「首屏→logo 墙→三个特性→证言→价格」的固定顺序。</p>
+  </div>
+  <div class="step">
+    <h4>抽方向</h4>
+    <p>脚本发三个，人选一个，再说清楚为什么是它。</p>
+  </div>
+  <div class="step">
+    <h4>找想法</h4>
+    <p>填完一句话：「在这一页上，属于这个主题的东西 变成了 这个方向所要求的装置。」然后把最近的竞争对手填进去——如果句子还成立，这个想法是品类的，不是这个客户的。</p>
+  </div>
+  <div class="step">
+    <h4>写文案</h4>
+    <p>先写纯文本的 copy deck：标题两行以内（研究里中位数 5 个词 / 32 个字符），一句支撑句紧贴标题下方，一个主按钮，每个区块把真实内容写全。</p>
+  </div>
+  <div class="step">
+    <h4>搭页面</h4>
+    <p>先令牌，再首屏，再逐区块。区块之间不能共用同一种版式，想法要一直带到价格、问答和页脚。</p>
+  </div>
+  <div class="step">
+    <h4>过闸</h4>
+    <p>lint.mjs 扫源码，inspect.mjs 在 1440 / 768 / 390 三个宽度真开浏览器量。</p>
+  </div>
+  <div class="step">
+    <h4>看</h4>
+    <p>打开截图，用 14 遍检查 + Awwwards 权重打分，改最严重的三个问题，最多三轮。</p>
+  </div>
+  <div class="step">
+    <h4>动起来</h4>
+    <p>招牌动效一个、每个区块分部件入场（错开 60–90ms）、每个控件有反馈、一张会动的图。</p>
+  </div>
+  <div class="step">
+    <h4>报告</h4>
+    <p>方向、种子、重抽理由、想法句、那个「活的东西」、最后的分数、每张找来的图的署名。</p>
+  </div>
+</div>
+
+<h3 id="闸门到底量什么"><a href="#闸门到底量什么" class="headerlink" title="闸门到底量什么"></a>闸门到底量什么</h3><p><code>inspect.mjs</code> 背后有 <strong>93 条规则 id</strong>，<code>lint.mjs</code> 有 <strong>23 条源码规则</strong>。我照着「典型的 AI 页面」写了一个故意犯错的 demo，跑了一遍，输出是这样（节选，真实结果）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">TASTESKILL · INSPECT   demo/index.html</span><br><span class="line">MEASURED (first viewport listed)</span><br><span class="line">  hero headline   &quot;A headline that is much too long for two lines anywhere at all&quot;</span><br><span class="line">                  13 words · 4 line(s) · 64px (4.4vw)</span><br><span class="line">  sizes in use    11 / 13 / 16 / 64 px</span><br><span class="line">  colour          page #faf9f5 · button #8b5cf6</span><br><span class="line"></span><br><span class="line">FAIL — fix every one of these</span><br><span class="line">  [headline-lines] 1 headline(s) wrap past two lines at 1440px → 4 lines</span><br><span class="line">  [eyebrow]        1 eyebrow/kicker label(s) above headings: &quot;Introducing&quot;</span><br><span class="line">  [gradient]       1 gradient fill(s): div.card → linear-gradient(90deg, ...)</span><br><span class="line">  [shadow]         1 box-shadow(s) on elements at rest</span><br><span class="line">  [palette-claude] Cream + terracotta palette (#faf9f5, #d97757)</span><br><span class="line">  [palette-purple] Indigo / violet (button #8b5cf6)</span><br><span class="line">  [few-pictures]   Only 0 picture(s) on the page</span><br><span class="line">  [focal-point]    The first screen has no dominant element: 64px, no picture</span><br><span class="line">  [off-centre]     content 370px from left, 449px from right, at 1440px</span><br><span class="line">  [still-page]     Only 0 element(s) moved while the page loaded and scrolled</span><br></pre></td></tr></table></figure>
+
+<p><code>lint.mjs</code> 对同一个文件给的是源码级的判断（9 个 FAIL，逐条附行号），还顺手报了一条 <code>cta-copy</code>：「Get started」这种按钮文案要改成说清楚动作的词。</p>
+<p>这些规则里，有一类特别值得抄进自己的验收清单——<strong>「框」的规则</strong>（v2.1 新增）：首屏必须有一个 <code>h1</code> 且在第一屏；左右外边距必须相等（偏 16px 就警告）；不能有内容全挤在一边、另一边空掉半个屏的区块；不能有超过半屏的空白带；每个有正文的区块要有标题；正文不能贴着屏幕边；左对齐的起点不能散成 6 条线。</p>
+<p>研究给的理由很直接：<strong>读者描述一个页面「看起来不对」时，最先说的就是这些</strong>——「没有标题」「莫名其妙一块空白」「全挤在左边」。所以它们被做成了会 FAIL 的硬指标。</p>
+<h3 id="这套流程的真实成本"><a href="#这套流程的真实成本" class="headerlink" title="这套流程的真实成本"></a>这套流程的真实成本</h3><p>README 里写得很老实：一次完整构建大约 <strong>30–45 分钟、几十万 token</strong>，大头花在「项目没有照片时，去找图或画图」上。它不是那种「一句话出页面」的东西，它是「一次做对」的东西。</p>
+<h2 id="用法-B：不装-skill，只把它当资料库"><a href="#用法-B：不装-skill，只把它当资料库" class="headerlink" title="用法 B：不装 skill，只把它当资料库"></a>用法 B：不装 skill，只把它当资料库</h2><p>我猜你更可能是这种用法：不想让 agent 接管，只想在写 PPT、剪视频、搭页面之前，从这里<strong>拿一套已经想清楚的方案</strong>。完全可以，库本身是纯 JSON，脚本也全是只读命令。</p>
+<h3 id="六个只读命令"><a href="#六个只读命令" class="headerlink" title="六个只读命令"></a>六个只读命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方向、行业、角色、语气，全部可枚举</span></span><br><span class="line">node scripts/draw.mjs --list directions</span><br><span class="line">node scripts/draw.mjs --list sectors</span><br><span class="line">node scripts/draw.mjs --list roles</span><br><span class="line">node scripts/draw.mjs --list tones</span><br><span class="line"></span><br><span class="line"><span class="comment"># 把某个参考站展开成一页笔记（构图 / 字体 / 配色 / 值得偷的那一手）</span></span><br><span class="line">node scripts/draw.mjs --site aww-pp-neue-montreal</span><br><span class="line"></span><br><span class="line"><span class="comment"># 按气质找气氛照片（19 个分组，或自由词搜索）</span></span><br><span class="line">node scripts/draw.mjs --photos city-night</span><br><span class="line">node scripts/draw.mjs --photos <span class="string">&quot;fog mountain&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重印上一次的方向单</span></span><br><span class="line">node scripts/draw.mjs --show</span><br></pre></td></tr></table></figure>
+
+<h3 id="直接读-JSON"><a href="#直接读-JSON" class="headerlink" title="直接读 JSON"></a>直接读 JSON</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; readFileSync &#125; <span class="keyword">from</span> <span class="string">&#x27;node:fs&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">lib</span> = (<span class="params">f</span>) =&gt; <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title function_">readFileSync</span>(<span class="string">&#x27;library/&#x27;</span> + f + <span class="string">&#x27;.json&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> directions = <span class="title function_">lib</span>(<span class="string">&#x27;directions&#x27;</span>);   <span class="comment">// 20 条</span></span><br><span class="line"><span class="keyword">const</span> palettes   = <span class="title function_">lib</span>(<span class="string">&#x27;palettes&#x27;</span>);     <span class="comment">// 56 套</span></span><br><span class="line"><span class="keyword">const</span> type       = <span class="title function_">lib</span>(<span class="string">&#x27;type&#x27;</span>);         <span class="comment">// 44 套</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 找「深色 + 单强调」的配色</span></span><br><span class="line"><span class="keyword">const</span> dark = palettes.<span class="title function_">filter</span>(<span class="function">(<span class="params">p</span>) =&gt;</span></span><br><span class="line">  p.<span class="property">tags</span>.<span class="title function_">includes</span>(<span class="string">&#x27;dark-neutral&#x27;</span>) &amp;&amp; p.<span class="property">tags</span>.<span class="title function_">includes</span>(<span class="string">&#x27;mono-accent&#x27;</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 找适合「餐厅」且走「安静」的方向</span></span><br><span class="line"><span class="keyword">const</span> quiet = directions.<span class="title function_">filter</span>(<span class="function">(<span class="params">d</span>) =&gt;</span></span><br><span class="line">  d.<span class="property">sectors</span>.<span class="title function_">includes</span>(<span class="string">&#x27;restaurant&#x27;</span>) &amp;&amp; d.<span class="property">tones</span>.<span class="title function_">includes</span>(<span class="string">&#x27;quiet&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>字段都是人话，不需要 schema 文档，读一条就懂。这对「我想在 Notion &#x2F; Obsidian 里攒自己的设计笔记」特别友好——JSON 直接变成卡片。</p>
+<h3 id="三步取用法"><a href="#三步取用法" class="headerlink" title="三步取用法"></a>三步取用法</h3><div class="flow">
+  <div class="flow-node">抽一个方向<br><small>只看 idea + richness</small></div>
+  <div class="flow-arrow"></div>
+  <div class="flow-node">抄三个角色<br><small>字 / 色 / 首屏</small></div>
+  <div class="flow-arrow"></div>
+  <div class="flow-node">只留一个强调色<br><small>其余全部压成中性</small></div>
+</div>
+
+<ol>
+<li><strong>只读 <code>idea</code> 和 <code>richness</code></strong>，不看具体像素。这两段决定「这一页靠什么成立」和「预算花在哪」，其余都是执行细节。</li>
+<li><strong>抄三个角色</strong>：一套 <code>type</code>（拿它的 4 个 <code>clamp()</code> 台阶）、一套 <code>palette</code>（拿 <code>bg/ink/accent/fields</code>）、一个 <code>hero</code> 蓝图（拿栏位和比例）。别一次抄五个，抄多了就变成拼贴。</li>
+<li><strong>只留一个强调色</strong>，把其余全部压成中性。这条是这套库反复验证过的：强调色出现在十个地方就等于没有强调。</li>
+</ol>
+<h2 id="迁到-PPT-与视频：哪些能搬，哪些搬不动"><a href="#迁到-PPT-与视频：哪些能搬，哪些搬不动" class="headerlink" title="迁到 PPT 与视频：哪些能搬，哪些搬不动"></a>迁到 PPT 与视频：哪些能搬，哪些搬不动</h2><p>这是我最想写清楚的一节，因为它决定了这座库对你到底有没有长期价值。</p>
+<h3 id="先给结论"><a href="#先给结论" class="headerlink" title="先给结论"></a>先给结论</h3><table>
+<thead>
+<tr>
+<th>库里的东西</th>
+<th>网页</th>
+<th>PPT</th>
+<th>视频</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>20 个方向（构图原理）</td>
+<td>直接用</td>
+<td>每页版式的骨架</td>
+<td>段落节奏</td>
+</tr>
+<tr>
+<td>58 个首屏 &#x2F; 185 个区块蓝图</td>
+<td>直接用</td>
+<td>换成「标题页 &#x2F; 数据页 &#x2F; 收尾页」</td>
+<td>片头、字卡、数据卡</td>
+</tr>
+<tr>
+<td>56 套配色（角色 + 比例）</td>
+<td>直接用</td>
+<td>最值钱的一项</td>
+<td>调色 + 字幕底色</td>
+</tr>
+<tr>
+<td>44 套字体系统（4 步台阶）</td>
+<td>直接用</td>
+<td>换成 pt</td>
+<td>换成视频字号</td>
+</tr>
+<tr>
+<td>420 张气氛照片</td>
+<td>可用</td>
+<td>可用，但注意投影偏色</td>
+<td>空镜、底图</td>
+</tr>
+<tr>
+<td>18 个动效配方 + 曲线令牌</td>
+<td>直接用</td>
+<td>只能借「时长感」</td>
+<td>转场与入场的时间轴</td>
+</tr>
+<tr>
+<td>93 条 inspector 规则</td>
+<td>自动</td>
+<td>没有浏览器，靠人眼</td>
+<td>没有浏览器，靠人眼</td>
+</tr>
+<tr>
+<td>可访问性 &#x2F; hover &#x2F; 键盘</td>
+<td>必须做</td>
+<td>不适用</td>
+<td>不适用</td>
+</tr>
+</tbody></table>
+<p>一句话：<strong>能搬的是「比例」和「配方」，搬不动的是「测量」。</strong> 网页那套自动验收在 PPT 和视频里不存在，你得自己当那个 inspector。</p>
+<h3 id="换算：一个公式-一张表"><a href="#换算：一个公式-一张表" class="headerlink" title="换算：一个公式 + 一张表"></a>换算：一个公式 + 一张表</h3><p>PPT 的 16:9 画布按 1920×1080 像素算（导出 144dpi，13.33×7.5 英寸），于是：</p>
+<blockquote>
+<p><strong>pt &#x3D; 网页 px × 1.333 ÷ 2 &#x3D; 网页 px × 0.667</strong></p>
+</blockquote>
+<p>因为 144px &#x3D; 1 英寸 &#x3D; 72pt，所以 1pt &#x3D; 2px；而 1440 → 1920 要放大 1.333 倍。</p>
+<table>
+<thead>
+<tr>
+<th>角色</th>
+<th>网页（1440 宽）</th>
+<th>幻灯片（1920 宽）</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正文</td>
+<td>17–19px</td>
+<td>11–13pt</td>
+<td>投影偏小，实际建议 16–18pt</td>
+</tr>
+<tr>
+<td>引导句</td>
+<td>20–26px</td>
+<td>13–17pt</td>
+<td>支撑句、副标题</td>
+</tr>
+<tr>
+<td>区块标题</td>
+<td>32–64px</td>
+<td>21–43pt</td>
+<td>通常就是页标题</td>
+</tr>
+<tr>
+<td>展示字</td>
+<td>96–144px（8–10vw）</td>
+<td>64–96pt</td>
+<td>封面、金句页</td>
+</tr>
+<tr>
+<td>外边距</td>
+<td>16–32px</td>
+<td>11–21pt</td>
+<td>投影时可放大到 24–36pt</td>
+</tr>
+<tr>
+<td>区块间距</td>
+<td>120–240px</td>
+<td>80–160pt</td>
+<td>页与页之间靠留白</td>
+</tr>
+</tbody></table>
+<p>注意表里「备注」那一列：<strong>字号要上调，比例要保留</strong>。原因是研究里的 4.3 倍「标题 ÷ 正文」比，是在人离屏幕 50cm 的前提下量出来的；投影是 3–5 米、只有几秒阅读时间。所以正确做法不是照抄 px，而是：</p>
+<ul>
+<li>保留<strong>层级数量</strong>：五个字号封顶，一大一小，中间不要。</li>
+<li>保留<strong>跳跃幅度</strong>：标题至少是正文的 3 倍（研究里强站中位数 4.7）。</li>
+<li>单页文字量砍到网页的三分之一，然后正文可以放心涨到 16–18pt。</li>
+</ul>
+<h3 id="视频：把动效配方翻成时间轴"><a href="#视频：把动效配方翻成时间轴" class="headerlink" title="视频：把动效配方翻成时间轴"></a>视频：把动效配方翻成时间轴</h3><p><code>base.css</code> 那套令牌几乎是现成的剪辑参数：</p>
+<table>
+<thead>
+<tr>
+<th>令牌</th>
+<th>值</th>
+<th>在 30fps 时间轴上</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--t-press</code></td>
+<td>140ms</td>
+<td>约 4 帧（按钮回弹）</td>
+</tr>
+<tr>
+<td><code>--t-hover</code></td>
+<td>180ms</td>
+<td>约 5 帧（颜色变化）</td>
+</tr>
+<tr>
+<td><code>--t-ui</code></td>
+<td>240ms</td>
+<td>约 7 帧（淡入淡出）</td>
+</tr>
+<tr>
+<td><code>--t-reveal</code></td>
+<td>800ms</td>
+<td>24 帧（标题升起）</td>
+</tr>
+<tr>
+<td><code>--t-open</code></td>
+<td>1200ms</td>
+<td>36 帧（画面打开）</td>
+</tr>
+<tr>
+<td><code>--stagger-line</code></td>
+<td>90ms</td>
+<td>约 3 帧（逐行错开）</td>
+</tr>
+</tbody></table>
+<p>再加上研究里量到的两条：<strong>真正跑起来的动效时长中位数是 420ms</strong>，<strong>跑得最多的曲线是 expo-out 和 quint-out</strong>。所以片头别用线性、别用 2 秒慢淡；0.4–0.8 秒、强缓出，才是「看起来被设计过」的节奏。</p>
+<p>18 个配方里，有 7 个可以直接当转场或入场用：<code>masked-headline</code>（标题逐行升起）、<code>shutter-image</code>（画面从边打开）、<code>opening-window</code>（从小窗开到全屏）、<code>slow-crossfade</code>（同构图慢叠化）、<code>ink-fill</code>（字随阅读填满）、<code>curtain-footer</code>（纸被掀开）、<code>stillness</code>（什么都不动，只留 140ms 反馈）。剩下那些依赖滚动的（<code>pinned-story</code>、<code>scaling-wordmark</code>、<code>colour-on-scroll</code>、<code>drag-row</code>）在视频里要改写成「镜头不动、内容在变」，否则会变成无意义的推拉。</p>
+<p>还有一条数据可以直接当剪辑节奏表用：第二份研究（100 个 Sites of the Day）里，<strong>42% 的滚动屏里一张图都没有，19% 的屏是 90% 以上的图</strong>。也就是说强站在做「整屏空 → 整屏图」的交替，而不是每屏塞一张中等大小的图。视频同理：字卡之后给一整屏画面，比每三秒换一张小图高级得多。</p>
+<h3 id="一个具体例子：把抽到的那套搬成-3-页-deck-1-个片头"><a href="#一个具体例子：把抽到的那套搬成-3-页-deck-1-个片头" class="headerlink" title="一个具体例子：把抽到的那套搬成 3 页 deck + 1 个片头"></a>一个具体例子：把抽到的那套搬成 3 页 deck + 1 个片头</h3><p>用上面真实抽到的「Oxblood and grey + Zilla Slab + 分屏舞台」举例：</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>网页原值</th>
+<th>搬到 PPT</th>
+<th>搬到片头</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>底色</td>
+<td>#e2e2e2</td>
+<td>母版背景</td>
+<td>全屏底</td>
+</tr>
+<tr>
+<td>墨色</td>
+<td>#7d0c14</td>
+<td>标题 + 正文</td>
+<td>标题</td>
+</tr>
+<tr>
+<td>强调</td>
+<td>同一个红</td>
+<td>只给一个关键数字</td>
+<td>只给片名</td>
+</tr>
+<tr>
+<td>翻转场</td>
+<td>field-1 #7d0c14</td>
+<td>第 3 页整页红底灰字</td>
+<td>结尾卡整屏红</td>
+</tr>
+<tr>
+<td>字形</td>
+<td>Zilla Slab 600 &#x2F; 400</td>
+<td>换同气质中文：思源宋体 &#x2F; 霞鹜文楷</td>
+<td>粗宋或黑体</td>
+</tr>
+<tr>
+<td>台阶</td>
+<td>4 步 clamp</td>
+<td>96 &#x2F; 43 &#x2F; 17 &#x2F; 12pt</td>
+<td>96pt 片名 + 24pt 副题</td>
+</tr>
+<tr>
+<td>构图</td>
+<td>左栏固定图，右栏窄文字</td>
+<td>左 45% 图，右 55% 文字</td>
+<td>图先开，字后进</td>
+</tr>
+</tbody></table>
+<p>（这篇的封面就是照这套抽签做的：灰纸 <code>#e2e2e2</code>、牛血红 <code>#7d0c14</code>、一块翻转色场，没有渐变、没有阴影、没有描边——整套东西只靠字的大小和一块红。）</p>
+<p>这里有个必须说的坑：<strong>44 套字体系统全是拉丁字</strong>。中文场景要自己配——最省事的做法是保留「气质 + 字重 + 字距」这三个变量，换成本地字体族：紧排无衬线 → 思源黑体 &#x2F; 阿里巴巴普惠体；衬线展示 → 思源宋体；板衬线 → 霞鹜文楷。字距和字重的比例照着库里的数值走，观感就不会跑。</p>
+<p>同理，<code>clamp()</code> 在 PPT 里没有意义，你要把它固定成四个显式字号，然后用母版保证全篇只用这四个。</p>
+<h3 id="明确搬不动的"><a href="#明确搬不动的" class="headerlink" title="明确搬不动的"></a>明确搬不动的</h3><ul>
+<li><strong>93 条自动检查</strong>：PPT 和视频没有 DOM，没有 1440&#x2F;768&#x2F;390。你得把规则变成人眼清单：一页一个主张、标题不超过两行、边距对称、没有区块挤在一边、正文别用浅灰。</li>
+<li><strong>滚动相关的一切</strong>：<code>pinned-story</code>、<code>scaling-wordmark</code>、<code>opening-window</code>、<code>colour-on-scroll</code> 都是「页面高度换来的」，视频里没有滚动，只能换成镜头语言。</li>
+<li><strong>可访问性条款</strong>：焦点环、键盘顺序、<code>aria-label</code>，在 PPT 里不适用（但「控件说明自己的用法」对表单和二维码页仍然成立）。</li>
+<li><strong>首屏的 <code>h1</code> 规则</strong>：幻灯片没有语义 <code>h1</code>，但「第一页必须说清楚这是什么」等价存在；研究里 97 个首屏有 15 个从没说清楚——这条在 deck 里同样致命。</li>
+</ul>
+<h2 id="坑与边界：一份诚实的清单"><a href="#坑与边界：一份诚实的清单" class="headerlink" title="坑与边界：一份诚实的清单"></a>坑与边界：一份诚实的清单</h2><div class="compare">
+  <div class="compare-col good">
+    <h4>它的优势</h4>
+    <ul>
+      <li>所有数字有出处：247 个站、可测量的 202 个、评分权重公开</li>
+      <li>蓝图是几何而不是形容词，能直接施工</li>
+      <li>脚本零依赖，纯本地跑，没有 API key</li>
+      <li>把「审美」问题变成「验收」问题，可以复现</li>
+      <li>MIT，拿去做自己的工具链没障碍</li>
+    </ul>
+  </div>
+  <div class="compare-col">
+    <h4>它的边界</h4>
+    <ul>
+      <li>house style 是作者一个人的口味，比画廊本身更严格</li>
+      <li>0 FAIL 不等于好看，第 8 步「看」才是主观判断</li>
+      <li>字体全是拉丁，中文要自己补</li>
+      <li>照片是气氛图，不能当产品图、房间图、菜品图</li>
+      <li>研究是模型评审、单次截图，噪声约 ±0.5 分</li>
+    </ul>
+  </div>
+</div>
+
+<p>几个我实跑之后才发现的细节，值得写下来：</p>
+<p><strong>1. 这套规则严到什么程度？</strong> 作者拿自己的 inspector 跑了那 202 个可测量的获奖站：<strong>中位数 4 个 FAIL，只有 4% 全过</strong>。最常触发的是「标题超过两行」60%、「眉标」60%、「细线」50%、「等宽」37%、「阴影」32%。</p>
+<p>所以别把它当「好设计的客观标准」，它是**「另一个更窄的目标」**：拿获奖站的尺度、想法、影像和克制，但不要它们已经变成制服的那些装饰。你在自己的项目里破它的规则，完全合理——只要你破的时候知道自己破的是哪一条。</p>
+<p><strong>2. 文档和代码有一处对不上。</strong> SKILL.md 多处提到 <code>library/scenes.json</code> 和 <code>assets/scenes/demo/&lt;id&gt;.html</code>，但 v2.1.5 的包里 <code>assets/scenes</code> 只有 <code>stage.js</code> &#x2F; <code>stage.css</code>，没有场景库，<code>draw.mjs --list scenes</code> 会直接告诉你「No scene library yet」。也就是说滚动场景这一层目前只有舞台，没有节目单。用之前先 <code>ls</code> 一眼，别照着文档找不存在的文件。</p>
+<p><strong>3. 照片是「气氛」，不是「素材」。</strong> 420 张来自 Picsum（Unsplash 授权），用途写死了：海岸、雾、桌面、质感这类通用气氛。真要用「这个客户自己的世界」，得走 <code>assets.mjs</code> 去开放馆藏搜，而且只返回可商用授权、必须署名。这条线划得很清楚，也是它比一般「AI 素材库」靠谱的地方。</p>
+<p><strong>4. 它是资料库，不是组件库。</strong> 没有 React 组件、没有 Figma 文件、没有图标集、没有 Tailwind 配置。它给的是 JSON、CSS 令牌和一个 <code>base.css</code> 中性底座（reset + 令牌名 + 12 栏网格 + 状态 + 动效助手，<strong>本身没有风格</strong>）。你得自己把值填进去。</p>
+<p><strong>5. 版本在动。</strong> v1 → v2（2026-10-13 重写）→ v2.1（加 app 屏幕 + 框的检查 + 100 站动效研究）→ 2.1.5（社区修复）。早年的 <code>high-end-visual-design</code>、<code>minimalist-ui</code>、<code>industrial-brutalist-ui</code> 等已经搬到 <code>taste-skill-classics</code> 仓库，安装名不变。想找「更重口味」的旧风格，去那个仓库。</p>
+<p><strong>6. 我用它量了这篇博客。</strong> 顺手把这一页丢进 <code>inspect.mjs</code>：30 屏、<strong>8 个 FAIL</strong>——主题的 indigo 渐变、按钮和卡片的阴影、一个对比度只有 2.2:1 的代码高亮色，全在它的黑名单上。这不矛盾：这套库反对的正是「用渐变和阴影代替构图」，而博客主题是另一套系统。重点在于——<strong>知道自己在破哪条规则，和不知道，是两件事</strong>。</p>
+<h2 id="一页速查"><a href="#一页速查" class="headerlink" title="一页速查"></a>一页速查</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>数值 &#x2F; 命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>方向</td>
+<td>20（7 种语气：quiet &#x2F; bold &#x2F; warm &#x2F; technical &#x2F; playful &#x2F; luxury &#x2F; editorial）</td>
+</tr>
+<tr>
+<td>首屏</td>
+<td>58（14 个原型）</td>
+</tr>
+<tr>
+<td>区块</td>
+<td>185（16 个角色，13 种形状）</td>
+</tr>
+<tr>
+<td>字体系统</td>
+<td>44（11 个族，全部免费）</td>
+</tr>
+<tr>
+<td>配色</td>
+<td>56（9 类标签，含 fields 翻转场）</td>
+</tr>
+<tr>
+<td>照片</td>
+<td>420（19 组，Picsum &#x2F; Unsplash）</td>
+</tr>
+<tr>
+<td>动效</td>
+<td>18 个配方 + 6 条曲线 + 8 个时长令牌</td>
+</tr>
+<tr>
+<td>参考站</td>
+<td>202（带评分、想法、首屏、字体、配色、可偷的一手）</td>
+</tr>
+<tr>
+<td>app</td>
+<td>7 风格 &#x2F; 5 外壳 &#x2F; 25 模式 &#x2F; 13 场景</td>
+</tr>
+<tr>
+<td>规则</td>
+<td>inspector 93 条 id，lint 23 条</td>
+</tr>
+<tr>
+<td>抽签</td>
+<td>node scripts&#x2F;draw.mjs –sector X –brief “…” –sections a,b,c</td>
+</tr>
+<tr>
+<td>重抽一格</td>
+<td>–redraw hero &#x2F; type &#x2F; palette &#x2F; section:pricing</td>
+</tr>
+<tr>
+<td>看参考站</td>
+<td>node scripts&#x2F;draw.mjs –site <id></td>
+</tr>
+<tr>
+<td>找气氛图</td>
+<td>node scripts&#x2F;draw.mjs –photos <set></td>
+</tr>
+<tr>
+<td>过闸</td>
+<td>node scripts&#x2F;lint.mjs . &amp;&amp; node scripts&#x2F;inspect.mjs index.html</td>
+</tr>
+<tr>
+<td>版本 &#x2F; 许可</td>
+<td>v2.1.5 · MIT · 2026-10-25</td>
+</tr>
+<tr>
+<td>成本</td>
+<td>一次完整构建 30–45 分钟，几十万 token</td>
+</tr>
+</tbody></table>
+<div class="note green icon-padding modern"><i class="note-icon fas fa-lightbulb"></i><p>如果只记三句：<strong>一、装饰不是风格，构图才是；二、一页只决定一件事，其余全部压小；三、把「看起来对不对」变成可测量的条目，然后自己当那个 inspector。</strong> 这三条在网页、PPT、视频里都成立——这座库只是把它们写成了 9 个 JSON 和几个脚本。</p>
+</div>
+
+<p>最后说句实话：这个库最不像「AI 工具」的地方，是它一直在劝你别太快动手。要先盘点客户有什么、要先写主张、要先把方向抽出来再选、要写完文案才写标记、要过完闸还要再看三轮截图。它卖的不是模板，是<strong>顺序</strong>。而顺序，恰恰是「看起来被设计过」和「看起来是生成的」之间，最难抄的那道分界线。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://autoeyeee.github.io/">Lin</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://autoeyeee.github.io/taste-skill-%E8%AE%BE%E8%AE%A1%E5%BA%93%E6%8B%86%E8%A7%A3/">https://autoeyeee.github.io/taste-skill-设计库拆解/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://autoeyeee.github.io" target="_blank">Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BE%E8%AE%A1%E7%B3%BB%E7%BB%9F/">设计系统</a><a class="post-meta__tags" href="/tags/%E5%BC%80%E6%BA%90/">开源</a><a class="post-meta__tags" href="/tags/%E8%AE%BE%E8%AE%A1%E5%BA%93/">设计库</a><a class="post-meta__tags" href="/tags/%E5%AE%A1%E7%BE%8E/">审美</a></div><div class="post-share"><div class="social-share" data-image="/img/taste-skill-cover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>联系方式</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/qq.jpg" target="_blank"><img class="post-qr-code-img" src="/img/qq.jpg" alt="QQ"/></a><div class="post-qr-code-desc">QQ</div></li></ul></div></div><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/awesome-design-md-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="awesome-design-md 使用指南"><img class="cover" src="/img/design-md-cover.jpg" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-10-25</div><div class="info-item-2">awesome-design-md 使用指南</div></div><div class="info-2"><div class="info-item-1">这个仓库收的不是 UI，而是 84 份对真实站点设计语言的拆解。这篇讲清楚它有什么、84 套怎么分类、十分钟怎么读完一份、怎么预览，以及三种实际用法和几个别踩的坑。</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/ban.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Lin</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">8</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/autoeyeee"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/autoeyeee" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:863426293@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="tencent://AddContact/?fromId=45&amp;fromSubId=1&amp;subcmd=all&amp;uin=863426293&amp;website=www.oicqzone.com" target="_blank" title="QQ"><i class="fab fa-qq"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">Welcome to my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%83%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9A%E4%B8%89%E5%B1%82%EF%BC%8C%E4%B8%8D%E6%98%AF%E4%B8%80%E5%B1%82"><span class="toc-number">1.</span> <span class="toc-text">它是什么：三层，不是一层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E7%9C%8B%E5%AE%83%E5%8F%8D%E5%AF%B9%E4%BB%80%E4%B9%88%EF%BC%8C%E6%AF%94%E7%9C%8B%E5%AE%83%E4%B8%BB%E5%BC%A0%E4%BB%80%E4%B9%88%E6%9B%B4%E6%9C%89%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">先看它反对什么，比看它主张什么更有用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A3%8E%E6%A0%BC%EF%BC%9A20-%E4%B8%AA%E3%80%8C%E6%96%B9%E5%90%91%E3%80%8D%EF%BC%8C%E6%98%AF%E6%9E%84%E5%9B%BE%E8%80%8C%E4%B8%8D%E6%98%AF%E6%BB%A4%E9%95%9C"><span class="toc-number">3.</span> <span class="toc-text">风格：20 个「方向」，是构图而不是滤镜</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E7%AD%BE%E7%8E%B0%E5%9C%BA"><span class="toc-number">3.1.</span> <span class="toc-text">抽签现场</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%8D%E7%B1%BB%EF%BC%9A%E4%BA%94%E4%B8%AA%E8%B4%A7%E6%9E%B6%EF%BC%8C%E5%8A%A0%E4%B8%80%E4%B8%AA-app-%E5%8C%BA"><span class="toc-number">4.</span> <span class="toc-text">种类：五个货架，加一个 app 区</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%88%E5%BC%8F%EF%BC%9A58-%E4%B8%AA%E9%A6%96%E5%B1%8F-185-%E4%B8%AA%E5%8C%BA%E5%9D%97"><span class="toc-number">4.1.</span> <span class="toc-text">版式：58 个首屏 + 185 个区块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%EF%BC%9A44-%E5%A5%97%E5%AD%97%E4%BD%93%E7%B3%BB%E7%BB%9F%EF%BC%8C11-%E4%B8%AA%E6%97%8F"><span class="toc-number">4.2.</span> <span class="toc-text">字：44 套字体系统，11 个族</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%89%B2%EF%BC%9A56-%E5%A5%97%E9%85%8D%E8%89%B2%EF%BC%8C%E6%98%AF%E6%AF%94%E4%BE%8B%E8%80%8C%E4%B8%8D%E6%98%AF%E8%89%B2%E5%8D%A1"><span class="toc-number">4.3.</span> <span class="toc-text">色：56 套配色，是比例而不是色卡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%B1%E4%B8%8E%E5%8A%A8%EF%BC%9A420-%E5%BC%A0%E7%85%A7%E7%89%87-18-%E4%B8%AA%E5%8A%A8%E6%95%88%E9%85%8D%E6%96%B9"><span class="toc-number">4.4.</span> <span class="toc-text">影与动：420 张照片 + 18 个动效配方</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#app-%E5%8C%BA%EF%BC%9A7-%E5%A5%97%E9%A3%8E%E6%A0%BC%E3%80%815-%E7%A7%8D%E5%A4%96%E5%A3%B3%E3%80%8125-%E4%B8%AA%E5%B1%8F%E5%B9%95%E6%A8%A1%E5%BC%8F"><span class="toc-number">4.5.</span> <span class="toc-text">app 区：7 套风格、5 种外壳、25 个屏幕模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95-A%EF%BC%9A%E6%8A%8A%E5%AE%83%E5%BD%93-skill-%E8%B7%91"><span class="toc-number">5.</span> <span class="toc-text">用法 A：把它当 skill 跑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">5.0.1.</span> <span class="toc-text">盘点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">5.0.2.</span> <span class="toc-text">立论</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">5.0.3.</span> <span class="toc-text">抽方向</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">5.0.4.</span> <span class="toc-text">找想法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">5.0.5.</span> <span class="toc-text">写文案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">5.0.6.</span> <span class="toc-text">搭页面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">5.0.7.</span> <span class="toc-text">过闸</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">5.0.8.</span> <span class="toc-text">看</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">5.0.9.</span> <span class="toc-text">动起来</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">5.0.10.</span> <span class="toc-text">报告</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%B8%E9%97%A8%E5%88%B0%E5%BA%95%E9%87%8F%E4%BB%80%E4%B9%88"><span class="toc-number">5.1.</span> <span class="toc-text">闸门到底量什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%99%E5%A5%97%E6%B5%81%E7%A8%8B%E7%9A%84%E7%9C%9F%E5%AE%9E%E6%88%90%E6%9C%AC"><span class="toc-number">5.2.</span> <span class="toc-text">这套流程的真实成本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%B3%95-B%EF%BC%9A%E4%B8%8D%E8%A3%85-skill%EF%BC%8C%E5%8F%AA%E6%8A%8A%E5%AE%83%E5%BD%93%E8%B5%84%E6%96%99%E5%BA%93"><span class="toc-number">6.</span> <span class="toc-text">用法 B：不装 skill，只把它当资料库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E4%B8%AA%E5%8F%AA%E8%AF%BB%E5%91%BD%E4%BB%A4"><span class="toc-number">6.1.</span> <span class="toc-text">六个只读命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E8%AF%BB-JSON"><span class="toc-number">6.2.</span> <span class="toc-text">直接读 JSON</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E6%AD%A5%E5%8F%96%E7%94%A8%E6%B3%95"><span class="toc-number">6.3.</span> <span class="toc-text">三步取用法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%81%E5%88%B0-PPT-%E4%B8%8E%E8%A7%86%E9%A2%91%EF%BC%9A%E5%93%AA%E4%BA%9B%E8%83%BD%E6%90%AC%EF%BC%8C%E5%93%AA%E4%BA%9B%E6%90%AC%E4%B8%8D%E5%8A%A8"><span class="toc-number">7.</span> <span class="toc-text">迁到 PPT 与视频：哪些能搬，哪些搬不动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%88%E7%BB%99%E7%BB%93%E8%AE%BA"><span class="toc-number">7.1.</span> <span class="toc-text">先给结论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%A2%E7%AE%97%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%85%AC%E5%BC%8F-%E4%B8%80%E5%BC%A0%E8%A1%A8"><span class="toc-number">7.2.</span> <span class="toc-text">换算：一个公式 + 一张表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%86%E9%A2%91%EF%BC%9A%E6%8A%8A%E5%8A%A8%E6%95%88%E9%85%8D%E6%96%B9%E7%BF%BB%E6%88%90%E6%97%B6%E9%97%B4%E8%BD%B4"><span class="toc-number">7.3.</span> <span class="toc-text">视频：把动效配方翻成时间轴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%85%B7%E4%BD%93%E4%BE%8B%E5%AD%90%EF%BC%9A%E6%8A%8A%E6%8A%BD%E5%88%B0%E7%9A%84%E9%82%A3%E5%A5%97%E6%90%AC%E6%88%90-3-%E9%A1%B5-deck-1-%E4%B8%AA%E7%89%87%E5%A4%B4"><span class="toc-number">7.4.</span> <span class="toc-text">一个具体例子：把抽到的那套搬成 3 页 deck + 1 个片头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%8E%E7%A1%AE%E6%90%AC%E4%B8%8D%E5%8A%A8%E7%9A%84"><span class="toc-number">7.5.</span> <span class="toc-text">明确搬不动的</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%91%E4%B8%8E%E8%BE%B9%E7%95%8C%EF%BC%9A%E4%B8%80%E4%BB%BD%E8%AF%9A%E5%AE%9E%E7%9A%84%E6%B8%85%E5%8D%95"><span class="toc-number">8.</span> <span class="toc-text">坑与边界：一份诚实的清单</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">8.0.1.</span> <span class="toc-text">它的优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link"><span class="toc-number">8.0.2.</span> <span class="toc-text">它的边界</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%A1%B5%E9%80%9F%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">一页速查</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/taste-skill-%E8%AE%BE%E8%AE%A1%E5%BA%93%E6%8B%86%E8%A7%A3/" title="taste-skill：把审美拆成 20 个方向"><img src="/img/taste-skill-cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="taste-skill：把审美拆成 20 个方向"/></a><div class="content"><a class="title" href="/taste-skill-%E8%AE%BE%E8%AE%A1%E5%BA%93%E6%8B%86%E8%A7%A3/" title="taste-skill：把审美拆成 20 个方向">taste-skill：把审美拆成 20 个方向</a><time datetime="2026-10-30T13:20:00.000Z" title="发表于 2026-10-30 21:20:00">2026-10-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/awesome-design-md-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="awesome-design-md 使用指南"><img src="/img/design-md-cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="awesome-design-md 使用指南"/></a><div class="content"><a class="title" href="/awesome-design-md-%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" title="awesome-design-md 使用指南">awesome-design-md 使用指南</a><time datetime="2026-10-25T04:40:00.000Z" title="发表于 2026-10-25 12:40:00">2026-10-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Hexo-Butterfly-%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E4%B8%8E%E5%86%85%E5%AE%B9%E7%BB%84%E4%BB%B6%E9%80%9F%E6%9F%A5/" title="界面美化与内容组件速查"><img src="/img/XiaoHong.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="界面美化与内容组件速查"/></a><div class="content"><a class="title" href="/Hexo-Butterfly-%E7%95%8C%E9%9D%A2%E7%BE%8E%E5%8C%96%E4%B8%8E%E5%86%85%E5%AE%B9%E7%BB%84%E4%BB%B6%E9%80%9F%E6%9F%A5/" title="界面美化与内容组件速查">界面美化与内容组件速查</a><time datetime="2026-10-15T15:50:00.000Z" title="发表于 2026-10-15 23:50:00">2026-10-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/about-me/" title="个人介绍"><img src="/img/slogan.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="个人介绍"/></a><div class="content"><a class="title" href="/about-me/" title="个人介绍">个人介绍</a><time datetime="2026-10-15T13:52:00.000Z" title="发表于 2026-10-15 21:52:00">2026-10-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Hexo-Butterfly-%E5%86%99%E4%BD%9C%E4%B8%8E%E7%BE%8E%E5%8C%96%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/" title="Hexo + Butterfly 博客写作与美化速查手册"><img src="/img/XiaoHong.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hexo + Butterfly 博客写作与美化速查手册"/></a><div class="content"><a class="title" href="/Hexo-Butterfly-%E5%86%99%E4%BD%9C%E4%B8%8E%E7%BE%8E%E5%8C%96%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/" title="Hexo + Butterfly 博客写作与美化速查手册">Hexo + Butterfly 博客写作与美化速查手册</a><time datetime="2026-10-15T13:30:00.000Z" title="发表于 2026-10-15 21:30:00">2026-10-15</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Lin</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.4.3</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/self/vendor/fancybox/fancybox.umd.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('/self/vendor/mermaid/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const applyThemeDefaultsConfig = theme => {
+    if (theme === 'dark-mode') {
+      Chart.defaults.color = "rgba(255, 255, 255, 0.8)"
+      Chart.defaults.borderColor = "rgba(255, 255, 255, 0.2)"
+      Chart.defaults.scale.ticks.backdropColor = "transparent"
+    } else {
+      Chart.defaults.color = "rgba(0, 0, 0, 0.8)"
+      Chart.defaults.borderColor = "rgba(0, 0, 0, 0.1)"
+      Chart.defaults.scale.ticks.backdropColor = "transparent"
+    }
+  }
+
+  // Recursively traverse the config object and automatically apply theme-specific color schemes
+  const applyThemeConfig = (obj, theme) => {
+    if (typeof obj !== 'object' || obj === null) return
+
+    Object.keys(obj).forEach(key => {
+      const value = obj[key]
+      // If the property is an object and has theme-specific options, apply them
+      if (typeof value === 'object' && value !== null) {
+        if (value[theme]) {
+          obj[key] = value[theme] // Apply the value for the current theme
+        } else {
+          // Recursively process child objects
+          applyThemeConfig(value, theme)
+        }
+      }
+    })
+  }
+
+  const runChartJS = ele => {
+    window.loadChartJS = true
+
+    Array.from(ele).forEach((item, index) => {
+      const chartSrc = item.firstElementChild
+      const chartID = item.getAttribute('data-chartjs-id') || ('chartjs-' + index) // Use custom ID or default ID
+      const width = item.getAttribute('data-width')
+      const existingCanvas = document.getElementById(chartID)
+
+      // If a canvas already exists, remove it to avoid rendering duplicates
+      if (existingCanvas) {
+          existingCanvas.parentNode.remove()
+      }
+
+      const chartDefinition = chartSrc.textContent
+      const canvas = document.createElement('canvas')
+      canvas.id = chartID
+
+      const div = document.createElement('div')
+      div.className = 'chartjs-wrap'
+
+      if (width) {
+        div.style.width = width
+      }
+
+      div.appendChild(canvas)
+      chartSrc.insertAdjacentElement('afterend', div)
+
+      const ctx = document.getElementById(chartID).getContext('2d')
+
+      const config = JSON.parse(chartDefinition)
+
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark-mode' : 'light-mode'
+
+      // Set default styles (initial setup)
+      applyThemeDefaultsConfig(theme)
+
+      // Automatically traverse the config and apply dual-mode color schemes
+      applyThemeConfig(config, theme)
+
+      new Chart(ctx, config)
+    })
+  }
+
+  const loadChartJS = () => {
+    const chartJSEle = document.querySelectorAll('#article-container .chartjs-container')
+    if (chartJSEle.length === 0) return
+
+    window.loadChartJS ? runChartJS(chartJSEle) : btf.getScript('/self/vendor/chartjs/chart.umd.js').then(() => runChartJS(chartJSEle))
+  }
+
+  // Listen for theme change events
+  btf.addGlobalFn('themeChange', loadChartJS, 'chartjs')
+  btf.addGlobalFn('encrypt', loadChartJS, 'chartjs')
+
+  window.pjax ? loadChartJS() : document.addEventListener('DOMContentLoaded', loadChartJS)
+})()</script></div><script src="/self/custom.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="/self/vendor/canvas-nest/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div></body></html>
